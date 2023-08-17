@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@dto": ["libs/dto/src/index.ts"],
+      "@seleccionado-10/mothers": ["libs/mothers/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

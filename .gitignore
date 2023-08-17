@@ -32,6 +32,7 @@ node_modules
 npm-debug.log
 yarn-error.log
 testem.log
+rome.json
 /typings
 
 # System Files
@@ -40,3 +41,6 @@ Thumbs.db
 
 # Next.js
 .next
+
+# env
+*.env
