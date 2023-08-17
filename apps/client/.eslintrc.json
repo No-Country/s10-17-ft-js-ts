@@ -1,31 +1,47 @@
 {
-  "extends": [
-    "plugin:@nx/react-typescript",
-    "next",
-    "next/core-web-vitals",
-    "../../.eslintrc.json"
-  ],
-  "ignorePatterns": ["!**/*", ".next/**/*"],
-  "overrides": [
-    {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {
-        "@next/next/no-html-link-for-pages": ["error", "apps/client/pages"]
-      }
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "node": true,
+        "jest": true
     },
-    {
-      "files": ["*.ts", "*.tsx"],
-      "rules": {}
+    "extends": [
+      "plugin:@nx/react-typescript",
+      "../../.eslintrc.json",
+      "plugin:react/recommended",
+      "standard",
+      "eslint-config-next"
+    ],
+    "ignorePatterns": ["*.d.ts", "*.config.js", "*.config.ts"]
+    ,
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
     },
-    {
-      "files": ["*.js", "*.jsx"],
-      "rules": {}
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-filename-extension": [1, { "extensions": [".js",".jsx", ".tsx"] }],
+        "react/no-unknown-property": [
+            2,
+            {
+                "ignore": [
+                    "jsx"
+                ]
+            }
+        ],
+        "@typescript-eslint/no-explicit-any": "warn",
+        "no-new": "off",
+        "react-hooks/exhaustive-deps": "off"
+    },
+    "globals": {
+        "React": "readonly"
     }
-  ],
-  "rules": {
-    "@next/next/no-html-link-for-pages": "off"
-  },
-  "env": {
-    "jest": true
-  }
 }
