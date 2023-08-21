@@ -59,7 +59,7 @@ export class ItemController {
   @ApiOkResponse()
   update(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() updateItemDto: UpdateItemDto,
+    @Body() updateItemDto: UpdateItemDto
   ) {
     return this.itemService.update(id, updateItemDto);
   }

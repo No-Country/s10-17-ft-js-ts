@@ -2,7 +2,10 @@
   "name": "@seleccionado-10/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "prepare": "husky install",
+    "lint": "nx run-many -t lint"
+  },
   "private": true,
   "dependencies": {
     "@automapper/classes": "^8.7.7",
@@ -63,6 +66,7 @@
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-jsx-a11y": "6.7.1",
     "eslint-plugin-n": "^16.0.1",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "7.32.2",
     "eslint-plugin-react-hooks": "4.6.0",
@@ -75,6 +79,7 @@
     "sass": "1.62.1",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
-    "typescript": "~5.1.3"
+    "typescript": "~5.1.3",
+    "husky": "^8.0.0"
   }
 }

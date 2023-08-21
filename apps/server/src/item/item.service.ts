@@ -6,7 +6,7 @@ import { ItemRepository, ItemRepositoryKey } from './item.repository';
 export class ItemService {
   constructor(
     @Inject(ItemRepositoryKey)
-    private readonly itemRepository: ItemRepository,
+    private readonly itemRepository: ItemRepository
   ) {}
 
   /**

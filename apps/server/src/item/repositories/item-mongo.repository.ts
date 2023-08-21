@@ -10,7 +10,7 @@ import { v4 as uuid } from 'uuid';
 export class ItemMongoRepository implements ItemRepository {
   constructor(
     @InjectModel(Item.name) private readonly itemModel: Model<Item>,
-    @InjectMapper() private readonly mapper: Mapper,
+    @InjectMapper() private readonly mapper: Mapper
   ) {}
 
   async create(createItemDto: CreateItemDto): Promise<ItemDto> {
