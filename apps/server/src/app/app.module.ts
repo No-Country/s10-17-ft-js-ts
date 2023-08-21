@@ -5,6 +5,7 @@ import { appConfig, appSchema } from './app.config';
 import { ItemModule } from '../item/item.module';
 import { AutomapperModule } from '@timonmasberg/automapper-nestjs';
 import { pojos } from '@automapper/pojos';
+import { DbseedModule } from '../dbseed/dbseed.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { pojos } from '@automapper/pojos';
       strategyInitializer: pojos(),
     }),
     ItemModule,
+    DbseedModule,
   ],
   controllers: [],
   providers: [],

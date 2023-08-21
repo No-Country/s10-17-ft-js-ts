@@ -5,3 +5,4 @@ export * from './lib/error-response.dto';
 export * from './lib/user/user.dto';
 export * from './lib/user/create-user.dto';
 export * from './lib/user/update-user.dto';
+export * from './lib/dbseed/genres.dto';
