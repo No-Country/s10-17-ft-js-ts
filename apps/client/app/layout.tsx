@@ -1,4 +1,4 @@
-import Header from 'components/Header/Header'
+import Header from 'components/Header'
 import './global.css'
 import { Inter } from 'next/font/google'
 
