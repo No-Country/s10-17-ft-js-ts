@@ -47,7 +47,7 @@ export class CreateUserDto {
     description: 'birthdate',
     example: '10/12/1998',
   })
-  @IsDate()
+  @IsString()
   @IsNotEmpty()
   birthdate: Date;
 
