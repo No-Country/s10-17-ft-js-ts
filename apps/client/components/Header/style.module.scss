@@ -7,9 +7,17 @@ $pl: 40px;
   padding-inline: 20px;
   height: 80px;
   background-color: grey;
+  &__options {
+    display: none;
+  }
   &__menu {
     display: none;
-}
+  }
+  &__btn-menu {
+    &--title {
+      display: none;
+    }
+  }
   &__menu--active {
     top: 0;
     left: 0;
@@ -17,12 +25,13 @@ $pl: 40px;
     display: flex;
     flex-direction: column;
     background-color: white;
+    padding-bottom: 30px;
     width: 100dvw;
     height: 100dvh;
     align-items: center;
     animation: swap-right 0.5s ease-in-out;
     -webkit-animation: swap-right 0.5s ease-in-out;
-}
+  }
   &__menu-back {
     @extend .header;
     width: 100%;
@@ -30,10 +39,10 @@ $pl: 40px;
   &__menu-options {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     gap: 20px;
     padding-block: 20px;
     width: 100%;
+    height: 100%;
     & ul {
       display: flex;
       flex-direction: column;
@@ -60,5 +69,85 @@ $pl: 40px;
   }
   100% {
     transform: translateX(0);
+  }
+}
+
+@media (width >= 1000px) {
+  $pl: 60px;
+
+  .header {
+    padding-left: $pl + 20px;
+    flex-direction: column;
+    padding-block: 30px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 60px;
+    width: 20dvw;
+    height: 100dvh;
+    &__btn {
+      position: absolute;
+      display: flex;
+      bottom: 30px;
+      left: 40px;
+    }
+    &__btn-menu {
+      &--title {
+        display: block;
+      }
+    }
+    &__menu-back {
+      display: none;
+    }
+    &__menu--active {
+      border-radius: 1.5rem;
+      background-color: rgb(64, 64, 64);
+      padding: 0;
+      top: auto;
+      left: 20px;
+      bottom: 70px;
+      width: 16dvw;
+      height: 50dvh;
+      animation: swap-bottom-scale 0.4s ease-in-out;
+      -webkit-animation: swap-bottom-scale 0.4s ease-in-out;
+      color: white;
+}
+    &__logout, &__perfil {
+      display: none;
+    }
+    &__options {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    &__msg-mobile {
+      display: none;
+    }
+    &__menu-options {
+      & ul {
+        & li {
+          padding-left: 0;
+        }
+      }
+      & ul:nth-child(1) {
+        padding-left: $pl;
+        height: 100%;
+      }
+      & ul:nth-child(2) {
+        padding-left: $pl - 10px;
+        border-top: 3px solid #797979;
+        padding-block: 20px;
+      }
+    }
+  }
+
+  @keyframes swap-bottom-scale {
+    0% {
+      opacity: 0;
+      transform: translateY(100%) scale(0);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   }
 }

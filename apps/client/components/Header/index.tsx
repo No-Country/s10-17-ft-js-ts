@@ -14,12 +14,26 @@ export default function Header () {
 
   return (
     <header className={style.header}>
-      <span
-        onClick={handleMenu}
-        className={style['header__btn-menu']}
-      >🍔</span>
+      <div className={style.header__btn} onClick={handleMenu}>
+        <span className={style['header__btn-menu']}>🍔</span>
+        <p className={style['header__btn-menu--title']}>Mas</p>
+      </div>
       <span>Logo</span>
-      <Link href={'#'}>📩</Link>
+
+      <div>
+        <ul className={style.header__options}>
+          <li>
+            <Link href={'#'}>Inicio</Link>
+          </li>
+          <li>
+            <Link href={'#'}>Explorar?</Link>
+          </li>
+          <li>
+            <Link href={'#'}>Mensajes</Link>
+          </li>
+        </ul>
+        <Link className={style['header__msg-mobile']} href={'#'}>📩</Link>
+      </div>
 
       <nav className={style.header__menu} ref={menu}>
         <header className={style['header__menu-back']}>
@@ -31,13 +45,13 @@ export default function Header () {
         <div className={style['header__menu-options']}>
           <ul>
             <li>
-              <Link href={'#'}>Perfil</Link>
+              <Link className={style.header__perfil} href={'#'}>Perfil</Link>
             </li>
             <li>
               <Link href={'#'}>Configuración</Link>
             </li>
             <li>
-              <Link href={'#'}>Ayuda</Link>
+              <Link href={'#'}>Notificaciones</Link>
             </li>
             <li>
               <Link href={'#'}>Quienes somos</Link>
@@ -55,7 +69,7 @@ export default function Header () {
             </li>
           </ul>
         </div>
-        <Link href={'#'}>Cerrar sesión</Link>
+        <Link className={style.header__logout} href={'#'}>Cerrar sesión</Link>
       </nav>
     </header>
   )
