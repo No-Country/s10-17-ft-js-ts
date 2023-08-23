@@ -3,6 +3,7 @@ import { ConfigModule, ConfigType } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { appConfig, appSchema } from './app.config';
 import { ItemModule } from '../item/item.module';
+import { UserModule } from '../user/user.module';
 import { AutomapperModule } from '@timonmasberg/automapper-nestjs';
 import { pojos } from '@automapper/pojos';
 
@@ -23,6 +24,7 @@ import { pojos } from '@automapper/pojos';
       strategyInitializer: pojos(),
     }),
     ItemModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],

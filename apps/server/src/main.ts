@@ -26,7 +26,7 @@ async function bootstrap() {
   SwaggerModule.setup('api/docs', app, document);
 
   const config = app.get<ConfigType<typeof appConfig>>(appConfig.KEY);
-  const port = config.app.port!;
+  const port = config.app.port;
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
