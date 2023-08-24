@@ -35,14 +35,47 @@
   width: 100%;
 }
 
-.form input {
-  background-color: #EEEEEE;
-  border-radius: 8px;
+.form .field {
+  width: 98%;
   max-width: 300px;
-  width: 100%;
+  height: fit-content;
+  position: relative;
+}
+
+.field label {
+  color: '#616161';
+  font-size: $SM;
+}
+
+.field small {
+  font-size: 10px;
+  color: '#BEBEBE';
+}
+
+.error {
+  outline: 1px dashed red !important;
+}
+
+.icon {
+  position: absolute;
+  right: 15px;
+  top: 45%;
+  z-index: 20;
+  cursor: pointer;
+}
+
+.form input {
+  background-color: #BEBEBE;
+  border-radius: 8px;
+  width: 95vw;
+  max-width: 300px;
   height: 40px;
   padding: 10px;
-  font-size: $SM;
+  font-size: $XS;
+}
+
+.form input::placeholder {
+  color: '#949494';
 }
 
 .form p {

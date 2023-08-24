@@ -85,8 +85,7 @@ table, tr, td {
 }
 
 svg {
-  width: 100%;
-  display: block;
+
   fill: currentColor;
 }
 
