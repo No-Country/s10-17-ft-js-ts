@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { ArrayMaxSize, ArrayMinSize, IsArray, IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class UserDto {
   @ApiProperty({
@@ -47,7 +47,7 @@ export class UserDto {
   birthdate: Date;
 
   @ApiProperty()
-  likedBy: number[];
+  likedBy: string[];
 
   @ApiProperty({
     description: 'user gender',
@@ -69,4 +69,19 @@ export class UserDto {
   })
   id: string;
 
+  @ApiProperty({
+    description: 'age range',
+    example: '[18, 30]',
+  })
+  @IsArray()
+  @ArrayMinSize(2)
+  @ArrayMaxSize(2)
+  @IsNumber({}, { each: true })
+  ageRange?: number[];
+
+  @ApiProperty({
+    description: 'isVerified',
+    example: 'false/true',
+  })
+  isVerified: boolean
 }

@@ -22,8 +22,13 @@ export class UserMongoRepository implements UserRepository {
     return this.mapper.map(newUser, 'UserDocument', 'UserDto');
   }
 
-  async update(id: string, UpdateUserDto: UpdateUserDto): Promise<void> {
-    await this.userModel.findByIdAndUpdate(id, UpdateUserDto);
+  async update(
+    id: string,
+    updateUserDto: UpdateUserDto
+  ): Promise<UserDto | undefined | null> {
+    return await this.userModel.findOneAndUpdate({ id }, updateUserDto, {
+      new: true,
+    });
   }
 
   async findById(id: string): Promise<UserDto | null> {
@@ -38,14 +43,50 @@ export class UserMongoRepository implements UserRepository {
 
   async findOne(filter: FilterQuery<User>): Promise<UserDto | null> {
     const user = await this.userModel.findOne(filter);
-
     if (!user) return null;
-
     return this.mapper.map(user, 'UserDocument', 'UserDto');
   }
 
   async findMany(filter: FilterQuery<User>): Promise<UserDto[]> {
     const items = await this.userModel.find(filter);
     return this.mapper.mapArray(items, 'UserDocument', 'UserDto');
+  }
+
+  async updateAddLike(
+    userId: string,
+    idLiked: string
+  ): Promise<UserDto | null | undefined> {
+    const updatedUser = await this.userModel.findOneAndUpdate(
+      { id: idLiked },
+      { $addToSet: { likedBy: userId } },
+      { new: true }
+    );
+    return updatedUser;
+  }
+
+  async updateRemoveLike(
+    userId: string,
+    idLiked: string
+  ): Promise<UserDto | null | undefined> {
+    const updatedUser = await this.userModel.findOneAndUpdate(
+      { id: idLiked },
+      { $pull: { likedBy: userId } },
+      { new: true }
+    );
+    return updatedUser;
+  }
+
+  // async deleteOne(id: string): Promise<UserDto | undefined | null>{
+  // return await this.userModel.deleteOne({id})
+  // }
+
+  async verifyUser(id: string): Promise<boolean> {
+    const userUpdated = await this.userModel.findOneAndUpdate(
+      { id },
+      { isVerified: true },
+      { new: true }
+    );
+    if (!userUpdated) return false;
+    return true;
   }
 }
