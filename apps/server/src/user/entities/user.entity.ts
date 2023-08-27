@@ -42,7 +42,7 @@ export class User {
 
   @Prop()
   @IsOptional()
-  likedBy: number[];
+  likedBy: string[];
 
   // @Prop({ type: [{ type: Types.ObjectId, ref: 'Chance' }] })
   // @IsOptional()

@@ -4,11 +4,24 @@ import { User } from './entities/user.entity';
 
 export interface UserRepository {
   create(createUserDto: CreateUserDto): Promise<UserDto>;
-  update(id: string, UpdateUserDto: UpdateUserDto): Promise<void>;
+  update(
+    id: string,
+    UpdateUserDto: UpdateUserDto
+  ): Promise<UserDto | undefined | null>;
   findById(id: string): Promise<UserDto | null>;
   findOne(filter: FilterQuery<User>): Promise<UserDto | null>;
   findByEmail(email: string): Promise<boolean>;
   findMany(filter: FilterQuery<User>): Promise<UserDto[]>;
+  updateAddLike(
+    userId: string,
+    idLiked: string
+  ): Promise<UserDto | undefined | null>;
+  updateRemoveLike(
+    userId: string,
+    idLiked: string
+  ): Promise<UserDto | undefined | null>;
+  // deleteOne(id:string): Promise<UserDto | undefined | null>;
+  verifyUser(id: string): Promise<boolean>;
 }
 
 export const UserRepositoryKey = Symbol('UserRepository');

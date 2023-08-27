@@ -28,6 +28,9 @@ export class UserProfile extends AutomapperProfile {
       email: String,
       birthdate: Date,
       gender: String,
+      ageRange: Array,
+      likedBy: Array,
+      isVerified: Boolean,
     });
 
     PojosMetadataMap.create<UserDto>('UserDto', {
@@ -38,6 +41,9 @@ export class UserProfile extends AutomapperProfile {
       email: String,
       birthdate: Date,
       gender: String,
+      ageRange: Array,
+      likedBy: Array,
+      isVerified: Boolean,
     });
   }
 }
