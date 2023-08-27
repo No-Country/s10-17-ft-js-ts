@@ -8,9 +8,13 @@ export const appConfig = registerAs('app', () => ({
   database: {
     uri: process.env.DB_URI,
   },
+  hash: {
+    salt: process.env.HASH_SALT,
+  },
 }));
 
 export const appSchema = Joi.object({
   PORT: Joi.number().optional().default(3000),
   DB_URI: Joi.string().required(),
+  HASH_SALT: Joi.number().required(),
 });
