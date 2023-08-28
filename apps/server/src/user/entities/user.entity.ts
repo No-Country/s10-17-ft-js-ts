@@ -9,31 +9,32 @@ export class User {
   @Prop({ required: true })
   firstName: string;
 
-  @Prop()
+  @Prop({ required: true })
   lastName: string;
 
   @Prop({
     unique: true,
+    required: true,
   })
   email: string;
 
-  @Prop()
+  @Prop({ required: true })
   passwordHash: string;
 
-  @Prop()
+  @Prop({ required: true })
   id: string;
 
-  @Prop()
+  @Prop({ required: true })
   birthdate: Date;
 
   // @Prop()
   // interests: Interest[];
 
-  @Prop()
+  @Prop({ default: [] })
   @IsOptional()
   images: string[];
 
-  @Prop()
+  @Prop({ default: '' })
   description: string;
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })

@@ -1,12 +1,22 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class ErrorResponse {
-  @ApiProperty()
+  @ApiProperty({
+    examples: [
+      'Invalid email',
+      "Verification code doesn't match",
+      'Internal server error',
+    ],
+  })
   message: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    example: 400,
+  })
   statusCode: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    example: 'BadRequestException',
+  })
   error: string;
 }

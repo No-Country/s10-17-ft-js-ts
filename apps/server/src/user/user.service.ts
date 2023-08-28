@@ -2,6 +2,7 @@ import { CreateUserDto, UpdateUserDto, UserDto } from '@dto';
 import { Inject, Injectable, BadRequestException } from '@nestjs/common';
 import { UserRepository, UserRepositoryKey } from './user.repository';
 import * as bcrypt from 'bcrypt';
+import { UserDocument } from './entities/user.entity';
 // import { appConfig } from '../app/app.config';
 // import { ConfigType } from '@nestjs/config';
 
@@ -24,9 +25,7 @@ export class UserService {
       // createUserDto.password = await bcrypt.hash(createUserDto.password, process.env.HASH_SALT);
 
       // validar si el email ya esta usado
-      const isRegistered: boolean = await this.isRegistered(
-        createUserDto.email
-      );
+      const isRegistered = await this.isRegistered(createUserDto.email);
 
       if (isRegistered) {
         throw new BadRequestException('Email already exists');
@@ -43,8 +42,12 @@ export class UserService {
     return this.userRepository.findMany({});
   }
 
-  async isRegistered(email: string): Promise<boolean> {
-    return this.userRepository.findByEmail(email);
+  async isRegistered(email: string): Promise<UserDocument | null> {
+    const user = await this.userRepository.findByEmail(email);
+
+    if (!user) return null;
+
+    return user;
   }
 
   async update(

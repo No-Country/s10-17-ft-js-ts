@@ -1,6 +1,6 @@
 import { CreateUserDto, UserDto, UpdateUserDto } from '@dto';
 import { FilterQuery } from 'mongoose';
-import { User } from './entities/user.entity';
+import { User, UserDocument } from './entities/user.entity';
 
 export interface UserRepository {
   create(createUserDto: CreateUserDto): Promise<UserDto>;
@@ -10,7 +10,7 @@ export interface UserRepository {
   ): Promise<UserDto | undefined | null>;
   findById(id: string): Promise<UserDto | null>;
   findOne(filter: FilterQuery<User>): Promise<UserDto | null>;
-  findByEmail(email: string): Promise<boolean>;
+  findByEmail(email: string): Promise<UserDocument | null>;
   findMany(filter: FilterQuery<User>): Promise<UserDto[]>;
   updateAddLike(
     userId: string,
@@ -21,7 +21,7 @@ export interface UserRepository {
     idLiked: string
   ): Promise<UserDto | undefined | null>;
   // deleteOne(id:string): Promise<UserDto | undefined | null>;
-  verifyUser(id: string): Promise<boolean>;
+  verifyUser(id: string): Promise<UserDto | null>;
 }
 
 export const UserRepositoryKey = Symbol('UserRepository');
