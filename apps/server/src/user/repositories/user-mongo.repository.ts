@@ -1,6 +1,6 @@
 import { CreateUserDto, UserDto, UpdateUserDto } from '@dto';
 import { FilterQuery, Model } from 'mongoose';
-import { User } from '../entities/user.entity';
+import { User, UserDocument } from '../entities/user.entity';
 import { UserRepository } from '../user.repository';
 import { InjectModel } from '@nestjs/mongoose';
 import { InjectMapper } from '@timonmasberg/automapper-nestjs';
@@ -16,6 +16,7 @@ export class UserMongoRepository implements UserRepository {
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
     const newUser = await this.userModel.create({
       ...createUserDto,
+      passwordHash: createUserDto.password,
       id: uuid(),
     });
 
@@ -35,10 +36,9 @@ export class UserMongoRepository implements UserRepository {
     return await this.findOne({ id });
   }
 
-  async findByEmail(email: string): Promise<boolean> {
+  async findByEmail(email: string): Promise<UserDocument | null> {
     const user = await this.userModel.findOne({ email });
-    if (!user) return false;
-    return true;
+    return user;
   }
 
   async findOne(filter: FilterQuery<User>): Promise<UserDto | null> {
@@ -80,13 +80,15 @@ export class UserMongoRepository implements UserRepository {
   // return await this.userModel.deleteOne({id})
   // }
 
-  async verifyUser(id: string): Promise<boolean> {
+  async verifyUser(email: string): Promise<UserDto | null> {
     const userUpdated = await this.userModel.findOneAndUpdate(
-      { id },
+      { email },
       { isVerified: true },
       { new: true }
     );
-    if (!userUpdated) return false;
-    return true;
+
+    if (!userUpdated) return null;
+
+    return this.mapper.map(userUpdated, 'UserDocument', 'UserDto');
   }
 }
