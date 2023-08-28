@@ -20,5 +20,6 @@ import { UserProfile } from './user.profile';
       useClass: UserMongoRepository,
     },
   ],
+  exports: [UserService],
 })
 export class UserModule {}
