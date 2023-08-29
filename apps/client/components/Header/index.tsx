@@ -2,9 +2,11 @@
 import Link from 'next/link'
 import style from './style.module.scss'
 import { useRef } from 'react'
+import { usePathname } from 'next/navigation'
 
 export default function Header () {
   const menu = useRef<HTMLDivElement>(null)
+  const router = usePathname()
 
   const handleMenu = () => {
     if (menu.current) {
@@ -13,22 +15,27 @@ export default function Header () {
   }
 
   return (
+    router !== '/'
+      ? (
     <header className={style.header}>
       <div className={style.header__btn} onClick={handleMenu}>
         <span className={style['header__btn-menu']}>🍔</span>
         <p className={style['header__btn-menu--title']}>Mas</p>
       </div>
-      <span>Logo</span>
+      <span className={style.header__logo}>Logo</span>
 
       <div>
         <ul className={style.header__options}>
-          <li>
+          <li className={style.header__option}>
+            <span className={style.header__icon}>🏠</span>
             <Link href={'#'}>Inicio</Link>
           </li>
-          <li>
+          <li className={style.header__option}>
+            <span className={style.header__icon}>🔍</span>
             <Link href={'#'}>Explorar?</Link>
           </li>
-          <li>
+          <li className={style.header__option}>
+            <span className={style.header__icon}>📩</span>
             <Link href={'#'}>Mensajes</Link>
           </li>
         </ul>
@@ -71,6 +78,8 @@ export default function Header () {
         </div>
         <Link className={style.header__logout} href={'#'}>Cerrar sesión</Link>
       </nav>
-    </header>
+  </header>
+        )
+      : null
   )
 }
