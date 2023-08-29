@@ -1,7 +1,8 @@
 'use client'
 import UserMatchCard from 'components/UserMatchCard'
 import style from './page.module.scss'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { slideAnimation } from '../../libs/slideAnimation'
 
 const users = [
   {
@@ -78,15 +79,26 @@ type Users = User[]
 
 export default function Index () {
   const [matches, setMatches] = useState<Users | []>([])
+  const match = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setMatches(users)
   }, [])
 
+  useEffect(() => {
+    if (match.current) {
+      slideAnimation(match)
+    }
+  }, [matches])
+
   return (
     <main className={style.home}>
       <div className={style.home__matches}>
-          {matches.length > 0 && <UserMatchCard user={matches[0]} setMatches={setMatches} matches={matches}/>}
+          {matches.length > 0 &&
+            <div ref={match} className={style.home__match}>
+              <UserMatchCard user={matches[0]} setMatches={setMatches} matches={matches}/>
+            </div>
+          }
       </div>
     </main>
   )
