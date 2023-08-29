@@ -5,11 +5,9 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  width: 100%;
   height: 100%;
   max-height: calc(80vh);
   max-width: 630px;
-  transition: all 0.5s ease-in-out;
   &__content {
     display: flex;
     flex-direction: column;
@@ -126,15 +124,5 @@
     &__buttons {
       padding-block: 50px;
     }
-  }
-}
-
-
-@keyframes slide {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-100%);
   }
 }
