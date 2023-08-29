@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
+import { useEffect, useRef, useState } from 'react'
 import style from './style.module.scss'
+import handleScroll from '../../libs/handleScroll'
 
 // TODO: tipar user
 interface User {
@@ -12,13 +14,36 @@ interface User {
   about: string
 }
 
-export default function UserMatchCard ({ user }: { user: User }) {
+interface Props {
+  user: User
+  setMatches: React.Dispatch<React.SetStateAction<User[] | []>>
+  matches: User[]
+}
+
+export default function UserMatchCard ({ user, setMatches, matches }: Props) {
+  const pins = useRef<HTMLUListElement>(null)
+  const [isScroll, setIsScroll] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (pins.current?.scrollWidth) {
+      setIsScroll(pins.current?.scrollWidth > pins.current?.clientWidth)
+    }
+  }, [isScroll])
+
+  function nextMatch () {
+    const newMatches = [...matches]
+    newMatches.shift()
+    setMatches(newMatches)
+  }
+
   function handleLike () {
-    console.log('Like')
+    nextMatch()
+    // logical
   }
 
   function handleDislike () {
-    console.log('Dislike')
+    nextMatch()
+    // logical
   }
 
   return (
@@ -45,13 +70,19 @@ export default function UserMatchCard ({ user }: { user: User }) {
 
         <div className={style.user__pins}>
           <h3 className={style['user__pins-title']}>Sus pines</h3>
-          <ul className={style['user__pins-content']}>
+          <ul className={style['user__pins-content']} ref={pins}>
             {user.pins.map((pin, index) => (
               <li key={index} className={style.user__pin} style={{ background: 'linear-gradient(45deg, rgb(186, 71, 71), rgb(33, 204, 164))' }}>
                 <img className={style['user__pin-photo']} src={pin} alt="User pin" />
               </li>
             ))}
           </ul>
+          {isScroll && (
+            <div className={style['user__pins-buttons']}>
+              <button value='left' onClick={(event) => handleScroll(event, pins)}>⬅️</button>
+              <button value='right' onClick={(event) => handleScroll(event, pins)}>➡️</button>
+            </div>
+          )}
         </div>
 
         <div className={style.user__about}>

@@ -1,7 +1,9 @@
+'use client'
 import UserMatchCard from 'components/UserMatchCard'
 import style from './page.module.scss'
+import { useEffect, useState } from 'react'
 
-const user = [
+const users = [
   {
     name: 'User name',
     photo: 'https://avatars.githubusercontent.com/u/1182328?v=5',
@@ -33,7 +35,7 @@ const user = [
   },
   {
     name: 'User name',
-    photo: 'https://avatars.githubusercontent.com/u/1122328?v=5',
+    photo: 'https://avatars.githubusercontent.com/u/118328?v=5',
     location: 'User location',
     interests: ['Interest 1', 'Interest 2', 'Interest 3', 'Interest 4'],
     pins: [
@@ -58,7 +60,7 @@ const user = [
   },
   {
     name: 'User name',
-    photo: 'https://avatars.githubusercontent.com/u/1982328?v=5',
+    photo: 'https://avatars.githubusercontent.com/u/1182328?v=5',
     location: 'User location',
     interests: ['Interest 1', 'Interest 2', 'Interest 3', 'Interest 4', 'Interest 5'],
     pins: [
@@ -71,14 +73,21 @@ const user = [
   }
 ]
 
-export default async function Index () {
+type User = typeof users[0]
+type Users = User[]
+
+export default function Index () {
+  const [matches, setMatches] = useState<Users | []>([])
+
+  useEffect(() => {
+    setMatches(users)
+  }, [])
+
   return (
     <main className={style.home}>
-      {
-        user.map((user, index) => (
-          <UserMatchCard key={index} user={user} />
-        ))
-      }
+      <div className={style.home__matches}>
+          {matches.length > 0 && <UserMatchCard user={matches[0]} setMatches={setMatches} matches={matches}/>}
+      </div>
     </main>
   )
 }

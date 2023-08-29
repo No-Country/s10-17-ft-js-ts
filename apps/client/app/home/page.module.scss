@@ -1,3 +1,13 @@
 .home {
+  width: 100%;
+  display: grid;
+  place-items: center;
   padding: 20px;
+  &__matches {
+    display: flex;
+    width: calc(100vw - 40px);
+    gap: 4rem;
+    overflow-x: hidden;
+    max-width: 630px;
+  }
 }
