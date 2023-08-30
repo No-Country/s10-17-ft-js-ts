@@ -19,7 +19,7 @@ export function Mails ({ setOpenChat }: Props) {
             <li key={i} onClick={setOpenChat} className={style.mails__match}>
               <img
                   className={style['mails__message-avatar']}
-                  src="https://avatars.githubusercontent.com/u/1182328?v=5"
+                  src="https://picsum.photos/200"
                   alt="User avatar"
                 />
             </li>
@@ -36,7 +36,7 @@ export function Mails ({ setOpenChat }: Props) {
                 <span className={style['mails__message-status']}></span>
                 <img
                   className={style['mails__message-avatar']}
-                  src="https://avatars.githubusercontent.com/u/1182328?v=5"
+                  src="https://picsum.photos/200"
                   alt="User avatar"
                 />
               </figure>
