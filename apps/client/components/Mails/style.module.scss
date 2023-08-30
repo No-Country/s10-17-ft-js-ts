@@ -1,0 +1,116 @@
+.mails {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 100vh;
+  animation: swap-right 1s ease-in-out;
+  overflow-y: scroll;
+  &__match {
+    cursor: pointer;
+  }
+  &__matches {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  &__matches-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__matches-list {
+    display: flex;
+    gap: 2rem;
+  }
+  &__message-avatar {
+    width: 7rem;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &__messages {
+    @extend .mails__matches;
+  }
+  &__messages-list {
+    display: flex;
+    flex-direction: column;
+  }
+  &__message {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid rgb(157, 157, 157);
+  }
+  &__message-photo {
+    position: relative;
+    width: max-content;
+  }
+  &__message-status {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background-color: rgb(36, 212, 92);
+  }
+  &__message-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__message-user {
+    width: 100%;
+  }
+  &__message-info:nth-child(1) {
+    cursor: pointer;
+  }
+  &__message-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__message-notifications {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: rgb(31, 128, 239);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media (width >= 1000px) {
+  .mails {
+    min-width: 390px;
+    border-right: 1px solid rgb(157, 157, 157);
+    animation: swap-top 1s ease-in-out;
+  }
+}
+
+@keyframes swap-top {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes swap-right {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

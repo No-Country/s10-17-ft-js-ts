@@ -1,16 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
+import Link from 'next/link'
 import style from './style.module.scss'
 
-export function Mails () {
+interface Props {
+  setOpenChat: () => void
+}
+
+export function Mails ({ setOpenChat }: Props) {
   return (
     <section className={style.mails}>
-      <p>Mailbox</p>
-
       <div className={style.mails__matches}>
-        <h3 className={style['mails__matches-title']}>Matches</h3>
+        <div className={style['mails__matches-header']}>
+          <h2 className={style['mails__matches-title']}>Matches</h2>
+          <Link href="/chat">Ver más</Link>
+        </div>
         <ul className={style['mails__matches-list']}>
           {Array.from({ length: 4 }).map((_, i) => (
-            <li key={i}>
+            <li key={i} onClick={setOpenChat} className={style.mails__match}>
               <img
                   className={style['mails__message-avatar']}
                   src="https://avatars.githubusercontent.com/u/1182328?v=5"
@@ -22,11 +28,11 @@ export function Mails () {
       </div>
 
       <div className={style.mails__messages}>
-        <h3 className={style['mails__messages-title']}>Messages</h3>
+        <h2 className={style['mails__messages-title']}>Mensajes</h2>
         <ul className={style['mails__messages-list']}>
           {Array.from({ length: 9 }).map((_, i) => (
-            <li key={i}>
-              <figure>
+            <li key={i} className={style.mails__message}>
+              <figure className={style['mails__message-photo']}>
                 <span className={style['mails__message-status']}></span>
                 <img
                   className={style['mails__message-avatar']}
@@ -35,18 +41,24 @@ export function Mails () {
                 />
               </figure>
 
-              <h3 className={style['mails__message-user']}>
-                User name
-              </h3>
-              <p className={style['mails__message-text']}>
-                Ejemplo de mensaje
-              </p>
-              <span className={style['mails__message-date']}>
-                1 day ago
-              </span>
-              <span className={style['mails__message-notifications']}>
-                1
-              </span>
+              <div className={style['mails__message-content']}>
+                <div className={style['mails__message-info']} onClick={setOpenChat}>
+                  <h3 className={style['mails__message-user']}>
+                    Nombre del match
+                  </h3>
+                  <p className={style['mails__message-text']}>
+                    Vista previa del mensaje
+                  </p>
+                </div>
+                <div className={style['mails__message-info']}>
+                  <span className={style['mails__message-time']}>
+                    18:45
+                  </span>
+                  <span className={style['mails__message-notifications']}>
+                    1
+                  </span>
+                </div>
+              </div>
             </li>
           ))}
         </ul>

@@ -1,0 +1,25 @@
+.chat {
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  position: absolute;
+  top: 0;
+  &__back {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    cursor: pointer;
+  }
+}
+
+
+@media (width >= 1000px) {
+  .chat {
+    display: flex;
+    position: relative;
+    &__back {
+      display: none;
+    }
+  }
+}

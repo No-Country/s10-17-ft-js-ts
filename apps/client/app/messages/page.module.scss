@@ -1,0 +1,11 @@
+.messages {
+  position: relative;
+}
+
+
+@media (width >= 1000px) {
+  .messages {
+    margin-left: 78px;
+    display: flex;
+  }
+}
