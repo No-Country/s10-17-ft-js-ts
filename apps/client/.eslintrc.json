@@ -27,6 +27,7 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "next/no-img-element": "off",
         "react/react-in-jsx-scope": "off",
         "react/jsx-filename-extension": [1, { "extensions": [".js",".jsx", ".tsx"] }],
         "react/no-unknown-property": [
