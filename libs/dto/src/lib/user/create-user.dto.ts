@@ -13,17 +13,19 @@ export class CreateUserDto {
     description: 'Name',
     example: 'Juan',
   })
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  firstName: string;
+  firstName?: string;
 
   @ApiProperty({
     description: 'Lastname',
     example: 'Serrano',
   })
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  lastName: string;
+  lastName?: string;
 
   @ApiProperty({
     description: 'Email',
@@ -37,6 +39,7 @@ export class CreateUserDto {
     description: 'password',
     example: 'Example123!',
   })
+  @IsOptional()
   @IsNotEmpty()
   @IsString()
   @MinLength(8)
@@ -53,26 +56,30 @@ export class CreateUserDto {
     description: 'birthdate',
     example: '10/12/1998',
   })
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  birthdate: Date;
+  birthdate?: Date;
 
   @ApiProperty({})
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  description: string;
+  description?: string;
 
   @ApiProperty({
     example: 'male',
   })
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  gender: string;
+  gender?: string;
 
   @ApiProperty({
     example: 'Curazao',
   })
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  address: string;
+  address?: string;
 }
