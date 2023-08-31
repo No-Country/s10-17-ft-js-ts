@@ -6,7 +6,7 @@
   position: absolute;
   flex-direction: column;
   top: 0;
-  animation: swap-right 1s ease-in-out;
+  animation: swap-right 0.5s ease-in-out;
   &__back {
     display: flex;
     gap: 1rem;

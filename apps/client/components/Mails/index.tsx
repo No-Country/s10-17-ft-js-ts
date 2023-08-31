@@ -12,7 +12,7 @@ export function Mails ({ setOpenChat }: Props) {
       <div className={style.mails__matches}>
         <div className={style['mails__matches-header']}>
           <h2 className={style['mails__matches-title']}>Matches</h2>
-          <Link href="/chat">Ver más</Link>
+          <Link href="/messages/matches">Ver más</Link>
         </div>
         <ul className={style['mails__matches-list']}>
           {Array.from({ length: 4 }).map((_, i) => (
