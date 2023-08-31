@@ -1,9 +1,10 @@
 import styles from './page.module.scss'
-import { Register } from 'components/Register'
+import { AuthForm } from 'components/AuthForm'
+
 export default async function Index () {
   return (
     <main className={styles.page}>
-      <Register />
+      <AuthForm type='login' />
     </main>
   )
 }

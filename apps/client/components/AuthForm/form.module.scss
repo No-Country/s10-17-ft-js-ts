@@ -1,32 +1,5 @@
 @import 'styles/variables.scss';
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 550px;
-  border-radius: 8px;
-  background-color: #fff;
-  color: $text-dark;
-  width: 95vw;
-  max-width: 480px;
-  position: relative;
-  gap: 24px;
-  justify-content: center;
-}
-
-.container h2 {
-  font-size: $L;
-  text-align: center;
-}
-
-.close {
-  position: absolute;
-  right: 10px;
-  top: 20px;
-  cursor: pointer;
-}
-
 .form {
   display: flex;
   flex-direction: column;
@@ -65,7 +38,7 @@
 }
 
 .form input {
-  background-color: #BEBEBE;
+  background-color: $purple-seconadary-lila;
   border-radius: 8px;
   width: 95vw;
   max-width: 300px;
@@ -75,7 +48,7 @@
 }
 
 .form input::placeholder {
-  color: '#949494';
+  color: $grey-dark;
 }
 
 .form p {
@@ -85,9 +58,9 @@
 
 .form .submit {
   font-size: $M;
-  color: $text-black;
-  background-color: #BEBEBE;
-  border-radius: 20px;
+  color: $white;
+  background-color: $purple-principal;
+  border-radius: 8px;
   height: 48px;
   max-width: 300px;
   width: 100%;
@@ -95,7 +68,7 @@
 }
 
 .icon {
-  fill: #000;
+  fill: $purple-principal;
   width: 20px;
   height: 20px;
   text-align: center;
