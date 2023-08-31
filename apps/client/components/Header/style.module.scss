@@ -19,7 +19,6 @@ $pl: 40px;
     }
   }
   &__menu--active {
-    z-index: 2;
     top: 0;
     left: 0;
     position: absolute;
@@ -32,6 +31,7 @@ $pl: 40px;
     align-items: center;
     animation: swap-right 0.5s ease-in-out;
     -webkit-animation: swap-right 0.5s ease-in-out;
+    z-index: 1;
   }
   &__menu-back {
     @extend .header;
@@ -77,6 +77,7 @@ $pl: 40px;
   $pl: 60px;
 
   .header {
+    position: fixed;
     padding-left: $pl - 20px;
     flex-direction: column;
     padding-block: 30px;
@@ -86,6 +87,8 @@ $pl: 40px;
     min-width: 310px;
     width: 20dvw;
     height: 100dvh;
+    transition: all 0.3s ease-in-out;
+    z-index: 5;
     &__logo {
       padding-left: $pl - 20px;
     }
@@ -94,6 +97,7 @@ $pl: 40px;
       display: flex;
       bottom: 30px;
       left: 40px;
+      cursor: pointer;
     }
     &__btn-menu {
       &--title {
@@ -110,12 +114,13 @@ $pl: 40px;
       top: auto;
       left: 20px;
       bottom: 70px;
-      width: 16dvw;
+      width: 18.5dvw;
       height: 50dvh;
       animation: swap-left-scale 0.4s ease-in-out;
       -webkit-animation: swap-left-scale 0.4s ease-in-out;
       color: white;
-}
+      z-index: 1;
+    }
     &__logout, &__perfil {
       display: none;
     }
@@ -146,6 +151,21 @@ $pl: 40px;
         border-top: 3px solid #797979;
         padding-block: 20px;
       }
+    }
+  }
+
+  .header--messages {
+    display: flex;
+    align-items: center;
+    padding: 30px 0;
+    min-width: 50px;
+    width: 76px;
+    transition: all 0.3s ease-in-out;
+    & .header__logo {
+      padding: 0;
+    }
+    & .header__btn {
+      left: 25px;
     }
   }
 

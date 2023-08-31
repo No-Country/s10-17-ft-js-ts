@@ -17,29 +17,35 @@ export default function Header () {
   return (
     router !== '/'
       ? (
-    <header className={style.header}>
+    <header className={`${style.header} ${router === '/messages' ? style['header--messages'] : ''}`}>
       <div className={style.header__btn} onClick={handleMenu}>
         <span className={style['header__btn-menu']}>🍔</span>
-        <p className={style['header__btn-menu--title']}>Mas</p>
+        {router !== '/messages' ? <p className={style['header__btn-menu--title']}>Mas</p> : null}
       </div>
       <span className={style.header__logo}>Logo</span>
 
       <div>
         <ul className={style.header__options}>
-          <li className={style.header__option}>
-            <span className={style.header__icon}>🏠</span>
-            <Link href={'#'}>Inicio</Link>
+          <li>
+            <Link href={'/'} className={style.header__option}>
+              <span className={style.header__icon}>🏠</span>
+              {router !== '/messages' ? <p>Inicio</p> : null}
+            </Link>
           </li>
-          <li className={style.header__option}>
-            <span className={style.header__icon}>🔍</span>
-            <Link href={'#'}>Explorar?</Link>
+          <li>
+            <Link href={'/home'} className={style.header__option}>
+              <span className={style.header__icon}>🔍</span>
+              {router !== '/messages' ? <p>Explorar?</p> : null}
+            </Link>
           </li>
-          <li className={style.header__option}>
-            <span className={style.header__icon}>📩</span>
-            <Link href={'#'}>Mensajes</Link>
+          <li>
+            <Link href={'/messages'} className={style.header__option}>
+              <span className={style.header__icon}>📩</span>
+              {router !== '/messages' ? <p>Mensajes</p> : null}
+            </Link>
           </li>
         </ul>
-        <Link className={style['header__msg-mobile']} href={'#'}>📩</Link>
+        <Link className={style['header__msg-mobile']} href={'/messages'}>📩</Link>
       </div>
 
       <nav className={style.header__menu} ref={menu}>
@@ -72,7 +78,7 @@ export default function Header () {
               <Link href={'#'}>Cambiar cuenta</Link>
             </li>
             <li>
-              <Link href={'#'}>Salir</Link>
+              <Link href={'/'}>Salir</Link>
             </li>
           </ul>
         </div>
