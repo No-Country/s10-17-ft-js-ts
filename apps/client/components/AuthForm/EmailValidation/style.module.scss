@@ -1,0 +1,75 @@
+@import 'styles/variables.scss';
+
+
+.form__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  width: 100%;
+  margin: 80px 0;
+ 
+}
+
+.form__error {
+  color: #f00;
+  font-size: $M;
+  margin: 20px 0;
+  font-weight: 400;
+  text-align: center;
+}
+
+.error {
+  outline: 1px dashed red !important;
+}
+
+.icon {
+  position: absolute;
+  right: 15px;
+  top: 45%;
+  z-index: 20;
+  cursor: pointer;
+}
+
+.form .form__token {
+  background-color: $purple-seconadary-lila;
+  border-radius: 8px;
+  width: 30px;
+  max-width: 300px;
+  height: 40px;
+  padding: 10px;
+  font-size: $XS;
+}
+
+.form .form__token::placeholder {
+  color: $grey-dark;
+}
+
+.form p {
+  font-size: $SM;
+  text-decoration: underline;
+}
+
+.form .submit {
+  font-size: $M;
+  color: $white;
+  background-color: $purple-principal;
+  border-radius: 8px;
+  height: 48px;
+  max-width: 300px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.icon {
+  fill: $purple-principal;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+}
+
+
+.submit[disabled] {
+  background-color: $purple-seconadary-lila;
+  cursor: not-allowed;
+}
