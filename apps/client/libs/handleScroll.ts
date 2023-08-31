@@ -1,4 +1,4 @@
-export default function handleScroll (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, ref: React.RefObject<HTMLUListElement>) {
+export default function handleScroll (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, ref: React.RefObject<HTMLUListElement | HTMLDivElement>) {
   const direction = event.currentTarget.value
   const scroll = ref.current?.scrollLeft
 

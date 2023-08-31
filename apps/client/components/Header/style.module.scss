@@ -31,6 +31,7 @@ $pl: 40px;
     align-items: center;
     animation: swap-right 0.5s ease-in-out;
     -webkit-animation: swap-right 0.5s ease-in-out;
+    z-index: 1;
   }
   &__menu-back {
     @extend .header;
@@ -87,6 +88,7 @@ $pl: 40px;
     width: 20dvw;
     height: 100dvh;
     transition: all 0.3s ease-in-out;
+    z-index: 5;
     &__logo {
       padding-left: $pl - 20px;
     }
