@@ -4,9 +4,19 @@
 .form__container {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 24px;
   width: 100%;
   margin: 80px 0;
+ 
+}
+
+.form__error {
+  color: #f00;
+  font-size: $M;
+  margin: 20px 0;
+  font-weight: 400;
+  text-align: center;
 }
 
 .error {
@@ -56,4 +66,10 @@
   width: 20px;
   height: 20px;
   text-align: center;
+}
+
+
+.submit[disabled] {
+  background-color: $purple-seconadary-lila;
+  cursor: not-allowed;
 }

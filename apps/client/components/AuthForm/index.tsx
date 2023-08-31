@@ -8,7 +8,7 @@ import { EmailValidation } from './EmailValidation'
 
 export function AuthForm ({ type }: { type: 'login' | 'register' | 'validate' }) {
   const [typeForm, setTypeForm] = useState<'login' | 'register' | 'validate'>(type)
-  const email = useRef<string | null>('hola@123.com')
+  const email = useRef<string | null>(null)
 
   const showValidationForm = (emailData: string) => {
     email.current = emailData

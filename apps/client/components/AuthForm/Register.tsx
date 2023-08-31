@@ -1,5 +1,5 @@
 import style from './form.module.scss'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Icons } from 'components/Icons'
 import { useFormFields } from 'hooks/useFormFields'
 import { useValidator } from 'hooks/useValidation'
@@ -11,10 +11,11 @@ type Errors<T> = {
 };
 
 export function Register ({ showValidationForm }: { showValidationForm: (_email: string) => void }) {
-  const [showPassword, setShowPassword] = useState(false)
   const { fields, handleChange } = useFormFields<{ password: string, email: string }>()
-  const [errors, setErrors] = useState<Errors<typeof fields>>()
   const validateForm = useValidator()
+  const [showPassword, setShowPassword] = useState(false)
+  const [errors, setErrors] = useState<Errors<typeof fields>>()
+  const [isLoading, setIsLoading] = useState(false)
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword)
 
@@ -24,10 +25,35 @@ export function Register ({ showValidationForm }: { showValidationForm: (_email:
     if (foundErrors) setErrors(foundErrors as Errors<typeof fields>)
     else {
       setErrors(undefined)
-      // Request to register
-      showValidationForm(fields.email) // After registration, show validation form
+      setIsLoading(true)
     }
   }
+
+  useEffect(() => {
+    if (isLoading) {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
+        method: 'POST',
+        body: JSON.stringify(fields),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(res => {
+          if (!res.ok) {
+            setErrors({ password: undefined, email: 'El correo ya está registrado o es inexistente.' })
+            throw new Error('El correo ya está registrado o es inexistente')
+          } else showValidationForm(fields.email)
+        })
+        .catch((e) => {
+          setErrors({ password: undefined, email: 'El correo ya está registrado o es inexistente.' })
+          console.error(e)
+        })
+        .finally(() => {
+          console.log('asdfjl')
+          setIsLoading(false)
+        })
+    }
+  }, [isLoading])
 
   return (
     <form onSubmit={handleSubmit} className={style.form}>
@@ -42,7 +68,7 @@ export function Register ({ showValidationForm }: { showValidationForm: (_email:
         <small>Debe contener al menos 8 caracteres</small>
       </span>
       <p>Inicia sesión con Google</p>
-      <button className={style.submit} type='submit'>Registrarse</button>
+      <button disabled={isLoading} className={style.submit} type='submit'>{isLoading ? 'Cargando...' : 'Registrarse'}</button>
     </form>
   )
 }

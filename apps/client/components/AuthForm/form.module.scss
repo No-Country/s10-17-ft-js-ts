@@ -67,6 +67,11 @@
   cursor: pointer;
 }
 
+.submit[disabled] {
+  background-color: $purple-seconadary-lila;
+  cursor: not-allowed;
+}
+
 .icon {
   fill: $purple-principal;
   width: 20px;

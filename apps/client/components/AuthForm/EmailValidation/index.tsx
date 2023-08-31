@@ -1,5 +1,6 @@
 import style from './style.module.scss'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface DataT {
   [key: string]: string
@@ -7,13 +8,43 @@ interface DataT {
 
 export function EmailValidation ({ email }: {email: string}) {
   const [data, setData] = useState<DataT | null>(null)
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(false)
+
+  useEffect(() => {
+    if (isLoading) {
+      if (data && Object.keys(data).length === 4) {
+        const code = Object.values(data).join('')
+
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/checkVerificationCode`, {
+          method: 'POST',
+          body: JSON.stringify({ email, code }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(res => {
+            if (!res.ok) {
+              setError(true)
+              throw new Error('El código es incorrecto.')
+            } else router.push('/home')
+          })
+          .catch((e) => {
+            setError(true)
+            console.log(e)
+          })
+          .finally(() => {
+            setIsLoading(false)
+          })
+      }
+    }
+  }, [isLoading])
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault()
-    if (data && Object.keys(data).length === 4) {
-      const _code = Object.values(data).join('')
-      const _email = email
-    }
+
+    if (data && Object.keys(data).length === 4) setIsLoading(true)
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +73,8 @@ export function EmailValidation ({ email }: {email: string}) {
         <input type="text" name='3' className={style.form__token} onChange={handleChange} placeholder='_' />
         <input type="text" name='4' className={style.form__token} onChange={handleChange} placeholder='_' />
       </span>
-      <button className={style.submit} type='submit'>Verificación</button>
+      {error && <small className={style.form__error}>El código es incorrecto.</small>}
+      <button disabled={isLoading} className={style.submit} type='submit'>{isLoading ? 'Cargando...' : 'Verificación'}</button>
     </form>
   )
 }

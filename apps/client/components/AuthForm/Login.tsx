@@ -1,5 +1,5 @@
 import style from './form.module.scss'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Icons } from 'components/Icons'
 import { useFormFields } from 'hooks/useFormFields'
 import { useValidator } from 'hooks/useValidation'
@@ -14,6 +14,7 @@ export function Login () {
   const [showPassword, setShowPassword] = useState(false)
   const { fields, handleChange } = useFormFields<{ password: string, email: string }>()
   const [errors, setErrors] = useState<Errors<typeof fields>>()
+  const [isLoading, setIsLoading] = useState(false)
   const validateForm = useValidator()
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword)
@@ -22,8 +23,18 @@ export function Login () {
     e.preventDefault()
     const foundErrors = validateForm(fields)
     if (foundErrors) setErrors(foundErrors as Errors<typeof fields>)
-    else setErrors(undefined)
+    else {
+      setErrors(undefined)
+      setIsLoading(true)
+    }
   }
+
+  useEffect(() => {
+    if (isLoading) {
+      // api call
+      setIsLoading(false)
+    }
+  }, [isLoading])
 
   return (
     <form onSubmit={handleSubmit} className={style.form}>
@@ -38,7 +49,7 @@ export function Login () {
         <small>Debe contener al menos 8 caracteres</small>
       </span>
       <p>Inicia sesión con Google</p>
-      <button className={style.submit} type='submit'>Ingresar</button>
+      <button disabled={isLoading} className={style.submit} type='submit'>{isLoading ? 'Cargando...' : 'Ingresar'}</button>
     </form>
   )
 }
