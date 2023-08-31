@@ -19,7 +19,6 @@ $pl: 40px;
     }
   }
   &__menu--active {
-    z-index: 2;
     top: 0;
     left: 0;
     position: absolute;
@@ -118,7 +117,8 @@ $pl: 40px;
       animation: swap-left-scale 0.4s ease-in-out;
       -webkit-animation: swap-left-scale 0.4s ease-in-out;
       color: white;
-}
+      z-index: 1;
+    }
     &__logout, &__perfil {
       display: none;
     }

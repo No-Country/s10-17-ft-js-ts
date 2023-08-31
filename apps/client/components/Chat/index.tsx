@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import style from './style.module.scss'
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
+import { Messages } from 'components/Messages'
 
 interface Props {
   chat: React.RefObject<HTMLDivElement>
@@ -41,7 +42,14 @@ export function Chat ({ chat, setOpenChat }: Props) {
           </h3>
         </div>
         <div className={style.chat__messages}>
-          {}
+          {
+            (
+              <>
+                <Messages admin={false}/>
+                <Messages admin={true}/>
+              </>
+            )
+          }
         </div>
           <div className={style.chat__input}>
             <div className={style['chat__input-container']}>

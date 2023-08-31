@@ -5,6 +5,8 @@
   height: 100vh;
   animation: swap-right 1s ease-in-out;
   overflow-y: scroll;
+  position: relative;
+  z-index: -1;
   &__match {
     cursor: pointer;
   }
