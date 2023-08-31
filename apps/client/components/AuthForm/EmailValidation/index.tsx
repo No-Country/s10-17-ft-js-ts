@@ -16,14 +16,7 @@ export function EmailValidation ({ email }: {email: string}) {
     if (isLoading) {
       if (data && Object.keys(data).length === 4) {
         const code = Object.values(data).join('')
-
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/checkVerificationCode`, {
-          method: 'POST',
-          body: JSON.stringify({ email, code }),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/checkVerificationCode?email=${email}&code=${code}`, { method: 'POST' })
           .then(res => {
             if (!res.ok) {
               setError(true)
