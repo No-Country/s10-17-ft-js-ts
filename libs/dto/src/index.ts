@@ -7,3 +7,4 @@ export * from './lib/user/create-user.dto';
 export * from './lib/user/update-user.dto';
 export * from './lib/auth/login.dto'
 export * from './lib/auth/auth-response.dto'
+export * from './lib/dbseed/genres.dto'
