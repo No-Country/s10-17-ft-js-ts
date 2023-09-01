@@ -1,3 +1,4 @@
+@import '../../styles/_variables.scss';
 $pl: 40px;
 
 .header {
@@ -6,7 +7,7 @@ $pl: 40px;
   align-items: center;
   padding-inline: 20px;
   height: 80px;
-  background-color: grey;
+  background: var(--bg-chat-color);
   &__options {
     display: none;
   }
@@ -24,7 +25,7 @@ $pl: 40px;
     position: absolute;
     display: flex;
     flex-direction: column;
-    background-color: white;
+    background-color: var(--bg-chat-color);
     padding-bottom: 30px;
     width: 100dvw;
     height: 100dvh;
@@ -89,6 +90,8 @@ $pl: 40px;
     height: 100dvh;
     transition: all 0.3s ease-in-out;
     z-index: 5;
+    border-right: 1px solid var(--bg-chat-color);
+    background: linear-gradient(180deg, var(--bg-chat-color) 0%, var(--bg-color) 100%);
     &__logo {
       padding-left: $pl - 20px;
     }

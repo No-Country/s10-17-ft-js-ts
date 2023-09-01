@@ -14,6 +14,11 @@ export default function Header () {
     }
   }
 
+  function toggleTheme () {
+    document.documentElement.dataset.theme =
+    document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'
+  }
+
   return (
     router !== '/'
       ? (
@@ -22,7 +27,12 @@ export default function Header () {
         <span className={style['header__btn-menu']}>🍔</span>
         {router !== '/messages' ? <p className={style['header__btn-menu--title']}>Mas</p> : null}
       </div>
-      <span className={style.header__logo}>Logo</span>
+      <span
+        onClick={toggleTheme}
+        className={style.header__logo}
+      >
+        Logo
+      </span>
 
       <div>
         <ul className={style.header__options}>
