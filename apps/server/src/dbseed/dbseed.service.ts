@@ -29,6 +29,12 @@ export class DbseedService {
     const transformedData = data.genres.map((genre) => genre.name);
     const genres = { belongsTo: 'Películas', genres: transformedData };
     try {
+      const response = await this.genresService.findByBelongsTo(
+        genres.belongsTo
+      );
+      if (response) {
+        return response;
+      }
       await this.genresService.saveGenres(genres);
       console.log('Genres saved successfully');
     } catch (error) {
@@ -55,6 +61,12 @@ export class DbseedService {
     const transformedData = data.genres.map((genre) => genre.name);
     const genres = { belongsTo: 'Series', genres: transformedData };
     try {
+      const response = await this.genresService.findByBelongsTo(
+        genres.belongsTo
+      );
+      if (response) {
+        return response;
+      }
       await this.genresService.saveGenres(genres);
       console.log('Genres saved successfully');
     } catch (error) {
@@ -76,6 +88,12 @@ export class DbseedService {
     const transformedData = data.data.map((genre) => genre.name);
     const genres = { belongsTo: 'Animes', genres: transformedData };
     try {
+      const response = await this.genresService.findByBelongsTo(
+        genres.belongsTo
+      );
+      if (response) {
+        return response;
+      }
       await this.genresService.saveGenres(genres);
       console.log('Genres saved successfully');
     } catch (error) {
@@ -100,6 +118,12 @@ export class DbseedService {
     const transformedData = data.results.map((genre) => genre.name);
     const genres = { belongsTo: 'Videojuegos', genres: transformedData };
     try {
+      const response = await this.genresService.findByBelongsTo(
+        genres.belongsTo
+      );
+      if (response) {
+        return response;
+      }
       await this.genresService.saveGenres(genres);
       console.log('Genres saved successfully');
     } catch (error) {
@@ -126,6 +150,12 @@ export class DbseedService {
     const transformedData = data.genres.map((genre) => genre.name);
     const genres = { belongsTo: 'Música', genres: transformedData };
     try {
+      const response = await this.genresService.findByBelongsTo(
+        genres.belongsTo
+      );
+      if (response) {
+        return response;
+      }
       await this.genresService.saveGenres(genres);
       console.log('Genres saved successfully');
     } catch (error) {
