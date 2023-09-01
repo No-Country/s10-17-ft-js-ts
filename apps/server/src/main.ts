@@ -16,8 +16,8 @@ async function bootstrap() {
   app.setGlobalPrefix(globalPrefix);
 
   const documentConfig = new DocumentBuilder()
-    .setTitle('Seleccionado10')
-    .setDescription('Dating app or cuevana app')
+    .setTitle('Wave')
+    .setDescription('Dating app')
     .setVersion('1.0')
     .addTag('item')
     .build();
@@ -26,9 +26,11 @@ async function bootstrap() {
   SwaggerModule.setup('api/docs', app, document);
 
   const config = app.get<ConfigType<typeof appConfig>>(appConfig.KEY);
-  const port = config.app.port!;
+  const port = config.app.port;
 
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useGlobalPipes(
+    new ValidationPipe({ whitelist: true, stopAtFirstError: true })
+  );
 
   await app.listen(port);
   Logger.log(

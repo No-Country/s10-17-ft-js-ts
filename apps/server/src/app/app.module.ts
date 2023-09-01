@@ -3,9 +3,10 @@ import { ConfigModule, ConfigType } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { appConfig, appSchema } from './app.config';
 import { ItemModule } from '../item/item.module';
+import { UserModule } from '../user/user.module';
 import { AutomapperModule } from '@timonmasberg/automapper-nestjs';
 import { pojos } from '@automapper/pojos';
-import { DbseedModule } from '../dbseed/dbseed.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { DbseedModule } from '../dbseed/dbseed.module';
       strategyInitializer: pojos(),
     }),
     ItemModule,
-    DbseedModule,
+    AuthModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],
