@@ -71,7 +71,7 @@ export function Chat ({ chat, setOpenChat }: Props) {
                 <span>😊</span>
               </div>
             </div>
-            <button className={style.chat__send} onClick={handleSend}>➡️</button>
+            <button className='btn-send' onClick={handleSend}>➡️</button>
           </div>
       </div>
     </section>

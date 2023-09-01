@@ -1,0 +1,75 @@
+@import './variables';
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+svg {
+  fill: var(--icon-color);
+}
+
+.btn {
+  background-color: var(--icon-color-500);
+  color: var(--bg-color);
+  border-radius: 20px;
+  padding: 12px 16px;
+}
+
+.btn-send {
+  @extend .btn;
+  border-radius: 8px;
+}
+
+.btn:hover, .btn-send:hover {
+  background-color: var(--title-color);
+}
+
+.btn-second {
+  background-color: var(--icon-color-400);
+  color: var(--bg-color);
+  border-radius: 20px;
+  padding: 8px 12px;
+}
+
+.btn-second:hover {
+  background-color: var(--bg-chat-color);
+}
+
+input {
+  font-size: $ih-text;
+}
+
+h1 {
+  font-size: $m_title;
+}
+
+h2, h3 {
+  font-size: $m_subtitle;
+}
+
+button, p {
+  font-size: $text;
+}
+
+button {
+  cursor: pointer;
+}
+
+span {
+  font-size: $m_r-text;
+}
+
+@media (width >= 1000px) {
+  span {
+    font-size: $d_r-text-sm;
+  }
+
+  h1 {
+    font-size: $d_second-title;
+  }
+  
+  h2, h3 {
+    font-size: $d_third-title;
+  }
+}
