@@ -12,10 +12,7 @@ export function SliderPins ({ pins }: Props) {
   const [isScroll, setIsScroll] = useState<boolean>(false)
 
   useEffect(() => {
-    console.log(pinsRef.current?.scrollWidth, pinsRef.current?.clientWidth)
     if (pinsRef.current?.scrollWidth) {
-      console.log({ pins: pinsRef.current }, pinsRef.current?.scrollWidth > pinsRef.current?.clientWidth)
-
       setIsScroll(pinsRef.current?.scrollWidth > pinsRef.current?.clientWidth)
     }
   }, [isScroll])
