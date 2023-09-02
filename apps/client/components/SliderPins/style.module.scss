@@ -1,0 +1,42 @@
+.pins {
+  position: relative;
+  height: max-content;
+  width: calc(13dvw + 100px);
+  max-width: 280px;
+  overflow-x: scroll;
+  &__container {
+    max-width: 280px;
+    position: relative;
+  }
+  &__content {
+    width: max-content;
+    display: flex;
+    gap: 2rem;
+  }
+  &__item {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+  }
+  &__photo {
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+  }
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: absolute;
+    bottom: 45%;
+  }
+  &__button {
+    cursor: pointer;
+  }
+}
+
+.pins::-webkit-scrollbar {
+  display: none;
+}

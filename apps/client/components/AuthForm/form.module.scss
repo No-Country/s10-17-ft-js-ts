@@ -1,0 +1,80 @@
+@import 'styles/variables.scss';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.form .field {
+  width: 98%;
+  max-width: 300px;
+  height: fit-content;
+  position: relative;
+}
+
+.field label {
+  color: '#616161';
+  font-size: $SM;
+}
+
+.field small {
+  font-size: 10px;
+  color: '#BEBEBE';
+}
+
+.error {
+  outline: 1px dashed red !important;
+}
+
+.icon {
+  position: absolute;
+  right: 15px;
+  top: 45%;
+  z-index: 20;
+  cursor: pointer;
+}
+
+.form input {
+  background-color: $purple-seconadary-lila;
+  border-radius: 8px;
+  width: 95vw;
+  max-width: 300px;
+  height: 40px;
+  padding: 10px;
+  font-size: $XS;
+}
+
+.form input::placeholder {
+  color: $grey-dark;
+}
+
+.form p {
+  font-size: $SM;
+  text-decoration: underline;
+}
+
+.form .submit {
+  font-size: $M;
+  color: $white;
+  background-color: $purple-principal;
+  border-radius: 8px;
+  height: 48px;
+  max-width: 300px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.submit[disabled] {
+  background-color: $purple-seconadary-lila;
+  cursor: not-allowed;
+}
+
+.icon {
+  fill: $purple-principal;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+}
