@@ -1,12 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link'
 import style from './style.module.scss'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   setOpenChat: () => void
 }
 
 export function Mails ({ setOpenChat }: Props) {
+  const router = useRouter()
+
+  function openProfile () {
+    router.push('/profile')
+  }
+
   return (
     <section className={style.mails}>
       <div className={style.mails__matches}>
@@ -18,6 +25,7 @@ export function Mails ({ setOpenChat }: Props) {
           {Array.from({ length: 4 }).map((_, i) => (
             <li key={i} onClick={setOpenChat} className={style.mails__match}>
               <img
+                  onClick={openProfile}
                   className={style['mails__message-avatar']}
                   src="https://picsum.photos/200"
                   alt="User avatar"
@@ -35,6 +43,7 @@ export function Mails ({ setOpenChat }: Props) {
               <figure className={style['mails__message-photo']}>
                 <span className={style['mails__message-status']}></span>
                 <img
+                  onClick={openProfile}
                   className={style['mails__message-avatar']}
                   src="https://picsum.photos/200"
                   alt="User avatar"
