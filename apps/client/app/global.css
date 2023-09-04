@@ -14,7 +14,7 @@ body {
   overflow-x: hidden;
   color: #252525;
   font-size: 1.6rem;
-  width: 100vw;
+  width: 100dvw;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -86,8 +86,9 @@ table, tr, td {
 }
 
 svg {
-
-  fill: currentColor;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 body {
