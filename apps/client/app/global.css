@@ -104,9 +104,3 @@ body {
 .pointer {
   cursor: pointer;
 }
-
-@media (min-width: 1000px) {
-  body {
-    display: flex;
-  }
-}

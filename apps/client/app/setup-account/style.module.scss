@@ -1,0 +1,10 @@
+@import 'styles/variables.scss';
+
+.container {
+  margin: auto;
+  display: grid;
+  grid-template-rows: 50px, 1fr;
+  width: 96vw;
+  max-width: 420px;
+  border: 1px solid red;
+}

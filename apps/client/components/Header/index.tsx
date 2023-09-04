@@ -8,6 +8,8 @@ export default function Header () {
   const menu = useRef<HTMLDivElement>(null)
   const router = usePathname()
 
+  const WITHOUT_HEADER = ['/', '/setup-account']
+
   const handleMenu = () => {
     if (menu.current) {
       menu.current.classList.toggle(style['header__menu--active'])
@@ -20,7 +22,7 @@ export default function Header () {
   }
 
   return (
-    router !== '/'
+    !WITHOUT_HEADER.includes(router)
       ? (
     <header className={`${style.header} ${router === '/messages' ? style['header--messages'] : ''}`}>
       <div className={style.header__btn} onClick={handleMenu}>
