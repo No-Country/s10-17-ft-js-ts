@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  &__menu {
+    display: none;
+  }
+  &__menu--active {
+    display: block;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--);
+  }
+}
