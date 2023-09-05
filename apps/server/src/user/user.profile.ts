@@ -1,4 +1,4 @@
-import { Mapper, createMap } from '@automapper/core';
+import { Mapper, createMap, forMember, mapFrom } from '@automapper/core';
 import {
   AutomapperProfile,
   InjectMapper,
@@ -6,6 +6,7 @@ import {
 import { UserDto } from '@dto';
 import { UserDocument } from './entities/user.entity';
 import { PojosMetadataMap } from '@automapper/pojos';
+import { Schema } from 'mongoose';
 
 export class UserProfile extends AutomapperProfile {
   constructor(@InjectMapper() mapper: Mapper) {
@@ -15,13 +16,16 @@ export class UserProfile extends AutomapperProfile {
 
   override get profile() {
     return (mapper: Mapper) => {
-      createMap(mapper, 'UserDocument', 'UserDto');
+      createMap(mapper, 'UserDocument', 'UserDto',
+        forMember<UserDocument, UserDto>((destination) => destination.id, mapFrom((source) => source._id))
+      )
     };
   }
 
   createMetadata(): void {
     PojosMetadataMap.create<UserDocument>('UserDocument', {
-      id: String,
+      _id: Schema.Types.ObjectId,
+      // id: String,
       firstName: String,
       lastName: String,
       description: String,
@@ -31,10 +35,11 @@ export class UserProfile extends AutomapperProfile {
       ageRange: Array,
       likedBy: Array,
       isVerified: Boolean,
+      dislikedBy: Array,
+      matches: Array
     });
 
     PojosMetadataMap.create<UserDto>('UserDto', {
-      id: String,
       firstName: String,
       lastName: String,
       description: String,
@@ -44,6 +49,9 @@ export class UserProfile extends AutomapperProfile {
       ageRange: Array,
       likedBy: Array,
       isVerified: Boolean,
+      dislikedBy: Array,
+      matches: Array
+
     });
   }
 }

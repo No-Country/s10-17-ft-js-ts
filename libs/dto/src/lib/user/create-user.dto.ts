@@ -10,22 +10,6 @@ import {
 
 export class CreateUserDto {
   @ApiProperty({
-    description: 'Name',
-    example: 'Juan',
-  })
-  @IsString()
-  @IsNotEmpty()
-  firstName: string;
-
-  @ApiProperty({
-    description: 'Lastname',
-    example: 'Serrano',
-  })
-  @IsString()
-  @IsNotEmpty()
-  lastName: string;
-
-  @ApiProperty({
     description: 'Email',
     example: 'wave@example.com',
   })
@@ -48,31 +32,4 @@ export class CreateUserDto {
     },
   )
   password: string;
-
-  @ApiProperty({
-    description: 'birthdate',
-    example: '10/12/1998',
-  })
-  @IsString()
-  @IsNotEmpty()
-  birthdate: Date;
-
-  @ApiProperty({})
-  @IsString()
-  @IsNotEmpty()
-  description: string;
-
-  @ApiProperty({
-    example: 'male',
-  })
-  @IsString()
-  @IsNotEmpty()
-  gender: string;
-
-  @ApiProperty({
-    example: 'Curazao',
-  })
-  @IsString()
-  @IsNotEmpty()
-  address: string;
 }
