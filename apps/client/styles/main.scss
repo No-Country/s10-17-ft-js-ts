@@ -5,8 +5,8 @@ body {
   color: var(--text-color);
 }
 
-svg {
-  fill: var(--icon-color);
+svg, svg path {
+  fill: var(--icon-color-500);
 }
 
 .btn {
