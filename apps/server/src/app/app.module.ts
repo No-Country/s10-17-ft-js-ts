@@ -28,7 +28,7 @@ import { RecomModule } from '../recom/recom.module';
     ItemModule,
     AuthModule,
     UserModule,
-    RecomModule
+    RecomModule,
   ],
   controllers: [],
   providers: [],

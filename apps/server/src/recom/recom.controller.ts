@@ -8,10 +8,7 @@ export class RecomController {
   constructor(private readonly recomService: RecomService) {}
 
   @Get('/:many/:id')
-  getAll(
-    @Param('many') many: number,
-    @Param('id') id: string
-  ) {
+  getAll(@Param('many') many: number, @Param('id') id: string) {
     return this.recomService.getRecommendations(many, id);
   }
 }
