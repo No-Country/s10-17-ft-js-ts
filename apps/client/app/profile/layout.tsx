@@ -1,4 +1,4 @@
-import style from './style.module.scss'
+import style from './page.module.scss'
 import HeaderProfile from 'components/HeaderProfile'
 
 export default function ProfileLayout ({ children }: { children: React.ReactNode }) {

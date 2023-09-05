@@ -81,6 +81,7 @@
       padding: 0px 20px 20px 20px;
       bottom: -120px;
       background-color: var(--bg-chat-color);
+      z-index: 1;
     }
     &__menu-authB {
       display: flex;

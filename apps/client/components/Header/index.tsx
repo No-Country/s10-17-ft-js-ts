@@ -44,6 +44,12 @@ export default function Header () {
             </Link>
           </li>
           <li>
+            <Link href={'/profile'} className={style.header__option}>
+              <span className={style.header__icon}>👤</span>
+              {router !== '/messages' ? <p>Perfil</p> : null}
+            </Link>
+          </li>
+          <li>
             <Link href={'/home'} className={style.header__option}>
               <span className={style.header__icon}>🔍</span>
               {pathname !== '/messages' ? <p>Explorar?</p> : null}
@@ -69,7 +75,7 @@ export default function Header () {
         <div className={style['header__menu-options']}>
           <ul>
             <li>
-              <Link className={style.header__perfil} href={'#'}>Perfil</Link>
+              <Link className={style.header__perfil} href={'/profile'}>Perfil</Link>
             </li>
             <li>
               <Link href={'#'}>Configuración</Link>

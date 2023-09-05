@@ -14,7 +14,7 @@ body {
   overflow-x: hidden;
   color: #252525;
   font-size: 1.6rem;
-  width: 100dvw;
+  width: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
