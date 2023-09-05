@@ -118,14 +118,8 @@ export class UserService {
         console.log('userRegisteredUpdated', userRegisteredUpdated);
         // agregar el _id del usuario a la propiedad match del otro. x2
 
-        const addMatch = await this.userRepository.updateAddMatch(
-          userId,
-          idLiked
-        );
-        const addMatch2 = await this.userRepository.updateAddMatch(
-          idLiked,
-          userId
-        );
+        await this.userRepository.updateAddMatch(userId, idLiked);
+        await this.userRepository.updateAddMatch(idLiked, userId);
 
         // lanzar notificacion de match
       } else {

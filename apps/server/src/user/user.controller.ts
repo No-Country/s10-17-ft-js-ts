@@ -1,10 +1,25 @@
-import { CreateUserDto, UpdateUserDto } from '@dto';
-import { Body, Controller, Get, Param, Post, Put, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiBody, ApiNotFoundResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import { UserService } from './user.service';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { v2 as cloudinary } from 'cloudinary';
+import { UpdateUserDto } from '@dto';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import {
+  ApiBadRequestResponse,
+  ApiBody,
+  ApiNotFoundResponse,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { UserService } from './user.service';
 
 @ApiTags('User')
 @Controller('user')
@@ -29,13 +44,13 @@ export class UserController {
     return this.userService.getOne(id);
   }
 
-
-  @ApiBody({ type: UpdateUserDto} )  @ApiOperation({ summary: 'Update user information' })
+  @ApiBody({ type: UpdateUserDto })
+  @ApiOperation({ summary: 'Update user information' })
   @Put('/:id')
   @UseInterceptors(FileInterceptor('file'))
   update(
     @Body() updateUserDto: UpdateUserDto,
-    @Param('id') id: string,
+    @Param('id') id: string
     // @UploadedFile() file: Express.Multer.File
   ) {
     // if(file){
@@ -52,8 +67,10 @@ export class UserController {
   // }
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Like a user' })
-  @ApiNotFoundResponse({description : `User not found`})
-  @ApiBadRequestResponse({description : `Cannot like yourself. User IDs must be different`})
+  @ApiNotFoundResponse({ description: `User not found` })
+  @ApiBadRequestResponse({
+    description: `Cannot like yourself. User IDs must be different`,
+  })
   @ApiParam({
     name: 'userId',
     description: 'ID del usuario que dio el like',
@@ -73,9 +90,11 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Dislike a user' })
-  @ApiNotFoundResponse({description : `User not found`})
-  @ApiBadRequestResponse({description : `Cannot like yourself. User IDs must be different`})
-  @ApiBadRequestResponse({description : `User 1 already liked user 2`})
+  @ApiNotFoundResponse({ description: `User not found` })
+  @ApiBadRequestResponse({
+    description: `Cannot like yourself. User IDs must be different`,
+  })
+  @ApiBadRequestResponse({ description: `User 1 already liked user 2` })
   @ApiParam({
     name: 'userId',
     description: 'ID del usuario que dio el like',
@@ -89,9 +108,10 @@ export class UserController {
     type: 'string',
   })
   @Post('/dislike/:userId/:idDisliked')
-  dislike(@Param('userId') userId: string, @Param('idDisliked') idDisliked: string) {
+  dislike(
+    @Param('userId') userId: string,
+    @Param('idDisliked') idDisliked: string
+  ) {
     return this.userService.disLikeBy(userId, idDisliked);
   }
-
-
 }

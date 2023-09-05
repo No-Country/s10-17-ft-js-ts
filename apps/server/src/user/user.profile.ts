@@ -16,9 +16,15 @@ export class UserProfile extends AutomapperProfile {
 
   override get profile() {
     return (mapper: Mapper) => {
-      createMap(mapper, 'UserDocument', 'UserDto',
-        forMember<UserDocument, UserDto>((destination) => destination.id, mapFrom((source) => source._id))
-      )
+      createMap(
+        mapper,
+        'UserDocument',
+        'UserDto',
+        forMember<UserDocument, UserDto>(
+          (destination) => destination.id,
+          mapFrom((source) => source._id)
+        )
+      );
     };
   }
 
@@ -36,7 +42,7 @@ export class UserProfile extends AutomapperProfile {
       likedBy: Array,
       isVerified: Boolean,
       dislikedBy: Array,
-      matches: Array
+      matches: Array,
     });
 
     PojosMetadataMap.create<UserDto>('UserDto', {
@@ -50,8 +56,7 @@ export class UserProfile extends AutomapperProfile {
       likedBy: Array,
       isVerified: Boolean,
       dislikedBy: Array,
-      matches: Array
-
+      matches: Array,
     });
   }
 }

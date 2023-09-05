@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsOptional } from 'class-validator';
-import { HydratedDocument, SchemaType, Types } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { UserDislike } from './user-dislike.entity';
 
 export type UserDocument = HydratedDocument<User>;

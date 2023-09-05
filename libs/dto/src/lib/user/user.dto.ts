@@ -40,8 +40,8 @@ export class UserDto {
   // matches: User[]
 
   @ApiProperty({
-    description: 'birthdate',
-    example: '10/12/1998',
+    description: 'birthdate (valid Format ISO)',
+    example: '1998-09-10',
   })
   @IsNotEmpty()
   birthdate: Date;
@@ -62,12 +62,6 @@ export class UserDto {
     example: 'female',
   })
   wantsGender: string;
-
-  // @ApiProperty({
-  //   description: 'user id',
-  //   example: '99a978f9-45f0-402e-a868-fabc422a3e71',
-  // })
-  // id: string;
 
   @ApiProperty({
     description: 'age range',

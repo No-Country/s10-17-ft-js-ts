@@ -97,19 +97,19 @@ export class UserMongoRepository implements UserRepository {
     return this.mapper.map(updatedUser, 'UserDocument', 'UserDto');
   }
 
-  async updateArrayProperti(
-    userId: string,
-    idLiked: string,
-    method: string,
-    property: string
-  ): Promise<UserDto | null | undefined> {
-    const updatedUser = await this.userModel.findOneAndUpdate(
-      { id: idLiked },
-      { $pull: { likedBy: userId } },
-      { new: true }
-    );
-    return this.mapper.map(updatedUser, 'UserDocument', 'UserDto');
-  }
+  // async updateArrayProperti(
+  //   userId: string,
+  //   idLiked: string,
+  //   method: string,
+  //   property: string
+  // ): Promise<UserDto | null | undefined> {
+  //   const updatedUser = await this.userModel.findOneAndUpdate(
+  //     { id: idLiked },
+  //     { $pull: { likedBy: userId } },
+  //     { new: true }
+  //   );
+  //   return this.mapper.map(updatedUser, 'UserDocument', 'UserDto');
+  // }
 
   // async deleteOne(id: string): Promise<UserDto | undefined | null>{
   // return await this.userModel.deleteOne({id})
