@@ -1,0 +1,21 @@
+// * Themes 
+
+:root, html[data-theme='light'] {
+  --bg-color: #FFFFFF;
+  --icon-color-500: #962ADB;
+  --icon-color-400: #BF7BE8;
+  --title-color: #3E2666;
+  --text-color: #0E0101;
+  --notify-color: #FBFF48;
+  --bg-chat-color: #DBCDF3;
+}
+
+html[data-theme='dark'] {
+  --bg-color: #0E0101;
+  --icon-color-500: #BF7BE8;
+  --icon-color-400: #DBCDF3;
+  --title-color: #962ADB;
+  --text-color: #FFFFFF;
+  --notify-color: #FBFF48;
+  --bg-chat-color: #3E2666;
+}

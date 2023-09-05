@@ -2,9 +2,11 @@
 import Link from 'next/link'
 import style from './style.module.scss'
 import { useRef } from 'react'
+import { usePathname } from 'next/navigation'
 
 export default function Header () {
   const menu = useRef<HTMLDivElement>(null)
+  const router = usePathname()
 
   const handleMenu = () => {
     if (menu.current) {
@@ -12,27 +14,48 @@ export default function Header () {
     }
   }
 
+  function toggleTheme () {
+    document.documentElement.dataset.theme =
+    document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'
+  }
+
   return (
-    <header className={style.header}>
+    router !== '/'
+      ? (
+    <header className={`${style.header} ${router === '/messages' ? style['header--messages'] : ''}`}>
       <div className={style.header__btn} onClick={handleMenu}>
         <span className={style['header__btn-menu']}>🍔</span>
-        <p className={style['header__btn-menu--title']}>Mas</p>
+        {router !== '/messages' ? <p className={style['header__btn-menu--title']}>Mas</p> : null}
       </div>
-      <span>Logo</span>
+      <span
+        onClick={toggleTheme}
+        className={style.header__logo}
+      >
+        Logo
+      </span>
 
       <div>
         <ul className={style.header__options}>
           <li>
-            <Link href={'#'}>Inicio</Link>
+            <Link href={'/'} className={style.header__option}>
+              <span className={style.header__icon}>🏠</span>
+              {router !== '/messages' ? <p>Inicio</p> : null}
+            </Link>
           </li>
           <li>
-            <Link href={'#'}>Explorar?</Link>
+            <Link href={'/home'} className={style.header__option}>
+              <span className={style.header__icon}>🔍</span>
+              {router !== '/messages' ? <p>Explorar?</p> : null}
+            </Link>
           </li>
           <li>
-            <Link href={'#'}>Mensajes</Link>
+            <Link href={'/messages'} className={style.header__option}>
+              <span className={style.header__icon}>📩</span>
+              {router !== '/messages' ? <p>Mensajes</p> : null}
+            </Link>
           </li>
         </ul>
-        <Link className={style['header__msg-mobile']} href={'#'}>📩</Link>
+        <Link className={style['header__msg-mobile']} href={'/messages'}>📩</Link>
       </div>
 
       <nav className={style.header__menu} ref={menu}>
@@ -65,12 +88,14 @@ export default function Header () {
               <Link href={'#'}>Cambiar cuenta</Link>
             </li>
             <li>
-              <Link href={'#'}>Salir</Link>
+              <Link href={'/'}>Salir</Link>
             </li>
           </ul>
         </div>
         <Link className={style.header__logout} href={'#'}>Cerrar sesión</Link>
       </nav>
-    </header>
+  </header>
+        )
+      : null
   )
 }

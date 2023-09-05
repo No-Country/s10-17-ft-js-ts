@@ -1,7 +1,7 @@
 export function useValidator () {
   const isPasswordValid = (password: string) => {
-    const check = password.length >= 8
-    return password && check
+    const check = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/
+    return password && check.test(password.trim())
   }
 
   const isEmailValid = (email: string) => {
@@ -12,7 +12,7 @@ export function useValidator () {
   function validateField<T extends object, K extends keyof T> (key: K, data: T) {
     switch (key) {
       case 'password':
-        return isPasswordValid(data[key]) ? null : 'Debe tener 8 caracteres'
+        return isPasswordValid(data[key]) ? null : 'Debe conteneral menos una minúscula, una mayúscula, un número y un caracter especial.'
       case 'email':
         return isEmailValid(data[key]) ? null : 'El email es inválido'
       default:

@@ -6,3 +6,60 @@ $XL: 40px;
 
 $text-dark: #252525;
 $text-black: #000;
+$grey-dark: #616161;
+
+$white: #fff;
+$purple-principal: #962ADB;
+$purple-seconadary-lila: #DBCDF3;
+$purple-dark: #3E2666;
+
+
+//
+
+// * Colors
+
+$notify: #FBFF48; // Notificacion mensajes
+
+// ? Dark
+$dark-primary: #BF7BE8; // Iconos
+$dark-secondary: #962ADB; // Titulos (como en matches/mensajes)
+$dark-tertiary: #FFFBBA; // Intereses
+$dark-quaternary: #3E2666; // Cards/chat
+$dark-bg: #0E0101; // Fondo
+$dark-text-chat: #FFFFFF; // Nombre match/mensajes
+
+// ? Light
+$light-primary: #962ADB; // Iconos
+$light-secondary: #3E2666; // Titulos (como en matches/mensajes)
+$light-quaternary: #DBCDF3; // Cards/chat
+$light-bg: #FFFFFF; // Fondo
+$light-text-chat: #0E0101; // Nombre match/mensajes
+
+// ? state
+$success: #00C844;
+$warning: #FB0000;
+
+// ? categories
+$anime: #FF8BF3;
+$music: #FF9820;
+$games: #FB0000;
+$movies: #00C844;
+$tvshows: #2C3FE5;
+$others: #62C4FC;
+
+// * Fonts
+
+$text: 1.6rem; // Parrafos, botones, labels
+$ih-text: 1.4rem; // Inputs/Helper text  (textfields)
+
+// ? Mobile
+$m_title: 2.4rem; // Títulos
+$m_subtitle: 2rem; // Subtitulos/Botones/Preguntas
+$m_r-text: 1.2rem; // Requiered text (textfields)
+$m_r-text-sm: 1rem; // Requiered text (textfields) small
+
+// ? Desktop
+$d_landing-title: 4rem; // Títulos landing
+$d_second-title: 3.2rem; // Títulos secundarios
+$d_third-title: 2.4rem; // Títulos terciarios
+$d_r-text-sm: 1.2rem; // Requiered text (textfields)

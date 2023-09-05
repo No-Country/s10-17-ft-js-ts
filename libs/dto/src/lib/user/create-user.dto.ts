@@ -21,6 +21,7 @@ export class CreateUserDto {
     description: 'password',
     example: 'Example123!',
   })
+  @IsOptional()
   @IsNotEmpty()
   @IsString()
   @MinLength(8)

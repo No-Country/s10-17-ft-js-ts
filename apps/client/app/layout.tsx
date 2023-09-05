@@ -1,5 +1,7 @@
 import Header from 'components/Header'
 import './global.css'
+import '../styles/themes.scss'
+import '../styles/main.scss'
 import { Poppins } from 'next/font/google'
 
 export const metadata = {
@@ -9,7 +11,7 @@ export const metadata = {
 
 const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['300', '400', '700']
+  weight: ['300', '400', '500', '700']
 })
 
 export default function RootLayout ({
@@ -18,7 +20,7 @@ export default function RootLayout ({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="light">
       <body className={poppins.className}>
         <Header />
         {children}
