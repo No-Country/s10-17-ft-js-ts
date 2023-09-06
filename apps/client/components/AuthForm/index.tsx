@@ -1,20 +1,30 @@
 'use client'
 import { PopupModal } from 'components/PopupModal'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import style from './style.module.scss'
 import { Register } from './Register'
 import { Login } from './Login'
 import { EmailValidation } from './EmailValidation'
+import { useSession } from 'hooks/useSession'
+import { useRouter } from 'next/navigation'
 
-export function AuthForm ({ type }: { type: 'login' | 'register' | 'validate' }) {
+export function AuthForm ({ type, email: initialEmail }: { type: 'login' | 'register' | 'validate', email?: string }) {
   const [typeForm, setTypeForm] = useState<'login' | 'register' | 'validate'>(type)
-  const email = useRef<string | null>(null)
+  const email = useRef<string | null>(initialEmail || null)
+  const { session } = useSession()
+  const router = useRouter()
 
   const showValidationForm = (emailData: string) => {
     email.current = emailData
     setTypeForm('validate')
   }
   const toggleTypeForm = () => setTypeForm(typeForm === 'login' ? 'register' : 'login')
+
+  useEffect(() => {
+    if (session?.access_token) {
+      router.push('/home')
+    }
+  }, [session])
 
   if (typeForm === 'validate' && email.current) {
     return (

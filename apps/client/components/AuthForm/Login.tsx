@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { Icons } from 'components/Icons'
 import { useFormFields } from 'hooks/useFormFields'
 import { useValidator } from 'hooks/useValidation'
+import { useSession } from 'hooks/useSession'
 
 const { Eye } = Icons
 
@@ -16,6 +17,7 @@ export function Login () {
   const [errors, setErrors] = useState<Errors<typeof fields>>()
   const [isLoading, setIsLoading] = useState(false)
   const validateForm = useValidator()
+  const { setSession } = useSession()
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword)
 
@@ -31,8 +33,32 @@ export function Login () {
 
   useEffect(() => {
     if (isLoading) {
-      // api call
-      setIsLoading(false)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
+        method: 'POST',
+        body: JSON.stringify(fields),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(res => {
+          if (!res.ok) {
+            setErrors({ password: undefined, email: 'Credenciales inválidas.' })
+            throw new Error('Credenciales inválidas.')
+          } else {
+            return res.json()
+          }
+        })
+        .then(data => {
+          console.log(data)
+          setSession(data)
+        })
+        .catch((e) => {
+          setErrors({ password: undefined, email: 'Credenciales inválidas.' })
+          console.error(e)
+        })
+        .finally(() => {
+          setIsLoading(false)
+        })
     }
   }, [isLoading])
 
