@@ -1,7 +1,7 @@
 export function useValidator () {
   const isPasswordValid = (password: string) => {
     const check = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/
-    return password && check.test(password.trim())
+    return password && password.length >= 8 && check.test(password.trim())
   }
 
   const isEmailValid = (email: string) => {

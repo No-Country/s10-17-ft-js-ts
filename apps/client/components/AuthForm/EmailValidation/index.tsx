@@ -1,6 +1,7 @@
 import style from './style.module.scss'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useSession } from 'hooks/useSession'
 
 interface DataT {
   [key: string]: string
@@ -11,6 +12,7 @@ export function EmailValidation ({ email }: {email: string}) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
+  const { setSession } = useSession()
 
   useEffect(() => {
     if (isLoading) {
@@ -21,7 +23,12 @@ export function EmailValidation ({ email }: {email: string}) {
             if (!res.ok) {
               setError(true)
               throw new Error('El código es incorrecto.')
-            } else router.push('/home')
+            }
+            return res.json()
+          })
+          .then((data) => {
+            setSession(data)
+            router.push('/home')
           })
           .catch((e) => {
             setError(true)

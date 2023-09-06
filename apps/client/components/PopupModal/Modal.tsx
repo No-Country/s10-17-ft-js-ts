@@ -2,6 +2,7 @@
 
 import style from './style.module.scss'
 import { createPortal } from 'react-dom'
+import { useEffect } from 'react'
 
 function Component ({ children }: {children: React.ReactNode}) {
   return (
@@ -12,9 +13,18 @@ function Component ({ children }: {children: React.ReactNode}) {
 }
 
 export default function Modal ({ children }: {children: React.ReactNode}) {
+  const element = document.body
+
+  useEffect(() => {
+    element.style.overflow = 'hidden'
+    return () => {
+      element.style.overflow = 'auto'
+    }
+  }, [element])
+
   return createPortal(
     <Component>
       {children}
     </Component>
-    , document.body)
+    , element)
 }
