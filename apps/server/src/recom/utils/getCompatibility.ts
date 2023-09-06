@@ -2,71 +2,90 @@ import { getAge } from './getAge';
 
 export const getCompatibility = (userA: any, userB: any): number => {
   let score = 0;
+  let highScore = 10;
+  let midScore = 5;
+  let lowScore = 2;
+  let lowPenalty = -0.5;
+  let midPenalty = -20;
+  let highPenalty = -1000;
   let currCateg: number;
   let currPin: number;
   let currSubc: number;
+  let userASubc: string[];
+  let userBSubc: string[];
 
-  //first iteratation, on categories
+  //FIRST ITERATION, on categories (I'm guessing categories will be setted by default in the same order)
 
   for (currCateg = 0; currCateg < 6; currCateg++) {
+    //restart subcategories arrays
+    userASubc = [];
+    userBSubc = [];
+    //compare same category rates
     score +=
-      10 -
+      highScore -
       Math.abs(
         userA.categories[currCateg].rate - userB.categories[currCateg].rate
       ) *
-        5;
+        midScore;
+    //compare same category amount of pins
     score +=
       Math.abs(
         userA.categories[currCateg].pins.length -
           userB.categories[currCateg].pins.length
-      ) * -0.5;
+      ) * lowPenalty;
 
-    //second iteration, on pins
+    //SECOND ITERATION, on pins
 
     for (
       currPin = 0;
       currPin < userA.categories[currCateg].pins.length;
       currPin++
     ) {
-      score +=
-        userA.categories[currCateg].pins[currPin] ==
-        userB.categories[currCateg].pins[currPin]
-          ? 10
-          : 0; //esto hay que mejorarlo, porque no van a encontrarse por índice
-      score +=
-        Math.abs(
-          userA.categories[currCateg].pins[currPin].subCategory.length -
-            userB.categories[currCateg].pins[currPin].subCategory.length
-        ) * -0.5;
+      //compare if userB has the same pin as userA
+      score += 
+        userB.categories[currCateg].pins.find(
+          (pin: any) => pin.name == 
+          userA.categories[currCateg].pins[currPin]
+        ) ? highScore : 0;
 
-      //third iteration, on subcategories
+      //THIRD ITERATION, on subcategories
 
       for (
         currSubc = 0;
-        currSubc < userA.categories[currCateg].pins[currPin].subCategory.length;
+        currSubc < userA.categories[currCateg].pins[currPin].subCategories.length;
         currSubc++
       ) {
-        score +=
-          userA.categories[currCateg].pins[currPin].subCategory[currSubc] ==
-          userB.categories[currCateg].pins[currPin].subCategory[currSubc]
-            ? 2
-            : 0; //esto hay que mejorarlo, porque no van a encontrarse por índice
+        let ASubc = userA.categories[currCateg].pins[currPin].subCategories[currSubc];
+        let BSubc = userB.categories[currCateg].pins[currPin].subCategories[currSubc];
+        //store the subcategory if it's new
+        userASubc.includes(ASubc) ? null : userASubc.push(ASubc);
+        userBSubc.includes(BSubc) ? null : userBSubc.push(BSubc);
       }
     }
+    //check the difference on amount of subcategories each has
+    score += Math.abs(userASubc.length - userBSubc.length) * lowPenalty;
+    //find if userB has the same subcategories as userA
+    for(let i = 0; i < userASubc.length; i++) {
+      score += userBSubc.includes(userASubc[i]) ? lowScore : 0;
+    }
   }
-
-  score += userA.lookingFor == userB.lookingFor ? 0 : -1000;
+  //check if both are looking for same kind of relationship
+  score += userA.lookingFor == userB.lookingFor ? 0 : highPenalty;
+  //check if userB has an age inside userA range
   const age = new Date().getFullYear() - userB.birthdate.getFullYear();
   score +=
     userA.ageRange[0] < getAge(userB.birthdate) &&
     getAge(userB.birthdate) < userA.ageRange[1]
       ? 0
-      : -1000;
-  score += userA.zone == userB.address ? 0 : -1000;
-  score += userA.wantsGenders.includes(userB.gender) ? 0 : -1000;
+      : highPenalty;
+  //check if userB is inside userA target zone
+  score += userA.zone == userB.address ? 0 : highPenalty;
+  //check if userB is a gender that userA wants
+  score += userA.wantsGenders.includes(userB.gender) ? 0 : highPenalty;
+  //check if userA has already disliked userB and how many times
   for (let i = 0; i < userB.dislikedBy.length; i++) {
     if (userB.dislikedBy[i].id == userA.id) {
-      score += userB.dislikedBy[i].times * -20;
+      score += userB.dislikedBy[i].times * midPenalty;
       break;
     }
   }

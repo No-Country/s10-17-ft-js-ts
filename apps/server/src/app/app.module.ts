@@ -8,6 +8,7 @@ import { AutomapperModule } from '@timonmasberg/automapper-nestjs';
 import { pojos } from '@automapper/pojos';
 import { AuthModule } from '../auth/auth.module';
 import { RecomModule } from '../recom/recom.module';
+import { ChatModule } from '../chat/chat.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { RecomModule } from '../recom/recom.module';
     AuthModule,
     UserModule,
     RecomModule,
+    ChatModule
   ],
   controllers: [],
   providers: [],
