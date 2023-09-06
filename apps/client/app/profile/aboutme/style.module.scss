@@ -1,0 +1,9 @@
+.aboutme {
+  padding-top: 3rem;
+}
+
+@media (width >= 1000px) {
+  .aboutme {
+    padding: 3rem 10rem;
+  }
+}

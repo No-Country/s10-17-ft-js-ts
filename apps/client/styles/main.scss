@@ -16,6 +16,11 @@ svg, svg path {
   padding: 12px 16px;
 }
 
+.btn:disabled {
+  background-color: rgb(157, 156, 156);
+  color: var(--text-color);
+}
+
 .btn-send {
   @extend .btn;
   border-radius: 8px;
@@ -23,6 +28,7 @@ svg, svg path {
 
 .btn:hover, .btn-send:hover {
   background-color: var(--title-color);
+  color: white;
 }
 
 .btn-second {
@@ -48,12 +54,25 @@ h2, h3 {
   font-size: $m_subtitle;
 }
 
-button, p {
+button, p, li {
   font-size: $text;
 }
 
 button {
   cursor: pointer;
+}
+
+label {
+  font-weight: 700;
+  color: var(--icon-color-500);
+}
+
+input, textarea {
+  background-color: var(--bg-chat-color);
+  color: var(--text-color);
+  border: 1px solid gray;
+  border-radius: 8px;
+  padding: 8px 12px;
 }
 
 span {

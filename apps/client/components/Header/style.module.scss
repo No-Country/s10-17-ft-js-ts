@@ -98,6 +98,7 @@ $pl: 40px;
     &__btn {
       position: absolute;
       display: flex;
+      align-items: center;
       bottom: 30px;
       left: 40px;
       cursor: pointer;
@@ -134,6 +135,7 @@ $pl: 40px;
     }
     &__option {
       display: flex;
+      align-items: center;
       gap: 20px;
     }
     &__msg-mobile {

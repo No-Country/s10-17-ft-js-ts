@@ -5,6 +5,7 @@ import style from './page.module.scss'
 import handleScroll from '../../libs/handleScroll'
 import { Icons } from 'components/Icons'
 import Link from 'next/link'
+import { useUserStore } from 'store/user'
 
 interface User {
   name: string
@@ -16,7 +17,7 @@ interface User {
 }
 
 // ! user temporal
-const user: User = {
+const userTemp: User = {
   name: 'User name',
   photo: 'https://avatars.githubusercontent.com/u/1182328?v=5',
   location: 'User location',
@@ -49,6 +50,7 @@ const user: User = {
 export default function Index () {
   const pins = useRef<HTMLUListElement>(null)
   const [isScroll, setIsScroll] = useState<boolean>(false)
+  const { userState: user } = useUserStore()
 
   useEffect(() => {
     if (pins.current?.scrollWidth) {
@@ -64,17 +66,17 @@ export default function Index () {
       <div className={style.user}>
         <div className={style.user__content}>
           <div className={style.user__info}>
-            <img className={style.user__photo} src={user.photo} alt="User photo" />
+            <img className={style.user__photo} src={userTemp.photo} alt="User photo" />
             <div className={style.user__details}>
-              <h1 className={style.user__name}>{user.name}</h1>
-              <h2 className={style.user__location}>{user.location}</h2>
+              <h1 className={style.user__name}>{user && user.info.firstName}, {user && user.info.lastName}</h1>
+              <h2 className={style.user__location}>{userTemp.location}</h2>
             </div>
           </div>
 
           <div className={style.user__interests}>
             <h2 className={style['user__interests-title']}>Sus intereses</h2>
             <ul className={style['user__interests-content']}>
-              {user.interests.map((interest, index) => (
+              {user && user.interests.map((interest, index) => (
                 <li key={index} className={style.user__interest}>
                   {interest}
                 </li>
@@ -85,7 +87,7 @@ export default function Index () {
           <div className={style.user__pins}>
             <h2 className={style['user__pins-title']}>Sus pines</h2>
             <ul className={style['user__pins-content']} ref={pins}>
-              {user.pins.map((pin, index) => (
+              {user && user.pins.map((pin, index) => (
                 <li key={index} className={style.user__pin} style={{ background: 'linear-gradient(45deg, rgb(186, 71, 71), rgb(33, 204, 164))' }}>
                   <img className={style['user__pin-photo']} src={pin} alt="User pin" />
                 </li>
@@ -104,9 +106,9 @@ export default function Index () {
           </div>
 
           <div className={style.user__about}>
-            <h2 className={style['user__about-title']}>Sobre {user.name}</h2>
+            <h2 className={style['user__about-title']}>Sobre {user && user.info.firstName}, {user && user.info.lastName}</h2>
             <p className={style['user__about-content']}>
-              {user.about}
+              {user && user.info.description}
             </p>
           </div>
         </div>
