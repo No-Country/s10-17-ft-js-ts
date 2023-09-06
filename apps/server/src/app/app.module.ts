@@ -30,7 +30,7 @@ import { ChatModule } from '../chat/chat.module';
     AuthModule,
     UserModule,
     RecomModule,
-    ChatModule
+    ChatModule,
   ],
   controllers: [],
   providers: [],

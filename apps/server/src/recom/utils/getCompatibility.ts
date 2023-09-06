@@ -2,12 +2,12 @@ import { getAge } from './getAge';
 
 export const getCompatibility = (userA: any, userB: any): number => {
   let score = 0;
-  let highScore = 10;
-  let midScore = 5;
-  let lowScore = 2;
-  let lowPenalty = -0.5;
-  let midPenalty = -20;
-  let highPenalty = -1000;
+  const highScore = 10;
+  const midScore = 5;
+  const lowScore = 2;
+  const lowPenalty = -0.5;
+  const midPenalty = -20;
+  const highPenalty = -1000;
   let currCateg: number;
   let currPin: number;
   let currSubc: number;
@@ -42,21 +42,24 @@ export const getCompatibility = (userA: any, userB: any): number => {
       currPin++
     ) {
       //compare if userB has the same pin as userA
-      score += 
-        userB.categories[currCateg].pins.find(
-          (pin: any) => pin.name == 
-          userA.categories[currCateg].pins[currPin]
-        ) ? highScore : 0;
+      score += userB.categories[currCateg].pins.find(
+        (pin: any) => pin.name == userA.categories[currCateg].pins[currPin]
+      )
+        ? highScore
+        : 0;
 
       //THIRD ITERATION, on subcategories
 
       for (
         currSubc = 0;
-        currSubc < userA.categories[currCateg].pins[currPin].subCategories.length;
+        currSubc <
+        userA.categories[currCateg].pins[currPin].subCategories.length;
         currSubc++
       ) {
-        let ASubc = userA.categories[currCateg].pins[currPin].subCategories[currSubc];
-        let BSubc = userB.categories[currCateg].pins[currPin].subCategories[currSubc];
+        const ASubc =
+          userA.categories[currCateg].pins[currPin].subCategories[currSubc];
+        const BSubc =
+          userB.categories[currCateg].pins[currPin].subCategories[currSubc];
         //store the subcategory if it's new
         userASubc.includes(ASubc) ? null : userASubc.push(ASubc);
         userBSubc.includes(BSubc) ? null : userBSubc.push(BSubc);
@@ -65,7 +68,7 @@ export const getCompatibility = (userA: any, userB: any): number => {
     //check the difference on amount of subcategories each has
     score += Math.abs(userASubc.length - userBSubc.length) * lowPenalty;
     //find if userB has the same subcategories as userA
-    for(let i = 0; i < userASubc.length; i++) {
+    for (let i = 0; i < userASubc.length; i++) {
       score += userBSubc.includes(userASubc[i]) ? lowScore : 0;
     }
   }
