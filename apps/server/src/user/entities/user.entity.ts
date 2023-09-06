@@ -1,30 +1,37 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsOptional } from 'class-validator';
 import { HydratedDocument, Types } from 'mongoose';
+import { UserDislike } from './user-dislike.entity';
 
 export type UserDocument = HydratedDocument<User>;
 
+// type UserDislike = {
+//   userId: string;
+//   times: number;
+// };
+
 @Schema({ timestamps: true })
 export class User {
-  @Prop({ required: false })
+  @Prop()
+  @IsOptional()
   firstName: string;
 
-  @Prop({ required: false })
+  @Prop()
+  @IsOptional()
   lastName: string;
 
   @Prop({
     unique: true,
     required: true,
   })
+  @IsOptional()
   email: string;
 
   @Prop({ required: true })
   passwordHash: string;
 
-  @Prop({ required: true })
-  id: string;
-
-  @Prop({ required: false })
+  @Prop()
+  @IsOptional()
   birthdate: Date;
 
   // @Prop()
@@ -35,6 +42,7 @@ export class User {
   images: string[];
 
   @Prop({ default: '' })
+  @IsOptional()
   description: string;
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })
@@ -45,9 +53,9 @@ export class User {
   @IsOptional()
   likedBy: string[];
 
-  // @Prop({ type: [{ type: Types.ObjectId, ref: 'Chance' }] })
-  // @IsOptional()
-  // dislikedBy: Chance[]
+  @Prop({ type: Types.ArraySubdocument, default: [] })
+  @IsOptional()
+  dislikedBy: UserDislike[];
 
   // @Prop({ type: [{ type: Types.ObjectId, ref: 'Conversation' }] })
   // @IsOptional()
@@ -58,9 +66,11 @@ export class User {
   // notifs: Notification[]
 
   @Prop()
+  @IsOptional()
   gender: string;
 
   @Prop()
+  @IsOptional()
   wantsGender: string;
 
   @Prop({
@@ -70,6 +80,7 @@ export class User {
   isVerified: boolean;
 
   @Prop()
+  @IsOptional()
   address: string;
 
   @Prop()
@@ -79,6 +90,12 @@ export class User {
   @Prop()
   @IsOptional()
   zone: string;
+
+  @Prop({
+    default: false,
+  })
+  @IsOptional()
+  isProfileConfigured: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

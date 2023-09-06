@@ -81,8 +81,13 @@ export const getCompatibility = (userA: any, userB: any): number => {
     getAge(userB.birthdate) < userA.ageRange[1]
       ? 0
       : highPenalty;
-  //check if userB is inside userA target zone
+
+  //check if userB is inside userA target zone **** THIS NEEDS TO BE CHECKED IF IT'S RIGHT ****
+
+  /*
   score += userA.zone == userB.address ? 0 : highPenalty;
+  */
+
   //check if userB is a gender that userA wants
   score += userA.wantsGenders.includes(userB.gender) ? 0 : highPenalty;
   //check if userA has already disliked userB and how many times

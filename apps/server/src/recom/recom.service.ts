@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
-import { UserDto } from '@dto';
 import { getCompatibility } from './utils/getCompatibility';
 
 @Injectable()
@@ -10,23 +9,23 @@ export class RecomService {
   async getRecommendations(
     thisMany: number,
     userId: string
-  ): Promise<any | undefined> {
+  ): Promise<any[] | undefined> {
     const allUsers = await this.userService.getAll();
-    const currUser = allUsers.filter((user) => user.id == userId);
-    const otherUsers = allUsers.filter((user) => user.id != userId);
-    const notLikedUsers = otherUsers.filter(
-      (user) => !user.likedBy.includes(userId)
-    );
-    const rankedUsers = [];
-    for (let i = 0; i < notLikedUsers.length; i++) {
-      rankedUsers.push({
-        compatibility: getCompatibility(currUser, notLikedUsers[i]),
-        user: notLikedUsers[i],
-      });
+    const currUser = allUsers.find((user) => user.id === userId);
+    const otherUsers = allUsers.filter((user) => user.id !== userId);
+
+    if (!currUser) {
+      return undefined; // Handle the case where the current user is not found.
     }
-    const recommendedUsers = rankedUsers.filter(
-      (rankedUser) => rankedUser.compatibility > 0
-    );
+
+    const recommendedUsers = otherUsers
+      .filter((user) => !user.likedBy.includes(userId))
+      .map((user) => ({
+        compatibility: getCompatibility(currUser, user),
+        user,
+      }))
+      .filter((rankedUser) => rankedUser.compatibility > 0);
+
     return recommendedUsers;
   }
 }

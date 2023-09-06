@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 
 export default function Header () {
   const menu = useRef<HTMLDivElement>(null)
-  const router = usePathname()
+  const pathname = usePathname()
 
   const handleMenu = () => {
     if (menu.current) {
@@ -19,13 +19,14 @@ export default function Header () {
     document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'
   }
 
-  return (
-    router !== '/'
-      ? (
-    <header className={`${style.header} ${router === '/messages' ? style['header--messages'] : ''}`}>
+  if (pathname === '/') return null
+
+  else {
+    return (
+    <header className={`${style.header} ${pathname === '/messages' ? style['header--messages'] : ''}`}>
       <div className={style.header__btn} onClick={handleMenu}>
         <span className={style['header__btn-menu']}>🍔</span>
-        {router !== '/messages' ? <p className={style['header__btn-menu--title']}>Mas</p> : null}
+        {pathname !== '/messages' ? <p className={style['header__btn-menu--title']}>Mas</p> : null}
       </div>
       <span
         onClick={toggleTheme}
@@ -39,19 +40,19 @@ export default function Header () {
           <li>
             <Link href={'/'} className={style.header__option}>
               <span className={style.header__icon}>🏠</span>
-              {router !== '/messages' ? <p>Inicio</p> : null}
+              {pathname !== '/messages' ? <p>Inicio</p> : null}
             </Link>
           </li>
           <li>
             <Link href={'/home'} className={style.header__option}>
               <span className={style.header__icon}>🔍</span>
-              {router !== '/messages' ? <p>Explorar?</p> : null}
+              {pathname !== '/messages' ? <p>Explorar?</p> : null}
             </Link>
           </li>
           <li>
             <Link href={'/messages'} className={style.header__option}>
               <span className={style.header__icon}>📩</span>
-              {router !== '/messages' ? <p>Mensajes</p> : null}
+              {pathname !== '/messages' ? <p>Mensajes</p> : null}
             </Link>
           </li>
         </ul>
@@ -95,7 +96,6 @@ export default function Header () {
         <Link className={style.header__logout} href={'#'}>Cerrar sesión</Link>
       </nav>
   </header>
-        )
-      : null
-  )
+    )
+  }
 }

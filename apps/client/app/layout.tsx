@@ -3,6 +3,7 @@ import './global.css'
 import '../styles/themes.scss'
 import '../styles/main.scss'
 import { Poppins } from 'next/font/google'
+import { SessionProvider } from 'components/SessionProvider'
 
 export const metadata = {
   title: 'Bienvenido a Wave!',
@@ -22,8 +23,10 @@ export default function RootLayout ({
   return (
     <html lang="en" data-theme="light">
       <body className={poppins.className}>
-        <Header />
-        {children}
+        <SessionProvider>
+          <Header />
+          {children}
+        </SessionProvider>
       </body>
     </html>
   )
