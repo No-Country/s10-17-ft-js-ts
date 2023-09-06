@@ -5,7 +5,7 @@ import { useFormFields } from 'hooks/useFormFields'
 import { useValidator } from 'hooks/useValidation'
 import { useSession } from 'hooks/useSession'
 
-const { Eye } = Icons
+const { HiddenPassword, ViewPassword } = Icons
 
 type Errors<T> = {
   [_key in keyof T]: string | undefined;
@@ -71,8 +71,8 @@ export function Login () {
       <span className={style.field}>
         <label htmlFor="password">Contraseña</label>
         <input type={showPassword ? 'text' : 'password'} name="password" className={errors?.password ? style.error : ''} placeholder='Contraseña' onChange={handleChange} />
-        <Eye width={15} height={15} className={style.icon} onClick={togglePasswordVisibility}/>
-        <small>Debe contener al menos 8 caracteres</small>
+        {showPassword ? <ViewPassword width={15} height={15} className={style.icon} onClick={togglePasswordVisibility}/> : <HiddenPassword width={15} height={15} className={style.icon} onClick={togglePasswordVisibility}/>}
+        <small>Debe contener al menos 8 caracteres, una mayúscula, un número y un caracter especial.</small>
       </span>
       <p>Inicia sesión con Google</p>
       <button disabled={isLoading} className={style.submit} type='submit'>{isLoading ? 'Cargando...' : 'Ingresar'}</button>

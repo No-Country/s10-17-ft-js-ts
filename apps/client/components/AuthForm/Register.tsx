@@ -4,7 +4,7 @@ import { Icons } from 'components/Icons'
 import { useFormFields } from 'hooks/useFormFields'
 import { useValidator } from 'hooks/useValidation'
 
-const { Eye } = Icons
+const { HiddenPassword, ViewPassword } = Icons
 
 type Errors<T> = {
   [_key in keyof T]: string | undefined;
@@ -63,8 +63,8 @@ export function Register ({ showValidationForm }: { showValidationForm: (_email:
       <span className={style.field}>
         <label htmlFor="password">Contraseña</label>
         <input type={showPassword ? 'text' : 'password'} name="password" className={errors?.password ? style.error : ''} placeholder='Crear contraseña' onChange={handleChange} />
-        <Eye width={15} height={15} className={style.icon} onClick={togglePasswordVisibility}/>
-        <small>Debe contener al menos 8 caracteres</small>
+        {showPassword ? <ViewPassword width={15} height={15} className={style.icon} onClick={togglePasswordVisibility}/> : <HiddenPassword width={15} height={15} className={style.icon} onClick={togglePasswordVisibility}/>}
+        <small>Al menos ocho caracteres, una mayúscula, un número y un caracter especial.</small>
       </span>
       <p>Inicia sesión con Google</p>
       <button disabled={isLoading} className={style.submit} type='submit'>{isLoading ? 'Cargando...' : 'Registrarse'}</button>
