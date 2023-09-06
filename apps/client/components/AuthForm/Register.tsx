@@ -49,7 +49,6 @@ export function Register ({ showValidationForm }: { showValidationForm: (_email:
           console.error(e)
         })
         .finally(() => {
-          console.log('asdfjl')
           setIsLoading(false)
         })
     }

@@ -1,27 +1,24 @@
-/* eslint-disable no-unused-vars */
 'use client'
 import Link from 'next/link'
 import styles from './style.module.scss'
-import { Dispatch, SetStateAction, useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Icons } from 'components/Icons'
+import { AuthForm } from 'components/AuthForm'
 
-interface Props {
-  setIsLogin: Dispatch<SetStateAction<{
-    login: boolean
-    register: boolean
-  }>>
-  handleAuth: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
-}
-
-export default function HeaderLanding ({ setIsLogin, handleAuth }: Props) {
+export default function HeaderLanding () {
+  const [showForm, setShowForm] = useState<'login' | 'register' | null>(null)
   const menu = useRef<HTMLDivElement>(null)
 
+  const handleAuth = (type: 'login' | 'register') => {
+    setShowForm(type)
+  }
   function toggleMenu () {
     menu.current?.classList.toggle(styles['header__menu--active'])
   }
 
   return (
     <header className={styles.header}>
+      {showForm ? <AuthForm type={showForm} /> : null }
       <span onClick={toggleMenu} className={styles['header__menu-burger']}>
         <Icons.BurgerMenu width={40} height={40}/>
       </span>
@@ -59,11 +56,11 @@ export default function HeaderLanding ({ setIsLogin, handleAuth }: Props) {
             <div className={styles['header__menu-authB']}>
               <button
                 value='login'
-                onClick={handleAuth}
+                onClick={() => handleAuth('login')}
                 className='btn'>Iniciar sesion</button>
               <button
                 value='register'
-                onClick={handleAuth}
+                onClick={() => handleAuth('register')}
                 className='btn'>Registrate</button>
             </div>
             <Link
