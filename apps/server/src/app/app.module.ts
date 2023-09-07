@@ -7,6 +7,7 @@ import { UserModule } from '../user/user.module';
 import { AutomapperModule } from '@timonmasberg/automapper-nestjs';
 import { pojos } from '@automapper/pojos';
 import { AuthModule } from '../auth/auth.module';
+import { ChatModule } from '../chat/chat.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { AuthModule } from '../auth/auth.module';
     ItemModule,
     AuthModule,
     UserModule,
+    ChatModule,
   ],
   controllers: [],
   providers: [],

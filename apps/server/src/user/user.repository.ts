@@ -1,6 +1,7 @@
 import { CreateUserDto, UserDto, UpdateUserDto } from '@dto';
 import { FilterQuery } from 'mongoose';
 import { User, UserDocument } from './entities/user.entity';
+import { UserDislike } from './entities/user-dislike.entity';
 
 export interface UserRepository {
   create(createUserDto: CreateUserDto): Promise<UserDto>;
@@ -22,6 +23,18 @@ export interface UserRepository {
   ): Promise<UserDto | undefined | null>;
   // deleteOne(id:string): Promise<UserDto | undefined | null>;
   verifyUser(id: string): Promise<UserDto | null>;
+  updateAddMatch(
+    userId: string,
+    idMatched: string
+  ): Promise<UserDto | undefined | null>;
+  updateAddDislike(
+    idDisliked: string,
+    dislike: UserDislike
+  ): Promise<UserDto | undefined | null>;
+  updateDislikeTimes(
+    idDisliked: string,
+    userId: string
+  ): Promise<UserDto | undefined | null>;
 }
 
 export const UserRepositoryKey = Symbol('UserRepository');

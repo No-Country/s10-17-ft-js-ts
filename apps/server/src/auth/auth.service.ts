@@ -49,9 +49,16 @@ export class AuthService {
         `Unable to retrieve user with email "${email}" from database`
       );
 
+    const userDoc = await this.userService.isRegistered(user.email);
+
+    if (!userDoc)
+      throw new InternalServerErrorException(
+        `Unable to retrieve user with email "${email}" from database`
+      );
+
     return {
       user,
-      access_token: await this.jwtService.signAsync({ email }),
+      access_token: await this.jwtService.signAsync({ email, id: userDoc._id }),
     };
   }
 
@@ -68,6 +75,7 @@ export class AuthService {
       user: this.mapper.map(userDoc, 'UserDocument', 'UserDto'),
       access_token: await this.jwtService.signAsync({
         email: credentials.email,
+        id: userDoc._id,
       }),
     };
   }

@@ -40,8 +40,8 @@ export class UserDto {
   // matches: User[]
 
   @ApiProperty({
-    description: 'birthdate',
-    example: '10/12/1998',
+    description: 'birthdate (valid Format ISO)',
+    example: '1998-09-10',
   })
   @IsNotEmpty()
   birthdate: Date;
@@ -64,12 +64,6 @@ export class UserDto {
   wantsGender: string;
 
   @ApiProperty({
-    description: 'user id',
-    example: '99a978f9-45f0-402e-a868-fabc422a3e71',
-  })
-  id: string;
-
-  @ApiProperty({
     description: 'age range',
     example: '[18, 30]',
   })
@@ -84,4 +78,28 @@ export class UserDto {
     example: 'false/true',
   })
   isVerified: boolean
+
+  @ApiProperty({
+    description: 'isProfileConfigured',
+    example: 'false/true',
+  })
+  isProfileConfigured: boolean;
+
+  @ApiProperty({
+    description: 'user id',
+    example: '609c1f8d8b937f120c551234',
+  })
+  id: string
+
+  @ApiProperty({
+    description: 'Users who disliked this user',
+    example: '[{ "userId": "user1", "times": 2 }, { "userId": "user2", "times": 1 }]',
+  })
+  dislikedBy: any[];
+
+  @ApiProperty({
+    description: 'An array containing the IDs of users with whom the current user has matched',
+    example: '["609c1f8d8b937f120c551234","609c1f8d8b937f120c551235","609c1f8d8b937f120c551236"]',
+  })
+  matches: string[]
 }
