@@ -32,9 +32,13 @@
 .icon {
   position: absolute;
   right: 15px;
-  top: 45%;
+  top: 35%;
   z-index: 20;
   cursor: pointer;
+  fill: $purple-principal;
+  width: 20px;
+  height: 20px;
+  text-align: center;
 }
 
 .form input {
@@ -70,11 +74,4 @@
 .submit[disabled] {
   background-color: $light-quaternary;
   cursor: not-allowed;
-}
-
-.icon {
-  fill: $light-primary;
-  width: 20px;
-  height: 20px;
-  text-align: center;
 }
