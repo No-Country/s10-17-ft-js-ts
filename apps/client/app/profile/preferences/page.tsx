@@ -66,7 +66,20 @@ export default async function Index () {
         {
           Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className={style.preferences__interest}>
-
+              <div>
+                <p>Qué tanto te gusta?</p>
+                <div>
+                  <span>✔️</span>
+                  <p>Anime</p>
+                </div>
+              </div>
+              <label className={style['preferences__interest-label']}>
+                <input type="range"/>
+              </label>
+              <div className={style['preferences__range-labels']}>
+                <p>Poco</p>
+                <p>Soy fan!</p>
+              </div>
             </div>
           ))
         }

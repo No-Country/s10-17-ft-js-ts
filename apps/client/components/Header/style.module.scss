@@ -32,7 +32,7 @@ $pl: 40px;
     align-items: center;
     animation: swap-right 0.5s ease-in-out;
     -webkit-animation: swap-right 0.5s ease-in-out;
-    z-index: 1;
+    z-index: 2;
   }
   &__menu-back {
     @extend .header;

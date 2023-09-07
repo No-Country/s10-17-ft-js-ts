@@ -26,6 +26,7 @@
   width: 100%;
   height: 100%;
   transition: all 0.5s ease-in-out;
+  animation: swap-right 1s ease-in-out;
   &__content {
     display: flex;
     flex-direction: column;
@@ -101,13 +102,24 @@
       height: calc(100% - 4rem);
       display: grid;
       place-items: center;
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0.56) 0%, var(--bg-color) 100%);
+      background: linear-gradient(90deg, var(--bg-color) 0%, rgba(255, 255, 255, 0.56) 100%);
       cursor: pointer;
       font-size: 3rem;
       & svg path {
         fill: var(--text-color);
       };
     }
+  }
+}
+
+@keyframes swap-right {
+  from {
+    opacity: 0;
+    transform: translateX(-150%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0%);
   }
 }
 

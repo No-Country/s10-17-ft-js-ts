@@ -42,7 +42,7 @@ export default function Header () {
         <ul className={style.header__options}>
           <li>
             <Link href={'/'} className={style.header__option}>
-              <span className={style.header__icon}>🏠</span>
+              <Icons.Home width={40} height={40} />
               {pathname !== '/messages' ? <p>Inicio</p> : null}
             </Link>
           </li>
