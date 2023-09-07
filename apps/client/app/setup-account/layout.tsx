@@ -1,4 +1,6 @@
 import { SetupStepProvider } from 'components/SetupStepProvider'
+import style from './style.module.scss'
+import { Header } from './header'
 
 export default function Layout ({
   children
@@ -6,22 +8,18 @@ export default function Layout ({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-theme="light">
-      <body>
-        <header>
-          {
-            // Mismo header que landing
-          }
-        </header>
-        <SetupStepProvider>
-          {children}
-        </SetupStepProvider>
-        <footer>
-          {
-            // Mismo footer que landing
-          }
-        </footer>
-      </body>
-    </html>
+    <>
+      <Header />
+      <SetupStepProvider>
+        {children}
+      </SetupStepProvider>
+      <footer className={style.footer}>
+        <p>Contacto</p>
+        <p>Redes sociales</p>
+        <p>Sobre Wave</p>
+        <p>Avisos legales</p>
+        <p>Términos y condiciones</p>
+      </footer>
+    </>
   )
 }

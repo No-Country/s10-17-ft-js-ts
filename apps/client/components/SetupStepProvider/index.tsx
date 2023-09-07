@@ -6,7 +6,7 @@ interface IContext {
   nextStep: () => void
   prevStep: () => void
   formData: any
-  addData: () => void
+  addData: (_data: FormData) => void
 }
 
 export const SetupStepCTX = createContext<IContext>({} as IContext)
@@ -27,8 +27,8 @@ export function SetupStepProvider ({ children }: { children: React.ReactNode }) 
     }
   }
 
-  const addData = () => {
-    // setFormData({})
+  const addData = (_data: IContext['formData']) => {
+    // setFormData({ ...data, data })
   }
 
   return (

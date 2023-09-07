@@ -19,7 +19,7 @@ export default function Header () {
     document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'
   }
 
-  if (pathname === '/') return null
+  if (pathname === '/' || pathname === '/setup-account') return null
 
   else {
     return (

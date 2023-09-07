@@ -1,18 +1,22 @@
 import style from './style.module.scss'
-import { useState } from 'react'
 
 interface Props {
   placeholder: string
-  options: string[]
+  options: string[] | number[]
+  disabled: boolean
+  handleChange: ({ target }: {target: HTMLInputElement | HTMLSelectElement}) => void // eslint-disable-line no-unused-vars
+  name: string
 }
 
-export function Select ({ placeholder, options: _optionsNotUsed }: Props) {
-  // const [isOpen, setIsOpen] = useState(false)
-  const [selected, _setSelected] = useState()
-
+export function Select ({ placeholder, options, handleChange, disabled, name }: Props) {
   return (
-    <div className={style.select}>
-      <span className={style.select__field}>{selected || placeholder}</span>
-    </div>
+      <select name={name} className={style.select} disabled={disabled} onChange={handleChange} placeholder={placeholder}>
+        <option value=''>{placeholder}</option>
+        {
+          options.map((option, i) => (
+            <option key={i} value={option}>{option}</option>
+          ))
+        }
+      </select>
   )
 }

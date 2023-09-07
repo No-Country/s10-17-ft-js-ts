@@ -1,12 +1,23 @@
 import style from './style.module.scss'
-// import { useSetupSteps } from 'hooks/useSetupSteps'
+import { useSetupSteps } from 'hooks/useSetupSteps'
 import { Input } from './Input'
 import { useFormFields } from 'hooks/useFormFields'
-// import { Select } from './Select'
+import { Birthday } from './Birthday'
+import { Select } from './Select'
+
+interface FormFields {
+  name: string
+  lastName: string
+  birthDay: string
+  birthMonth: string
+  birthYear: string
+  gender: string
+  about: string
+}
 
 export function AboutYou () {
-  // const { nextStep, prevStep } = useSetupSteps()
-  const { fields: _fieldNotUsed, handleChange } = useFormFields()
+  const { nextStep } = useSetupSteps()
+  const { fields, handleChange } = useFormFields<FormFields>()
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault()
@@ -20,12 +31,30 @@ export function AboutYou () {
       </div>
       <form className={style.form} onSubmit={handleSubmit}>
         <div className={style.form__group}>
-          <Input handleChange={handleChange} label='Nombre' placeholder='Nombre'/>
-          <Input handleChange={handleChange} label='Apellido' placeholder='Apellido'/>
+          <Input name='name' handleChange={handleChange} label='Nombre' placeholder='Nombre'/>
+          <Input name='lastName' handleChange={handleChange} label='Apellido' placeholder='Apellido'/>
         </div>
+
+        <span>
+          <label>Fecha de Nacimiento</label>
+          <div className={style.form__group}>
+            <Birthday handleUpdate={handleChange} {...fields} />
+          </div>
+        </span>
+
+        <span>
+          <label>Género</label>
+          <Select name='gender' handleChange={handleChange} options={['Masculino', 'Femenino']} placeholder='Género' disabled={false} />
+        </span>
+
+        <span>
+          <label>Cuéntanos sobre ti</label>
+          <textarea onChange={handleChange} name="about" className={style.about} cols={30} rows={10}></textarea>
+        </span>
+
+        <button onClick={nextStep} className={style.form__next}>Continuar</button>
       </form>
-      {/* <button onClick={prevStep}>Previous</button>
-      <button onClick={nextStep}>Next</button> */}
+
     </>
   )
 }
