@@ -12,14 +12,12 @@ export type UserDocument = HydratedDocument<User>;
 
 @Schema({ timestamps: true })
 export class User {
-
   @Prop()
   @IsOptional()
   firstName: string;
 
   @Prop()
   @IsOptional()
-
   lastName: string;
 
   @Prop({
@@ -31,7 +29,6 @@ export class User {
 
   @Prop({ required: true })
   passwordHash: string;
-
 
   @Prop()
   @IsOptional()
