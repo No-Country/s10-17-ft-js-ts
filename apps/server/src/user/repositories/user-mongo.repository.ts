@@ -1,23 +1,31 @@
-import { CreateUserDto, UserDto, UpdateUserDto } from '@dto';
-import { FilterQuery, Model } from 'mongoose';
-import { User, UserDocument } from '../entities/user.entity';
-import { UserRepository } from '../user.repository';
+import { Mapper } from '@automapper/core';
+import { CreateUserDto, UpdateUserDto, UserDto } from '@dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { InjectMapper } from '@timonmasberg/automapper-nestjs';
-import { Mapper } from '@automapper/core';
-import { v4 as uuid } from 'uuid';
+import { FilterQuery, Model } from 'mongoose';
+import { UserDislike } from '../entities/user-dislike.entity';
+import { User, UserDocument } from '../entities/user.entity';
+import { UserRepository } from '../user.repository';
+
+// enum ArrayUpdateMethod {
+//   Pull = 'pull',
+//   AddToSet = 'addToSet',
+//   Push = 'push',
+//   Pop = 'pop',
+//   PullAll = 'pullAll',
+// }
 
 export class UserMongoRepository implements UserRepository {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<User>,
-    @InjectMapper() private readonly mapper: Mapper
+    @InjectMapper() private readonly mapper: Mapper // private readonly arrayUpdateMethods = { //   [ArrayUpdateMethod.Pull]: (propertyName: ArrayUpdateMethod, value: string) => ({ $pull: { [propertyName]: value } }), //   [ArrayUpdateMethod.AddToSet]: (propertyName: ArrayUpdateMethod, value: string) => ({ $addToSet: { [propertyName]: value } }), // }
   ) {}
+
   //                                            Promise<UserDto>
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
     const newUser = await this.userModel.create({
       ...createUserDto,
       passwordHash: createUserDto.password,
-      id: uuid(),
     });
 
     return this.mapper.map(newUser, 'UserDocument', 'UserDto');
@@ -27,13 +35,13 @@ export class UserMongoRepository implements UserRepository {
     id: string,
     updateUserDto: UpdateUserDto
   ): Promise<UserDto | undefined | null> {
-    return await this.userModel.findOneAndUpdate({ id }, updateUserDto, {
+    return await this.userModel.findOneAndUpdate({ _id: id }, updateUserDto, {
       new: true,
     });
   }
 
   async findById(id: string): Promise<UserDto | null> {
-    return await this.findOne({ id });
+    return await this.userModel.findById(id);
   }
 
   async findByEmail(email: string): Promise<UserDocument | null> {
@@ -57,11 +65,11 @@ export class UserMongoRepository implements UserRepository {
     idLiked: string
   ): Promise<UserDto | null | undefined> {
     const updatedUser = await this.userModel.findOneAndUpdate(
-      { id: idLiked },
+      { _id: idLiked },
       { $addToSet: { likedBy: userId } },
       { new: true }
     );
-    return updatedUser;
+    return this.mapper.map(updatedUser, 'UserDocument', 'UserDto');
   }
 
   async updateRemoveLike(
@@ -69,12 +77,39 @@ export class UserMongoRepository implements UserRepository {
     idLiked: string
   ): Promise<UserDto | null | undefined> {
     const updatedUser = await this.userModel.findOneAndUpdate(
-      { id: idLiked },
-      { $pull: { likedBy: userId } },
+      { _id: userId },
+      { $pull: { likedBy: idLiked } },
       { new: true }
     );
-    return updatedUser;
+    console.log(updatedUser);
+    return this.mapper.map(updatedUser, 'UserDocument', 'UserDto');
   }
+
+  async updateAddMatch(
+    userId: string,
+    idMatched: string
+  ): Promise<UserDto | null | undefined> {
+    const updatedUser = await this.userModel.findOneAndUpdate(
+      { _id: idMatched },
+      { $addToSet: { matches: userId } },
+      { new: true }
+    );
+    return this.mapper.map(updatedUser, 'UserDocument', 'UserDto');
+  }
+
+  // async updateArrayProperti(
+  //   userId: string,
+  //   idLiked: string,
+  //   method: string,
+  //   property: string
+  // ): Promise<UserDto | null | undefined> {
+  //   const updatedUser = await this.userModel.findOneAndUpdate(
+  //     { id: idLiked },
+  //     { $pull: { likedBy: userId } },
+  //     { new: true }
+  //   );
+  //   return this.mapper.map(updatedUser, 'UserDocument', 'UserDto');
+  // }
 
   // async deleteOne(id: string): Promise<UserDto | undefined | null>{
   // return await this.userModel.deleteOne({id})
@@ -90,5 +125,30 @@ export class UserMongoRepository implements UserRepository {
     if (!userUpdated) return null;
 
     return this.mapper.map(userUpdated, 'UserDocument', 'UserDto');
+  }
+
+  async updateAddDislike(
+    idDisliked: string,
+    dislike: UserDislike
+  ): Promise<UserDto | undefined | null> {
+    const updatedUser = await this.userModel.findOneAndUpdate(
+      { _id: idDisliked },
+      { $addToSet: { dislikedBy: dislike } },
+      { new: true }
+    );
+    return this.mapper.map(updatedUser, 'UserDocument', 'UserDto');
+  }
+
+  async updateDislikeTimes(
+    idDisliked: string,
+    userId: string
+  ): Promise<UserDto | undefined | null> {
+    const updatedUser = await this.userModel.findOneAndUpdate(
+      { _id: idDisliked, 'dislikedBy.userId': userId },
+      { $inc: { 'dislikedBy.$.times': 1 } }, // Incrementa el campo 'times' del elemento coincidente
+      { new: true }
+    );
+
+    return this.mapper.map(updatedUser, 'UserDocument', 'UserDto');
   }
 }
