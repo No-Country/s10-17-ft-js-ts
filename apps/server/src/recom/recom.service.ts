@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { getCompatibility } from './utils/getCompatibility';
+import { Recommendations } from '@dto';
 
 @Injectable()
 export class RecomService {
@@ -9,7 +10,7 @@ export class RecomService {
   async getRecommendations(
     thisMany: number,
     userId: string
-  ): Promise<any[] | undefined> {
+  ): Promise<Recommendations[] | undefined> {
     const allUsers = await this.userService.getAll();
     const currUser = allUsers.find((user) => user.id === userId);
     const otherUsers = allUsers.filter((user) => user.id !== userId);
