@@ -32,7 +32,7 @@ export function ClientSection () {
             </div>
             <Image
               className={styles.home__image}
-              src='/images/intro-landing.png'
+              src={'/images/intro-landing.png'}
               alt="laptop con prueba de la aplicacion"
               width={50}
               height={50}
