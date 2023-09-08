@@ -138,6 +138,11 @@ $pl: 40px;
       align-items: center;
       gap: 20px;
     }
+    & .opt--theme {
+      display: none;
+      & svg {
+      }
+    }
     &__msg-mobile {
       display: none;
     }

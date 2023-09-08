@@ -4,7 +4,6 @@ import Link from 'next/link'
 import style from './style.module.scss'
 import { usePathname } from 'next/navigation'
 import { Icons } from 'components/Icons'
-// import type
 
 export default function HeaderProfile () {
   const pathname = usePathname()

@@ -1,11 +1,42 @@
+'use client'
+import React from 'react'
 import style from './style.module.scss'
 
-export default async function Index () {
+export default function Index () {
+  const [distanceValue, setDistanceValue] = React.useState(0)
+  const [ageValue, setAgeValue] = React.useState(0)
+
+  function handleDistanceChange (e: React.ChangeEvent<HTMLInputElement>) {
+    setDistanceValue(Number(e.target.value))
+  }
+
   return (
     <main className={style.preferences}>
       <section className={style.preferences__section}>
+        <div className={style['preferences__search-container']}>
+          <h2>¿Qué buscas?</h2>
+          <div className={style.preferences__searches}>
+            <label className={style.preferences__search}>
+              Solo conocer gente
+              <input value={'friendship'} type="radio" />
+            </label>
+            <label className={style.preferences__search}>
+              Amistad
+              <input value={'friendship'} type="radio" />
+            </label>
+            <label className={style.preferences__search}>
+              Relación
+              <input value={'love'} type="radio" />
+            </label>
+            <label className={style.preferences__search}>
+              Lo que sea
+              <input value={'both'} type="radio" />
+            </label>
+          </div>
+        </div>
+
         <div className={style.preferences__genre}>
-          <h2>Que buscas</h2>
+          <h2>¿Qué te mostramos?</h2>
           <div className={style.preferences__genres}>
             <label className={style.preferences__genre}>
               Hombres
@@ -28,23 +59,13 @@ export default async function Index () {
             <p>Cerca</p>
             <p>Lejos</p>
           </div>
-          <input type="range" />
-          <div className={style['preferences__range-labels']}>
-            <p>Menos de 10km</p>
-            <p>Más de 1000km</p>
+          <div>
+            <span>{distanceValue}</span>
+            <input type="range" value={distanceValue} defaultValue={distanceValue} onChange={handleDistanceChange}/>
           </div>
-        </div>
-
-        <div className={style.preferences__range}>
-          <h2>Rango de Edad</h2>
           <div className={style['preferences__range-labels']}>
-            <p>Menos</p>
-            <p>Más</p>
-          </div>
-          <input type="range" />
-          <div className={style['preferences__range-labels']}>
-            <p>18</p>
-            <p>99</p>
+            <p>- 10km</p>
+            <p>+ 1000km</p>
           </div>
         </div>
 
@@ -58,6 +79,22 @@ export default async function Index () {
             <input type="checkbox" name="" id="" />
             Mostrarme gente fuera de mi país
           </label>
+        </div>
+
+        <div className={style.preferences__range}>
+          <h2>Rango de Edad</h2>
+          <div className={style['preferences__range-labels']}>
+            <p>Menos</p>
+            <p>Más</p>
+          </div>
+          <div>
+            <span>{ageValue}</span>
+            <input type="range" value={ageValue} defaultValue={ageValue} onChange={e => setAgeValue(Number(e.target.value))}/>
+          </div>
+          <div className={style['preferences__range-labels']}>
+            <p>18</p>
+            <p>99</p>
+          </div>
         </div>
       </section>
 

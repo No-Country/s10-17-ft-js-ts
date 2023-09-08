@@ -34,7 +34,7 @@ export default function Index () {
         <div className={style.aboutme__photo}>
           <figure className={style.aboutme__image}>
             <span className={style['aboutme__image-edit']}>
-              🖋️
+              <Icons.Edit width={35} height={35} />
             </span>
             <input type="file" onChange={handleImage}/>
             <img src={image || 'https://picsum.photos/200/200'} alt="profile" onError={(e) => {
@@ -43,16 +43,18 @@ export default function Index () {
           </figure>
         </div>
         <form className={style.aboutme__info}>
-            <label className={style.aboutme__firstname}>
-              Nombre
-              <input type="text" name="firstname" />
-              <span></span>
-            </label>
-            <label className={style.aboutme__lastname}>
-              Apellido
-              <input type="text" name="lastname" />
-              <span></span>
-            </label>
+            <div className={style.aboutme__names}>
+              <label className={style.aboutme__firstname}>
+                Nombre
+                <input type="text" name="firstname" />
+                <span></span>
+              </label>
+              <label className={style.aboutme__lastname}>
+                Apellido
+                <input type="text" name="lastname" />
+                <span></span>
+              </label>
+            </div>
             <label className={style.aboutme__description}>
               Descripción
               <textarea cols={30} rows={3} placeholder='Agrega una descripción'></textarea>
@@ -74,22 +76,31 @@ export default function Index () {
         {preview && (
           <div className={style['aboutme__preview-container']}>
             <button className={style['aboutme__preview-close']} onClick={handlePreview}>
-              <Icons.Close width={30} height={30} />
+              <Icons.Close width={40} height={40} />
             </button>
             <div className={style['aboutme__preview-content']}>
               <div className={style.aboutme__preview1}>
                 <img src={image || 'https://picsum.photos/200/200'} alt="" />
                 <div className={style['aboutme__preview1-info']}>
-                  <h2>
-                    <span>Santiago, </span>
-                    <span>29 años</span>
-                  </h2>
+                  <div className={style['aboutme__preview1-info-name']}>
+                    <h2>Santiago, </h2>
+                    <h2>29 años</h2>
+                  </div>
                   <h3>Ubicación</h3>
                 </div>
               </div>
-              <p className={style.aboutme__preview2}>
-                Descripción: Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam asperiores libero cumque illo magni sequi.
-              </p>
+              <div className={style.aboutme__interests}>
+                <h2 className={style['aboutme__interests-title']}>Mis intereses</h2>
+                <ul className={style['aboutme__interests-content']}>
+                  {
+                    ['Interes 1', 'Interes 2', 'Interes 3'].map((interest, index) => (
+                        <li key={index} className={style.aboutme__interest}>
+                          {interest}
+                        </li>
+                    ))
+                  }
+                </ul>
+              </div>
               <div className={style.aboutme__preview3}>
                 <h2>Mis pines</h2>
                 <div className={style.aboutme__pins}>
@@ -100,10 +111,19 @@ export default function Index () {
                   ))}
                 </div>
               </div>
+              <div className={style.aboutme__preview2}>
+                <h3>Sobre mí</h3>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam asperiores libero cumque illo magni sequi.
+                </p>
+              </div>
             </div>
           </div>
         )}
       </section>
+      <button className={`${style.aboutme__save} btn`} disabled>
+        Guardar Cambios
+      </button>
     </main>
   )
 }

@@ -11,6 +11,7 @@ export default function Index () {
   const pins = React.useRef<HTMLUListElement>(null)
   const pinsResults = React.useRef<HTMLUListElement>(null)
   const [editPin, setEditPin] = React.useState(false)
+  const [categorySelect, setCategorySelect] = React.useState<string | null>(null)
 
   React.useEffect(() => {
     if (pins.current) {
@@ -36,12 +37,16 @@ export default function Index () {
         <header className={style['pins__edit-header']}>
           <h2 className={style['pins__edit-title']}>Todos los pines</h2>
           <button
-            className={style['pins__edit-button']}
-            onClick={() => setEditPin(!editPin)}>
+            className={`${style['pins__edit-button']} btn-second`}
+            onClick={() => setEditPin(!editPin)}
+          >
             <p>Editar</p>
-            <span>🖋️</span>
+            <Icons.Edit width={20} height={20} />
           </button>
-          <span className={style.pins__counter}>{`${8}/${50}`}</span>
+          <h3 className={style.pins__counter}>
+            <b>{8}</b>/
+            <h4>{50}</h4>
+          </h3>
         </header>
 
         <div className={style['pins__edit-pins']}>
@@ -76,27 +81,33 @@ export default function Index () {
             <h2 className={style['pins__add-title']}>Agregar pines</h2>
             <div className={style['pins__add-search']}>
               <input type="text" placeholder='Buscar'/>
-              <button>🔍</button>
+              <Icons.Search width={40} height={40} />
             </div>
           </div>
           <div className={style['pins__add-categories']}>
             <button
-              className={style['pins__add-category']}
+              onClick={() => setCategorySelect('movies')}
+              className={`${categorySelect === 'movies' && style['pins__add-category']} btn-second`}
               value="movies">Películas</button>
             <button
-              className={style['pins__add-category']}
+              onClick={() => setCategorySelect('music')}
+              className={`${categorySelect === 'music' && style['pins__add-category']} btn-second`}
               value="music">Música</button>
             <button
-              className={style['pins__add-category']}
+              onClick={() => setCategorySelect('games')}
+              className={`${categorySelect === 'games' && style['pins__add-category']} btn-second`}
               value="games">Juegos</button>
             <button
-              className={style['pins__add-category']}
+              onClick={() => setCategorySelect('anime')}
+              className={`${categorySelect === 'anime' && style['pins__add-category']} btn-second`}
               value="anime">Anime</button>
             <button
-              className={style['pins__add-category']}
+              onClick={() => setCategorySelect('tvseries')}
+              className={`${categorySelect === 'tvseries' && style['pins__add-category']} btn-second`}
               value="tvseries">Series</button>
             <button
-              className={style['pins__add-category']}
+              onClick={() => setCategorySelect('others')}
+              className={`${categorySelect === 'others' && style['pins__add-category']} btn-second`}
               value="others">Otros</button>
           </div>
         </header>
@@ -122,8 +133,12 @@ export default function Index () {
               </button>
             </div>
           )}
+          </div>
         </div>
-        </div>
+        <button
+          className={`btn ${style.pins__save}`} disabled
+        >Guardar Cambios
+        </button>
       </section>
     </main>
   )

@@ -48,6 +48,7 @@ const userTemp: User = {
 }
 
 export default function Index () {
+  const isAdmin = true
   const pins = useRef<HTMLUListElement>(null)
   const [isScroll, setIsScroll] = useState<boolean>(false)
   const { userState: user } = useUserStore()
@@ -60,21 +61,27 @@ export default function Index () {
 
   return (
     <main className={style.profile__container}>
-      <div className={style.profile__edit}>
-        <Link className='btn-second' href='/profile/aboutme'>Editar perfil</Link>
-      </div>
+      {isAdmin
+        ? <div className={style.profile__edit}>
+          <Link className='btn-second' href='/profile/aboutme'>Editar perfil</Link>
+        </div>
+        : null}
       <div className={style.user}>
         <div className={style.user__content}>
           <div className={style.user__info}>
             <img className={style.user__photo} src={userTemp.photo} alt="User photo" />
             <div className={style.user__details}>
               <h1 className={style.user__name}>{user && user.info.firstName}, {user && user.info.lastName}</h1>
-              <h2 className={style.user__location}>{userTemp.location}</h2>
+              <div className={style.user__location}>
+                <h2>
+                  {userTemp.location}
+                </h2>
+              </div>
             </div>
           </div>
 
           <div className={style.user__interests}>
-            <h2 className={style['user__interests-title']}>Sus intereses</h2>
+            <h2 className={style['user__interests-title']}>{isAdmin ? 'Mis' : 'Sus'} intereses</h2>
             <ul className={style['user__interests-content']}>
               {user && user.interests.map((interest, index) => (
                 <li key={index} className={style.user__interest}>
@@ -85,7 +92,7 @@ export default function Index () {
           </div>
 
           <div className={style.user__pins}>
-            <h2 className={style['user__pins-title']}>Sus pines</h2>
+            <h2 className={style['user__pins-title']}>{isAdmin ? 'Mis' : 'Sus'} pines</h2>
             <ul className={style['user__pins-content']} ref={pins}>
               {user && user.pins.map((pin, index) => (
                 <li key={index} className={style.user__pin} style={{ background: 'linear-gradient(45deg, rgb(186, 71, 71), rgb(33, 204, 164))' }}>
@@ -106,7 +113,7 @@ export default function Index () {
           </div>
 
           <div className={style.user__about}>
-            <h2 className={style['user__about-title']}>Sobre {user && user.info.firstName}, {user && user.info.lastName}</h2>
+            <h2 className={style['user__about-title']}>Sobre {isAdmin ? 'mí' : `${(user && user.info.firstName) + ', ' + (user && user.info.lastName)}`}</h2>
             <p className={style['user__about-content']}>
               {user && user.info.description}
             </p>

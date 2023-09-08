@@ -31,17 +31,20 @@
     }
   }
   &__image-edit {
+    width: 6rem;
+    height: 6rem;
     position: absolute;
-    top: -1rem;
-    right: -1rem;
-    font-size: 4rem; // TODO: change to icon
-    background-color: var(--color-primary);
+    top: -.5rem;
+    right: -.5rem;
+    padding: 2rem;
+    background-color: var(--bg-chat-color);
     border-radius: 50%;
     padding: 0.5rem;
     cursor: pointer;
     pointer-events: none;
     z-index: 1;
-    background-color: var(--bg-color);
+    display: grid;
+    place-items: center;
   }
   & input[type="file"] {
     width: 6rem;
@@ -61,6 +64,10 @@
       width: 100%;
       max-width: 100%;
     }
+  }
+  &__names {
+    display: flex;
+    gap: 1rem;
   }
   &__location {
     display: flex;
@@ -97,9 +104,10 @@
   &__preview-content {
     @include flex-col;
     gap: 2rem;
-    background-color: var(--bg-color);
+    background-color: var(--bg-chat-color);
     padding: 2rem;
     border-radius: 1.4rem;
+    max-width: 420px;
   }
   &__preview1 {
     display: flex;
@@ -114,12 +122,20 @@
     @include flex-col;
     justify-content: space-around
   }
+  &__preview1-info-name {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-weight: 500
+  }
   &__preview-info {
     @include flex-col;
     gap: 1rem;
   }
   &__preview2 {
-    text-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
   &__preview3 {
     @include flex-col;
@@ -139,6 +155,22 @@
       border-radius: 50%;
     }
   }
+  &__interests {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  &__interests-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  &__interest {
+    background-color: var(--icon-color-400);
+    color: var(--title-color);
+    padding: .5rem 1rem;
+    border-radius: 0.8rem;
+  }
 }
 
 @media (width >= 1000px) {
@@ -148,6 +180,9 @@
     flex-direction: row;
     padding: 3rem 10rem;
     height: calc(100% - 223px);
+    &__save {
+      display: none;
+    }
     &__form {
       width: 50%;
     }
@@ -166,7 +201,6 @@
     &__preview-content {
       width: 100%;
       padding: 3rem;
-      border: 1px solid var(--text-color);
     }
     &__preview-close {
       display: none;

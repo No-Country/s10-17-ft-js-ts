@@ -12,15 +12,17 @@
   }
   &__options-list {
     display: flex;
+    gap: 1rem;
   }
   &__option {
     padding: 0.5rem 1rem;
     background-color: var(--bg-color);
-    color: var(--text-color);
+    color: var(--icon-color-500);
   }
   &__option--selected {
-    background-color: var(--text-color);
+    background-color: var(--icon-color-400);
     color: var(--bg-color);
+    border-radius: .8rem;
   }
   &__save {
     display: none;

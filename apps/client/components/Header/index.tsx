@@ -1,13 +1,14 @@
 'use client'
 import Link from 'next/link'
 import style from './style.module.scss'
-import { useRef } from 'react'
+import React, { useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import { Icons } from 'components/Icons'
 
 export default function Header () {
   const menu = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
+  const [theme, setTheme] = React.useState('light')
 
   const handleMenu = () => {
     if (menu.current) {
@@ -16,8 +17,10 @@ export default function Header () {
   }
 
   function toggleTheme () {
+    const conditional = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'
+    setTheme(conditional)
     document.documentElement.dataset.theme =
-    document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'
+    document.documentElement.dataset.theme = conditional
   }
 
   if (pathname === '/') return null
@@ -32,7 +35,6 @@ export default function Header () {
         {pathname !== '/messages' ? <p className={style['header__btn-menu--title']}>Mas</p> : null}
       </div>
       <span
-        onClick={toggleTheme}
         className={style.header__logo}
       >
         <Icons.LogoHome width={40} height={40} />
@@ -63,6 +65,14 @@ export default function Header () {
               <Icons.Chat width={40} height={40} />
               {pathname !== '/messages' ? <p>Mensajes</p> : null}
             </Link>
+          </li>
+          <li
+            className={`${style.header__option} opt--theme`}
+            onClick={toggleTheme}
+          >
+            {theme === 'light' ? <Icons.Moon width={20} height={20} /> : <Icons.Sun width={20} height={20} />}
+            {pathname !== '/messages' ? <p>{theme === 'light' ? 'Dark' : 'Light'}</p> : null}
+
           </li>
         </ul>
         <Link className={style['header__msg-mobile']} href={'/messages'}>
