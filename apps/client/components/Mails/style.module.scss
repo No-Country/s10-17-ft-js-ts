@@ -7,7 +7,7 @@
   animation: swap-right 1s ease-in-out;
   overflow-y: scroll;
   position: relative;
-  &__match {
+  &__match, &__message-avatar {
     cursor: pointer;
   }
   &__matches {
@@ -15,6 +15,7 @@
     flex-direction: column;
     gap: 1rem;
     padding: 1rem;
+    z-index: 1;
   }
   &__matches-header {
     display: flex;

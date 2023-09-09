@@ -30,6 +30,7 @@ const pins = [
 
 export default function Index () {
   const chat = useRef<HTMLDivElement>(null)
+
   function handleOpenChat () {
     if (window.innerWidth < 1000) {
       if (!chat.current) return

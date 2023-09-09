@@ -1,0 +1,125 @@
+@mixin flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.preferences {
+  padding-top: 1rem;
+  @include flex-col;
+  gap: 3rem;
+  &__searching {
+    @include flex-col;
+    gap: 3rem;
+  }
+  &__searching-options {
+    @include flex-col;
+    gap: 3rem;
+  }
+  &__ranges {
+    @include flex-col;
+    gap: 3rem;
+  }
+  &__searches {
+    width: 100%;
+    align-items: center;
+    padding-top: 2rem;
+    @include flex-col;
+    gap: 2rem;
+  }
+  &__genre {
+    @include flex-col;
+    gap: 2rem;
+  }
+  &__genres {
+    @extend .preferences__searches;
+    padding: 0;
+  }
+  &__option {
+    display: flex;
+    width: 100%;
+    max-width: 26.7rem;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid gray;
+    padding: 1.6rem 1.2rem;
+    border-radius: .8rem;
+    color: gray;
+    max-height: 4rem;
+  }
+  &__option--selected {
+    border: 1px solid var(--icon-color-500);
+    color: var(--icon-color-500);
+  }
+  &__range {
+    @include flex-col;
+    gap: 2rem;
+  }
+  &__range-labels {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__range-input {
+    position: relative;
+    & input {
+      width: 100%; 
+    }
+  }
+  &__picker-value {
+    position: absolute;
+    top: -2rem;
+    color: gray;
+    padding-left: 1rem;
+    width: max-content;
+  }
+  &__country {
+    @include flex-col;
+    gap: 2rem;
+  }
+  &__country-opt {
+    display: flex;
+    gap: 1rem;
+    font-weight: 500;
+    color: var(--title-color);
+  }
+  &__interests {
+    @include flex-col;
+    gap: 3rem;
+  }
+  &__interest {
+    display: flex;
+    gap: 1rem;
+    font-weight: 500;
+    color: var(--title-color);
+  }
+  &__interest-container {
+    @include flex-col;
+    gap: 3rem;
+  }
+  &__interest-info {
+    display: flex;
+    gap: 1rem;
+    padding: .5rem 1rem;
+    background-color: var(--icon-color-400);
+    border-radius: 1.6rem;
+    color: var(--title-color);
+  }
+}
+
+@media (width >= 1000px) {
+  .preferences {
+    padding-top: 2rem;
+    padding-inline: 10rem;
+    &__searching {
+      flex-direction: row;
+      gap: 17rem;
+    }
+    &__save {
+      display: none;
+    }
+    &__interest-container {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 5rem;
+    }
+  }
+}

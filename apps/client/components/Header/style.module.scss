@@ -32,7 +32,7 @@ $pl: 40px;
     align-items: center;
     animation: swap-right 0.5s ease-in-out;
     -webkit-animation: swap-right 0.5s ease-in-out;
-    z-index: 1;
+    z-index: 2;
   }
   &__menu-back {
     @extend .header;
@@ -98,6 +98,7 @@ $pl: 40px;
     &__btn {
       position: absolute;
       display: flex;
+      align-items: center;
       bottom: 30px;
       left: 40px;
       cursor: pointer;
@@ -134,7 +135,13 @@ $pl: 40px;
     }
     &__option {
       display: flex;
+      align-items: center;
       gap: 20px;
+    }
+    & .opt--theme {
+      display: none;
+      & svg {
+      }
     }
     &__msg-mobile {
       display: none;

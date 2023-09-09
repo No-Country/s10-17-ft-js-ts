@@ -4,6 +4,7 @@ import style from './style.module.scss'
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 import { Messages } from 'components/Messages'
+import { Icons } from 'components/Icons'
 
 interface Props {
   chat: React.RefObject<HTMLDivElement>
@@ -59,7 +60,7 @@ export function Chat ({ chat, setOpenChat }: Props) {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
               />
-              <div className={style.chat__emoticons} onClick={() => setOpenEmoticons(e => !e)}>
+              <div className={style.chat__emoticons}>
                 {openEmoticons &&
                 <div className={style['chat__emoticons-picker']}>
                   <Picker
@@ -68,7 +69,9 @@ export function Chat ({ chat, setOpenChat }: Props) {
                   />
                 </div>
                 }
-                <span>😊</span>
+                <span onClick={() => setOpenEmoticons(e => !e)}>
+                  <Icons.Emoticon width={30} height={30}/>
+                </span>
               </div>
             </div>
             <button className='btn-send' onClick={handleSend}>➡️</button>
