@@ -8,3 +8,4 @@ export * from './lib/user/update-user.dto';
 export * from './lib/auth/login.dto'
 export * from './lib/auth/auth-response.dto'
 export * from './lib/dbseed/genres.dto'
+export * from './lib/recom/recommendations.dto'
