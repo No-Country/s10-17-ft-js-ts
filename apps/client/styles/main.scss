@@ -19,6 +19,12 @@ svg, svg path {
 .btn:disabled {
   background-color: rgb(157, 156, 156);
   color: var(--text-color);
+  cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+  background-color: rgb(157, 156, 156);
+  color: var(--text-color);
 }
 
 .btn-send {
@@ -55,6 +61,7 @@ h1 {
 h2, h3 {
   color: var(--title-color);
   font-size: $m_subtitle;
+  font-weight: 600;
 }
 
 button, p, li {
