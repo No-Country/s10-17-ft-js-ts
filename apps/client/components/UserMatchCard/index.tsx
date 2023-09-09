@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import style from './style.module.scss'
 import handleScroll from '../../libs/handleScroll'
+import { Icons } from 'components/Icons'
 
 // TODO: tipar user
 interface User {
@@ -79,9 +80,13 @@ export default function UserMatchCard ({ user, setMatches, matches }: Props) {
           </ul>
           {isScroll && (
             <div className={style['user__pins-buttons']}>
-              <button value='left' onClick={(event) => handleScroll(event, pins)}>⬅️</button>
-              <button value='right' onClick={(event) => handleScroll(event, pins)}>➡️</button>
-            </div>
+              <button value='left' onClick={(event) => handleScroll(event, pins)}>
+                <Icons.Arrow width={20} height={20} />
+              </button>
+              <button value='right' onClick={(event) => handleScroll(event, pins)}>
+                <Icons.Arrow width={20} height={20} />
+              </button>
+          </div>
           )}
         </div>
 

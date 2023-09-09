@@ -1,12 +1,14 @@
 'use client'
 import Link from 'next/link'
 import style from './style.module.scss'
-import { useRef } from 'react'
+import React, { useRef } from 'react'
 import { usePathname } from 'next/navigation'
+import { Icons } from 'components/Icons'
 
 export default function Header () {
   const menu = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
+  const [theme, setTheme] = React.useState('light')
 
   const handleMenu = () => {
     if (menu.current) {
@@ -15,8 +17,10 @@ export default function Header () {
   }
 
   function toggleTheme () {
+    const conditional = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'
+    setTheme(conditional)
     document.documentElement.dataset.theme =
-    document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'
+    document.documentElement.dataset.theme = conditional
   }
 
   if (pathname === '/') return null
@@ -25,38 +29,55 @@ export default function Header () {
     return (
     <header className={`${style.header} ${pathname === '/messages' ? style['header--messages'] : ''}`}>
       <div className={style.header__btn} onClick={handleMenu}>
-        <span className={style['header__btn-menu']}>🍔</span>
+        <span className={style['header__btn-menu']}>
+          <Icons.BurgerMenu width={40} height={40} />
+        </span>
         {pathname !== '/messages' ? <p className={style['header__btn-menu--title']}>Mas</p> : null}
       </div>
       <span
-        onClick={toggleTheme}
         className={style.header__logo}
       >
-        Logo
+        <Icons.LogoHome width={40} height={40} />
       </span>
 
       <div>
         <ul className={style.header__options}>
           <li>
             <Link href={'/'} className={style.header__option}>
-              <span className={style.header__icon}>🏠</span>
+              <Icons.Home width={40} height={40} />
               {pathname !== '/messages' ? <p>Inicio</p> : null}
             </Link>
           </li>
           <li>
+            <Link href={'/profile'} className={style.header__option}>
+              <Icons.User2 width={40} height={40} />
+              {pathname !== '/messages' ? <p>Perfil</p> : null}
+            </Link>
+          </li>
+          <li>
             <Link href={'/home'} className={style.header__option}>
-              <span className={style.header__icon}>🔍</span>
+              <Icons.Home width={40} height={40} />
               {pathname !== '/messages' ? <p>Explorar?</p> : null}
             </Link>
           </li>
           <li>
             <Link href={'/messages'} className={style.header__option}>
-              <span className={style.header__icon}>📩</span>
+              <Icons.Chat width={40} height={40} />
               {pathname !== '/messages' ? <p>Mensajes</p> : null}
             </Link>
           </li>
+          <li
+            className={`${style.header__option} opt--theme`}
+            onClick={toggleTheme}
+          >
+            {theme === 'light' ? <Icons.Moon width={20} height={20} /> : <Icons.Sun width={20} height={20} />}
+            {pathname !== '/messages' ? <p>{theme === 'light' ? 'Dark' : 'Light'}</p> : null}
+
+          </li>
         </ul>
-        <Link className={style['header__msg-mobile']} href={'/messages'}>📩</Link>
+        <Link className={style['header__msg-mobile']} href={'/messages'}>
+          <Icons.Chat width={40} height={40} />
+        </Link>
       </div>
 
       <nav className={style.header__menu} ref={menu}>
@@ -64,12 +85,14 @@ export default function Header () {
           <h3 className={style.header__username}>username</h3>
           <span
             onClick={handleMenu}
-          >❌</span>
+          >
+            <Icons.Close width={40} height={40} />
+          </span>
         </header>
         <div className={style['header__menu-options']}>
           <ul>
             <li>
-              <Link className={style.header__perfil} href={'#'}>Perfil</Link>
+              <Link className={style.header__perfil} href={'/profile'}>Perfil</Link>
             </li>
             <li>
               <Link href={'#'}>Configuración</Link>

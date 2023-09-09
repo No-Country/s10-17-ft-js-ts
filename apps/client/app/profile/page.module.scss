@@ -1,0 +1,193 @@
+@import '../../styles/variables';
+
+@mixin section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.profile {
+  width: 100%;
+  position: relative;
+  padding: 2rem;
+  &__edit {
+    position: absolute;
+    top: 8rem;
+    right: 1rem;
+    z-index: 2;
+    background-color: var(--icon-color-400);
+    color: var(--title-color);
+    border-radius: 3rem;
+  }
+}
+
+.user {
+  border-radius: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  height: 100%;
+  transition: all 0.5s ease-in-out;
+  animation: swap-right 1s ease-in-out;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    overflow-y: scroll;
+    position: relative;
+  }
+  &__name {
+    color: var(--title-color);
+  }
+  &__details {
+    color: var(--icon-color-500);
+  }
+  &__info {
+    display: flex;
+    gap: 2rem;
+    padding-block: 2rem;
+    border-bottom: 1px solid var(--bg-chat-color);
+  }
+  &__photo {
+    width: 6.25rem;
+    height: 6.25rem;
+    border-radius: 50%;
+  }
+  &__interests {
+    @include section;
+  }
+  &__interests-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  &__interest {
+    background-color: var(--bg-chat-color);
+    color: var(--title-color);
+    padding: .5rem 1rem;
+    border-radius: 0.8rem;
+  }
+  &__pins {
+    @include section;
+    position: relative;
+  }
+  &__pins-content {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: auto;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1rem;
+    overflow-x: scroll;
+    padding-inline: 3rem;
+  }
+  &__pin {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__pin-photo {
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+  }
+  &__about {
+    @include section;
+  }
+  &__pins-buttons {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    & button:nth-child(1) {
+      transform: rotate(180deg);
+    }
+    & button {
+      pointer-events: painted;
+      width: 30px;
+      height: calc(100% - 4rem);
+      display: grid;
+      place-items: center;
+      background: linear-gradient(90deg, var(--bg-color) 0%, rgba(255, 255, 255, 0.56) 100%);
+      cursor: pointer;
+      font-size: 3rem;
+      & svg path {
+        fill: var(--text-color);
+      };
+    }
+  }
+}
+
+@keyframes swap-right {
+  from {
+    opacity: 0;
+    transform: translateX(-150%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
+@media (width >= 400px) {
+  .profile {
+    &__edit {
+      top: 3rem;
+      right: 3rem;
+    }
+  }
+}
+
+@media (width >= 1000px) {
+  .profile {
+    margin-left: 310px;
+    &__container {
+      height: 100%;      
+      padding: 3rem;
+      display: grid;
+      place-items: center;
+    }
+  }
+
+  .user {
+    max-width: 630px;
+    padding: 4rem 3rem;
+    background-color: var(--bg-chat-color);
+    max-height: 90dvh;
+    &__content {
+      gap: 3rem;
+      height: 100%;
+      overflow-y: hidden;
+    }
+    &__info {
+      gap: 5rem;
+      padding: 0;
+    }
+    &__interests-content {
+      gap: 3rem;
+    }
+    &__interest {
+      background-color: var(--icon-color-400);
+      color: var(--bg-color);
+    }
+    &__pins-content {
+      grid-template-rows: repeat(2, 1fr);
+    }
+    &__pins-content::-webkit-scrollbar {
+      display: none;
+    }
+    &__about {
+      padding-top: 0;
+    }
+    &__buttons {
+      padding-block: 50px;
+    }
+  }
+}
