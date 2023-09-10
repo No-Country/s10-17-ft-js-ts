@@ -43,6 +43,7 @@ export class UserProfile extends AutomapperProfile {
       isVerified: Boolean,
       dislikedBy: Array,
       matches: Array,
+      categorys: Array,
     });
 
     PojosMetadataMap.create<UserDto>('UserDto', {
@@ -57,6 +58,7 @@ export class UserProfile extends AutomapperProfile {
       isVerified: Boolean,
       dislikedBy: Array,
       matches: Array,
+      categorys: Array,
     });
   }
 }

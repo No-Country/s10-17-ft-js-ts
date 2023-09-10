@@ -2,24 +2,18 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsOptional } from 'class-validator';
 import { HydratedDocument, Types } from 'mongoose';
 import { UserDislike } from './user-dislike.entity';
+import { UserCategory } from './user-categorys.entity';
 
 export type UserDocument = HydratedDocument<User>;
 
-// type UserDislike = {
-//   userId: string;
-//   times: number;
-// };
-
 @Schema({ timestamps: true })
 export class User {
-
   @Prop()
   @IsOptional()
   firstName: string;
 
   @Prop()
   @IsOptional()
-
   lastName: string;
 
   @Prop({
@@ -32,13 +26,12 @@ export class User {
   @Prop({ required: true })
   passwordHash: string;
 
-
   @Prop()
   @IsOptional()
   birthdate: Date;
 
-  // @Prop()
-  // interests: Interest[];
+  @Prop({ type: Types.ArraySubdocument, default: [] })
+  categorys: UserCategory[];
 
   @Prop({ default: [] })
   @IsOptional()
@@ -90,15 +83,33 @@ export class User {
   @IsOptional()
   ageRange: number[];
 
-  @Prop()
-  @IsOptional()
-  zone: string;
-
   @Prop({
     default: false,
   })
   @IsOptional()
   isProfileConfigured: boolean;
+
+  @Prop()
+  @IsOptional()
+  lookingFor: string;
+
+  @Prop()
+  @IsOptional()
+  avatar: string;
+
+  @Prop()
+  @IsOptional()
+  latitude: number;
+
+  @Prop()
+  @IsOptional()
+  longitude: number;
+
+  @Prop({
+    default: 200,
+  })
+  @IsOptional()
+  zone: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

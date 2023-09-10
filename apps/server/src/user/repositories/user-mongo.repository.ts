@@ -6,6 +6,7 @@ import { FilterQuery, Model } from 'mongoose';
 import { UserDislike } from '../entities/user-dislike.entity';
 import { User, UserDocument } from '../entities/user.entity';
 import { UserRepository } from '../user.repository';
+import { UserCategory } from '../entities/user-categorys.entity';
 
 // enum ArrayUpdateMethod {
 //   Pull = 'pull',
@@ -35,13 +36,15 @@ export class UserMongoRepository implements UserRepository {
     id: string,
     updateUserDto: UpdateUserDto
   ): Promise<UserDto | undefined | null> {
-    return await this.userModel.findOneAndUpdate({ _id: id }, updateUserDto, {
+    const updatedData = { ...updateUserDto, isConfigured: true };
+    return await this.userModel.findOneAndUpdate({ _id: id }, updatedData, {
       new: true,
     });
   }
 
   async findById(id: string): Promise<UserDto | null> {
-    return await this.userModel.findById(id);
+    const user = await this.userModel.findById(id);
+    return this.mapper.map(user, 'UserDocument', 'UserDto');
   }
 
   async findByEmail(email: string): Promise<UserDocument | null> {
@@ -148,7 +151,76 @@ export class UserMongoRepository implements UserRepository {
       { $inc: { 'dislikedBy.$.times': 1 } }, // Incrementa el campo 'times' del elemento coincidente
       { new: true }
     );
-
     return this.mapper.map(updatedUser, 'UserDocument', 'UserDto');
   }
+
+  async existingCategory(
+    userId: string,
+    name: string
+  ): Promise<UserDto | undefined | null> {
+    const user = await this.userModel.findOne({
+      _id: userId,
+      'categorys.name': name,
+    });
+
+    if (user && user.categorys.length > 0) {
+      // Si encontramos el usuario y tiene una categoría con ese nombre
+      // Devuelve el usuario
+      return this.mapper.map(user, 'UserDocument', 'UserDto');
+    }
+
+    // Si no se encuentra el usuario o no tiene una categoría con ese nombre
+    return null;
+  }
+
+  async updateAddCategory(
+    userId: string,
+    category: UserCategory
+  ): Promise<UserDto | undefined | null> {
+    const user = await this.userModel.findOneAndUpdate(
+      { _id: userId },
+      {
+        $push: {
+          categorys: {
+            $each: [category],
+            $position: 0,
+          },
+        },
+      },
+      { new: true }
+    );
+
+    if (user) return null;
+
+    return this.mapper.map(user, 'UserDocument', 'UserDto');
+  }
+
+  async updateCategory(
+    userId: string,
+    category: UserCategory
+  ): Promise<UserDto | undefined | null> {
+    const user = await this.userModel.findOneAndUpdate(
+      { _id: userId, 'categorys.name': category.name },
+      {
+        $set: {
+          'categorys.$': category,
+        },
+      },
+      { new: true }
+    );
+
+    if (user) return null;
+
+    return this.mapper.map(user, 'UserDocument', 'UserDto');
+  }
+
+  // const updatedUser = await this.userModel.findOneAndUpdate(
+  //   { _id: userId, 'categorys.name': newCategory.name },
+  //   {
+  //     $set: {
+  //       'categorys.$': newCategory,
+  //     },
+  //   },
+  //   { new: true }
+  // );
 }

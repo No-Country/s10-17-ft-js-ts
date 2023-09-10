@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ArrayMaxSize, ArrayMinSize, IsArray, IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { CategoryDto } from './update-categorys-user.dto';
 
 export class UserDto {
   @ApiProperty({
@@ -30,14 +31,12 @@ export class UserDto {
   @IsNotEmpty()
   description: string;
 
-  @ApiProperty({
-    description: 'array images',
-    example: '["urlexample.jpg", "url2example.jpg"]',
-  })
-  @IsArray()
-  images: string[];
-
-  // matches: User[]
+  // @ApiProperty({
+  //   description: 'array images',
+  //   example: '["urlexample.jpg", "url2example.jpg"]',
+  // })
+  // @IsArray()
+  // images: string[];
 
   @ApiProperty({
     description: 'birthdate (valid Format ISO)',
@@ -102,4 +101,25 @@ export class UserDto {
     example: '["609c1f8d8b937f120c551234","609c1f8d8b937f120c551235","609c1f8d8b937f120c551236"]',
   })
   matches: string[]
+
+  @ApiProperty({
+    description: 'Categorys',
+    example: '[ { "name": "videogames", "rate": 2 , pins:[{},{},{}] } ]',
+  })
+  categorys: CategoryDto[]
+
+  @ApiProperty({
+    description: 'lookingFor',
+    example: 'Enum: ',
+  })
+  lookingFor: string
+
+  @ApiProperty({
+    description: 'User Avatar',
+    example: 'https://res.cloudinary.com/dlvpftdsm/image/upload/v1694119146/Frame_427319187_c6ldi6.png',
+  })
+  avatar: string
+
+  zone: number
+
 }
