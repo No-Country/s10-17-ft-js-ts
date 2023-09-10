@@ -23,7 +23,7 @@ export default function Header () {
     document.documentElement.dataset.theme = conditional
   }
 
-  if (pathname === '/') return null
+  if (pathname === '/' || pathname === '/setup-account') return null
 
   else {
     return (

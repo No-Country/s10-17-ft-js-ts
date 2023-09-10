@@ -1,0 +1,188 @@
+@import 'styles/variables.scss';
+
+.data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: 30px 0;
+
+  .data__back {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-size: $text;
+    color: $dark-primary;
+    cursor: pointer;
+  }
+
+  h3 {
+    font-size: $d_third-title;
+    font-weight: 400;
+  }
+
+  small {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    font-size: $text;
+    &::first-letter {
+      font-weight: 600;
+    }
+  }
+}
+
+.input, .select {
+  width: 100%;
+  height: 40px;
+  position: relative; 
+
+  .input__field {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background-color: $light-quaternary;
+    border: .1px solid $dark-primary;
+    font-size: $ih-text;
+    padding-left: 16px;
+  }
+}
+
+.select {
+  background-color: $light-quaternary;
+  border: .1px solid $dark-primary;
+  font-size: $ih-text;
+  border-radius: 8px;
+  padding-left: 16px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+
+  .about {
+    width: 100%;
+    height: 100px;
+    border-radius: 8px;
+    background-color: transparent;
+    resize: none;
+    border: .1px solid #BEBEBE;
+    font-size: $ih-text;
+    padding: 16px;
+  }
+
+  .form__checkbox {
+    width: 190px;
+    height: 40px;
+    appearance: unset;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #BEBEBE;
+    border-radius: 8px;
+    padding: 1rem;
+    padding-left: 50px;
+    cursor: pointer;
+    color: $dark-quaternary;
+    font-size: $text;
+
+    >  * {
+      cursor: pointer;
+    }
+  }
+
+  .form__checkboxGroup {
+    display: grid;
+    place-content: center;
+    gap: 10px;
+    grid-template-rows: repeat(3, 40px);
+    grid-template-columns: repeat(auto-fill, 1fr);
+  }
+
+  .form__checkboxGroup-twice {
+    display: grid;
+    place-content: center;
+    gap: 10px;
+    grid-template-rows: repeat(3, 40px);
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  label {
+    font-size: $text;
+    white-space: nowrap;
+  }
+
+  .form__next {
+    width: 100%;
+    height: 48px;
+    font-size: $m_subtitle;
+    font-weight: 500;
+    border-radius: 50px;
+    background-color: $light-primary;
+    color: #fff;
+  }
+
+  .form__group {
+    display: flex;
+    gap: 10px;
+  }
+
+  .form__describedGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    p {
+      font-size: $text;
+      color: $dark-quaternary;
+    }
+
+    small {
+      color: #949494;
+      font-size: $text;
+    }
+  }
+
+  .avatar {
+    p {
+      color: $dark-quaternary;
+      text-align: center;
+    }
+  }
+
+  .location {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    color: #252525;
+    font-weight: 400;
+    
+    a {
+      font-weight: 500;
+      text-decoration: underline;
+    }
+
+    .location__image {
+      aspect-ratio: 1/1;
+      max-width: 100%;
+    }
+  }
+
+  .form__searchPins {
+    position: relative;
+
+    input {
+      width: 300px;
+      height: 40px;
+      border: 1px solid #BEBEBE;
+      border-radius: 8px;
+      padding-left: 16px;
+    }
+  }
+}
