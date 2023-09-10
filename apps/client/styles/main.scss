@@ -16,6 +16,17 @@ svg, svg path {
   padding: 12px 16px;
 }
 
+.btn:disabled {
+  background-color: rgb(157, 156, 156);
+  color: var(--text-color);
+  cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+  background-color: rgb(157, 156, 156);
+  color: var(--text-color);
+}
+
 .btn-send {
   @extend .btn;
   border-radius: 8px;
@@ -23,11 +34,12 @@ svg, svg path {
 
 .btn:hover, .btn-send:hover {
   background-color: var(--title-color);
+  color: white;
 }
 
 .btn-second {
   background-color: var(--icon-color-400);
-  color: var(--bg-color);
+    color: var(--title-color);
   border-radius: 20px;
   padding: 8px 12px;
 }
@@ -36,19 +48,23 @@ svg, svg path {
   background-color: var(--bg-chat-color);
 }
 
-input {
+input[text] {
   font-size: $ih-text;
+  height: 4rem;
 }
 
 h1 {
   font-size: $m_title;
+  color: var(--title-color);
 }
 
 h2, h3 {
+  color: var(--title-color);
   font-size: $m_subtitle;
+  font-weight: 600;
 }
 
-button, p {
+button, p, li {
   font-size: $text;
 }
 
@@ -56,8 +72,32 @@ button {
   cursor: pointer;
 }
 
+label {
+  font-weight: 700;
+  color: var(--icon-color-500);
+}
+
+input, textarea {
+  background-color: var(--bg-chat-color);
+  color: var(--text-color);
+  border: 1px solid gray;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+input:focus, textarea:focus {
+  border: 2px solid var(--icon-color-500);
+}
+
 span {
   font-size: $m_r-text;
+}
+
+.opt--theme {
+  cursor: pointer;
+  & svg {
+    margin: 1rem;
+  }
 }
 
 @media (width >= 1000px) {

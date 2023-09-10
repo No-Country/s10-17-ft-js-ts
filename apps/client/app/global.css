@@ -14,7 +14,7 @@ body {
   overflow-x: hidden;
   color: #252525;
   font-size: 1.6rem;
-  width: 100dvw;
+  width: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -75,9 +75,6 @@ form, input, textarea, select, button, label {
   border: none;
   outline:none;
   /* opcional */
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
 }
 
 table, tr, td {

@@ -1,9 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
+// import Image from 'next/image'
 import { useState } from 'react'
 import { AuthForm } from 'components/AuthForm'
 import styles from './page.module.scss'
 import Link from 'next/link'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'hooks/useSession'
 
@@ -30,12 +31,10 @@ export function ClientSection () {
                 Personaliza tu perfil y comienza a <br/> chatear
               </h2>
             </div>
-            <Image
+            <img
               className={styles.home__image}
-              src='/images/intro-landing.png'
+              src={'/images/intro-landing.png'}
               alt="laptop con prueba de la aplicacion"
-              width={50}
-              height={50}
             />
             <div className={styles.home__buttonsD}>
               <button className='btn' onClick={() => handleAuth('register')} value="register">Crear Cuenta</button>

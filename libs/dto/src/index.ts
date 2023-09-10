@@ -12,3 +12,5 @@ export * from './lib/user/update-categorys-user.dto'
 export * from './lib/enums/avatar.enum'
 export * from './lib/enums/gender.enum'
 export * from './lib/enums/lookinFor.enum'
+export * from './lib/recom/recommendations.dto'
+
