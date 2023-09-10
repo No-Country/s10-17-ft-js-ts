@@ -27,9 +27,9 @@ export function ClientSection () {
               <h1 className={styles.home__title}>
                 Mismos gustos,<br/> nuevas <b>oportunidades</b>
               </h1>
-              <h2 className={styles.home__description}>
+              <h3 className={styles.home__description}>
                 Personaliza tu perfil y comienza a <br/> chatear
-              </h2>
+              </h3>
             </div>
             <img
               className={styles.home__image}
