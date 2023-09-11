@@ -7,7 +7,7 @@
   height: 550px;
   border-radius: 8px;
   background-color: #fff;
-  color: $purple-dark;
+  color: $light-secondary;
   width: 95vw;
   max-width: 480px;
   position: relative;
@@ -26,7 +26,7 @@
 }
 
 .container h2 {
-  font-size: $L;
+  font-size: $d_second-title;
   text-align: center;
 }
 
@@ -54,7 +54,7 @@
 
 .container__toggle {
   span {
-    color: $purple-dark;
+    color: $light-secondary;
     cursor: pointer;
     text-decoration: underline;
   }

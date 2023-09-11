@@ -17,7 +17,7 @@
 
 .field label {
   color: '#616161';
-  font-size: $SM;
+  font-size: $text;
 }
 
 .field small {
@@ -42,13 +42,13 @@
 }
 
 .form input {
-  background-color: $purple-seconadary-lila;
+  background-color: $light-quaternary;
   border-radius: 8px;
   width: 95vw;
   max-width: 300px;
   height: 40px;
   padding: 10px;
-  font-size: $XS;
+  font-size: $ih-text;
 }
 
 .form input::placeholder {
@@ -56,14 +56,14 @@
 }
 
 .form p {
-  font-size: $SM;
+  font-size: $ih-text;
   text-decoration: underline;
 }
 
 .form .submit {
-  font-size: $M;
+  font-size: $m_subtitle;
   color: $white;
-  background-color: $purple-principal;
+  background-color: $light-primary;
   border-radius: 8px;
   height: 48px;
   max-width: 300px;
@@ -72,6 +72,6 @@
 }
 
 .submit[disabled] {
-  background-color: $purple-seconadary-lila;
+  background-color: $light-quaternary;
   cursor: not-allowed;
 }

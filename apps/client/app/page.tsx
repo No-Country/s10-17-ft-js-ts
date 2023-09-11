@@ -5,6 +5,7 @@ import HeaderLanding from 'components/HeaderLanding'
 
 export default function Index () {
   return (
+
     <section className={styles.home}>
       <HeaderLanding />
        <main className={styles.home__main}>
