@@ -31,7 +31,6 @@ export class UserProfile extends AutomapperProfile {
   createMetadata(): void {
     PojosMetadataMap.create<UserDocument>('UserDocument', {
       _id: Schema.Types.ObjectId,
-      // id: String,
       firstName: String,
       lastName: String,
       description: String,
@@ -44,6 +43,7 @@ export class UserProfile extends AutomapperProfile {
       dislikedBy: Array,
       matches: Array,
       categorys: Array,
+      isProfileConfigured: Boolean,
     });
 
     PojosMetadataMap.create<UserDto>('UserDto', {
@@ -59,6 +59,7 @@ export class UserProfile extends AutomapperProfile {
       dislikedBy: Array,
       matches: Array,
       categorys: Array,
+      isProfileConfigured: Boolean,
     });
   }
 }

@@ -22,7 +22,6 @@ import {
 import { User } from '../auth/decorators/user.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UserService } from './user.service';
-import calculateDistanceInKilometers from './utils/distanceCalculator';
 
 @ApiTags('User')
 @Controller('user')
@@ -46,12 +45,6 @@ export class UserController {
   @ApiOperation({ summary: 'Get all users' })
   @Get('/all')
   getAll() {
-    console.log(
-      calculateDistanceInKilometers(
-        { latitude: 51.5103, longitude: 7.49347 },
-        { latitude: 51.5183, longitude: 7.4845 }
-      )
-    );
     return this.userService.getAll();
   }
 

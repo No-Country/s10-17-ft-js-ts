@@ -120,6 +120,13 @@ export class UserDto {
   })
   avatar: string
 
+
+  @ApiProperty({
+    description: 'range in KM ',
+    example: 'default: 200',
+  })
+  @IsNumber()
   zone: number
+
 
 }
