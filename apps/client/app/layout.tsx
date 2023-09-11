@@ -1,5 +1,6 @@
 import Header from 'components/Header'
 import './global.css'
+import '../styles/scroll.scss'
 import '../styles/themes.scss'
 import '../styles/main.scss'
 import { Poppins } from 'next/font/google'

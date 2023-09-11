@@ -49,18 +49,22 @@ export default function Index () {
         <h2>Sus Pines en común</h2>
         <div className={style['messages__pins-container']}>
           <h3 className={style['messages__pins-title']}>Peliculas</h3>
+          <div className={style['messages__pins-gradient']}></div>
           <SliderPins pins={pins} />
         </div>
         <div className={style['messages__pins-container']}>
           <h3 className={style['messages__pins-title']}>Música</h3>
+          <div className={style['messages__pins-gradient']}></div>
           <SliderPins pins={pins} />
         </div>
         <div className={style['messages__pins-container']}>
           <h3 className={style['messages__pins-title']}>Juegos</h3>
+          <div className={style['messages__pins-gradient']}></div>
           <SliderPins pins={pins} />
         </div>
         <div className={style['messages__pins-container']}>
           <h3 className={style['messages__pins-title']}>Series</h3>
+          <div className={style['messages__pins-gradient']}></div>
           <SliderPins pins={pins} />
         </div>
       </section>

@@ -56,7 +56,9 @@ export default function Index () {
                 <figure key={i} className={style.pins__pin}>
                   <img src="https://picsum.photos/200/300" alt="" />
                   {editPin && (
-                    <button>✏️</button>
+                    <button>
+                      <Icons.Edit width={20} height={20} />
+                    </button>
                   )}
                 </figure>
               ))

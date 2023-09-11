@@ -5,7 +5,7 @@ body {
   color: var(--text-color);
 }
 
-svg, svg path {
+.icon path {
   fill: var(--icon-color-500);
 }
 
@@ -41,6 +41,7 @@ select {
 .btn-send {
   @extend .btn;
   border-radius: 8px;
+  color: var(--title-color);
 }
 
 .btn:hover, .btn-send:hover {

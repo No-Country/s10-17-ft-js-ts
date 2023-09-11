@@ -21,6 +21,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    & a {
+      text-decoration: underline;
+      color: var(--icon-color-400);
+    }
+    & a:hover {
+      color: var(--icon-color-500);
+    }
   }
   &__matches-list {
     display: flex;
@@ -45,7 +52,6 @@
     display: flex;
     gap: 1rem;
     padding: 1rem;
-    border-bottom: 1px solid rgb(157, 157, 157);
   }
   &__message-photo {
     position: relative;
@@ -53,12 +59,13 @@
   }
   &__message-status {
     position: absolute;
-    top: 5px;
+    top: 0px;
     right: 0;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.8rem;
+    height: 1.8rem;
     border-radius: 50%;
-    background-color: rgb(36, 212, 92);
+    background-color: green;
+    border: 2px solid var(--text-color);
   }
   &__message-content {
     width: 100%;
@@ -87,11 +94,12 @@
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
-    background-color: rgb(31, 128, 239);
+    background-color: var(--icon-color-500);
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-weight: 700;
   }
 }
 
