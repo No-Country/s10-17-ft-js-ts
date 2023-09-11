@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { Icons } from 'components/Icons'
 import handleScroll from '../../libs/handleScroll'
 import style from './style.module.scss'
 import { useEffect, useRef, useState } from 'react'
@@ -12,10 +13,7 @@ export function SliderPins ({ pins }: Props) {
   const [isScroll, setIsScroll] = useState<boolean>(false)
 
   useEffect(() => {
-    console.log(pinsRef.current?.scrollWidth, pinsRef.current?.clientWidth)
     if (pinsRef.current?.scrollWidth) {
-      console.log({ pins: pinsRef.current }, pinsRef.current?.scrollWidth > pinsRef.current?.clientWidth)
-
       setIsScroll(pinsRef.current?.scrollWidth > pinsRef.current?.clientWidth)
     }
   }, [isScroll])
@@ -38,13 +36,13 @@ export function SliderPins ({ pins }: Props) {
             className={style.pins__button}
             value='left'
             onClick={(event) => handleScroll(event, pinsRef)}>
-            ⬅️
+            <Icons.Arrow width={20} height={20} />
           </button>
           <button
             className={style.pins__button}
             value='right'
             onClick={(event) => handleScroll(event, pinsRef)}>
-            ➡️
+            <Icons.Arrow width={20} height={20} />
           </button>
         </div>
       )}

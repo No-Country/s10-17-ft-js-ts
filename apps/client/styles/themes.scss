@@ -8,6 +8,7 @@
   --text-color: #0E0101;
   --notify-color: #FBFF48;
   --bg-chat-color: #DBCDF3;
+  --bg-chat-gradient: linear-gradient(180deg, #DBCDF3 31.77%, #EDE4FF 83.33%);
 }
 
 html[data-theme='dark'] {
@@ -18,4 +19,5 @@ html[data-theme='dark'] {
   --text-color: #FFFFFF;
   --notify-color: #FBFF48;
   --bg-chat-color: #3E2666;
+  --bg-chat-gradient: linear-gradient(180deg, #3E2666 33.85%, #210827 100%);
 }

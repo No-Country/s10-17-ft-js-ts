@@ -35,9 +35,25 @@ export default function Header () {
         {pathname !== '/messages' ? <p className={style['header__btn-menu--title']}>Mas</p> : null}
       </div>
       <span
-        className={style.header__logo}
+        className={style.header__logoM}
       >
-        <Icons.LogoHome width={40} height={40} />
+        {theme === 'dark'
+          ? <Icons.IsotypeDark width={60} height={60} />
+          : <Icons.IsotypeLight width={60} height={60} />
+          }
+      </span>
+      <span
+        className={style.header__logoD}
+      >
+        {pathname !== '/messages'
+          ? (theme === 'dark'
+              ? <Icons.LogoDark width={150} height={60} />
+              : <Icons.LogoLight width={150} height={60} />
+            )
+          : (theme === 'dark'
+              ? <Icons.IsotypeDark width={60} height={60} />
+              : <Icons.IsotypeLight width={60} height={60} />
+            )}
       </span>
 
       <div>

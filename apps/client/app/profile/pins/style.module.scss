@@ -25,7 +25,9 @@
       position: absolute;
       top: 0;
       right: 0;
-      background: gray;
+      background: var(--bg-color);
+      border-radius: 50%;
+      padding: .2rem;
     }
   }
   &__edit-header {

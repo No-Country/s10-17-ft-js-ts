@@ -30,17 +30,17 @@ export function Chat ({ chat, setOpenChat }: Props) {
   return (
     <section className={style.chat} ref={chat}>
       <div className={style.chat__back} onClick={setOpenChat}>
-        <span>⬅️</span>
+        <Icons.Back width={30} height={30}/>
         <p>Volver</p>
       </div>
 
       <div className={style.chat__content}>
         <div className={style.chat__header}>
           <img className={style.chat__avatar} src="https://picsum.photos/200" alt="avatar"/>
-          <h3 className={style.chat__info}>
-            <span className={style.chat__name}>Nombre del match</span>
-            <span className={style.chat__age}>32</span>
-          </h3>
+          <div className={style.chat__info}>
+            <h2 className={style.chat__name}>Nombre del match</h2>
+            <h3 className={style.chat__age}>32</h3>
+          </div>
         </div>
         <div className={style.chat__messages}>
           {
@@ -70,11 +70,13 @@ export function Chat ({ chat, setOpenChat }: Props) {
                 </div>
                 }
                 <span onClick={() => setOpenEmoticons(e => !e)}>
-                  <Icons.Emoticon width={30} height={30}/>
+                  {openEmoticons ? <Icons.EmoticonHover width={30} height={30}/> : <Icons.Emoticon width={30} height={30}/>}
                 </span>
               </div>
             </div>
-            <button className='btn-send' onClick={handleSend}>➡️</button>
+            <button className={`${style.chat__send} btn-send`} onClick={handleSend}>
+              <Icons.Back width={30} height={30}/>
+            </button>
           </div>
       </div>
     </section>
