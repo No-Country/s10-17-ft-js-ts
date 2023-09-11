@@ -59,7 +59,7 @@ export default function Header () {
       <div>
         <ul className={style.header__options}>
           <li>
-            <Link href={'/'} className={style.header__option}>
+            <Link href={'/home'} className={style.header__option}>
               <Icons.Home width={40} height={40} />
               {pathname !== '/messages' ? <p>Inicio</p> : null}
             </Link>
@@ -68,12 +68,6 @@ export default function Header () {
             <Link href={'/profile'} className={style.header__option}>
               <Icons.User2 width={40} height={40} />
               {pathname !== '/messages' ? <p>Perfil</p> : null}
-            </Link>
-          </li>
-          <li>
-            <Link href={'/home'} className={style.header__option}>
-              <Icons.Home width={40} height={40} />
-              {pathname !== '/messages' ? <p>Explorar?</p> : null}
             </Link>
           </li>
           <li>
