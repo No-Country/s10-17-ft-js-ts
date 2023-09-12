@@ -5,7 +5,6 @@ import { ApiProperty } from '@nestjs/swagger';
 
 
 class PinDto {
-
   @ApiProperty({
     description: 'The name of the pin',
     example: 'Pin Name',
@@ -37,7 +36,7 @@ export class CategoryDto {
   @ApiProperty({
     description: 'The name of the category. Should be one of the values from the CategoryEnum',
     example: 'Category Name',
-    enum: ['Category Name'],
+    enum: [CategoryEnum],
   })
   @IsString()
   @IsNotEmpty()

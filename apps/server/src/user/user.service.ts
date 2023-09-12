@@ -11,6 +11,8 @@ import { UserDocument } from './entities/user.entity';
 import { UserDislike } from './entities/user-dislike.entity';
 import { UserPin } from './entities/user-pin.entity';
 import { UserCategory } from './entities/user-categorys.entity';
+import { v2 as cloudinary } from 'cloudinary';
+import 'multer';
 // import { appConfig } from '../app/app.config';
 // import { ConfigType } from '@nestjs/config';
 
@@ -38,7 +40,6 @@ export class UserService {
       if (isRegistered) {
         throw new BadRequestException('Email already exists');
       }
-
       // crearlo y retornarlo.
       return await this.userRepository.create(createUserDto);
     } catch (error) {
@@ -200,24 +201,16 @@ export class UserService {
 
   async getOne(id: string): Promise<UserDto | undefined | null> {
     try {
-      return this.userRepository.findById(id);
+      return this.userRepository.findOne(id);
     } catch (error) {
       console.log(error);
       throw new BadRequestException(error);
     }
   }
 
-  async prueba(
-    userId: string,
-    idLiked: string
-  ): Promise<UserDto | undefined | null> {
+  async prueba(userId: string): Promise<UserDto | undefined | null> {
     try {
-      console.log(userId, idLiked);
-      const userRegisteredUpdated = await this.userRepository.updateRemoveLike(
-        userId,
-        idLiked
-      );
-      console.log(userRegisteredUpdated);
+      const userRegisteredUpdated = await this.userRepository.findOne(userId);
       return userRegisteredUpdated;
     } catch (error) {
       console.log(error);
@@ -225,52 +218,6 @@ export class UserService {
   }
 
   async updateCategorys(updateCategorys: CategoryDto[], userId: string) {
-    // const example = [{
-    //   name: "Music",
-    //   rate: 1,
-    //   pins: [{
-    //     name: "ashe",
-    //     imgUrl: "ashe.png",
-    //     subCategorys: ["accion", "drama", "terror"]
-    //   }]
-    // },
-    // {
-    //   name: "Videogames",
-    //   rate: 2,
-    //   pins: [{
-    //     name: "ashe",
-    //     imgUrl: "ashe.png",
-    //     subCategorys: ["accion", "drama", "terror"]
-    //   }]
-    // },
-    // {
-    //   name: "Books",
-    //   rate: 3,
-    //   pins: [{
-    //     name: "Counter-Strike 1.6",
-    //     imgUrl: "Counter-Strike1.6.png",
-    //     subCategorys: ["accion", "drama", "terror"]
-    //   }]
-    // },
-    // {
-    //   name: "string",
-    //   rate: 4,
-    //   pins: [{
-    //     name: "ashe",
-    //     imgUrl: "ashe.png",
-    //     subCategorys: ["accion", "drama", "terror"]
-    //   }]
-    // },
-    // {
-    //   name: "string",
-    //   rate: 5,
-    //   pins: [{
-    //     name: "ashe",
-    //     imgUrl: "ashe.png",
-    //     subCategorys: ["accion", "drama", "terror"]
-    //   }]
-    // },
-    // ]
     try {
       updateCategorys.forEach(async ({ name, rate, pins }) => {
         // creo los pines
@@ -298,7 +245,11 @@ export class UserService {
         }
       });
 
-      return 'Categories updated successfully';
+      const userUpdated = await this.userRepository.confirmProfileConfigured(
+        userId
+      );
+
+      return userUpdated;
     } catch (error) {
       throw new BadRequestException(error);
     }
@@ -307,28 +258,38 @@ export class UserService {
   //   return  this.userRepository.deleteOne(id)
   // }
 
-  // async uploadFile(file: Express.Multer.File): Promise<string> {
-  //   try {
-  //     const result = await new Promise<string>((resolve, reject) => {
-  //       cloudinary.uploader
-  //         .upload_stream(
-  //           {
-  //             resource_type: 'auto',
-  //           },
-  //           (error: any, result: any) => {
-  //             if (error) {
-  //               reject(error);
-  //             } else {
-  //               resolve(result.secure_url);
-  //             }
-  //           },
-  //         )
-  //         .end(file.buffer);
-  //     });
-  //     console.log(result);
-  //     return result;
-  //   } catch (error) {
-  //     throw new Error(error);
-  //   }
-  // }
+  async uploadFile(file: Express.Multer.File): Promise<string> {
+    try {
+      const result = await new Promise<string>((resolve, reject) => {
+        cloudinary.uploader
+          .upload_stream(
+            {
+              resource_type: 'auto',
+            },
+            (error: any, result: any) => {
+              if (error) {
+                reject(error);
+              } else {
+                resolve(result.secure_url);
+              }
+            }
+          )
+          .end(file.buffer);
+      });
+      console.log(result);
+
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw new Error('Error al cargar el archivo a Cloudinary');
+    }
+  }
+
+  async addUrlImages(url: string, userId: string) {
+    try {
+      return await this.userRepository.updateAddImage(userId, url);
+    } catch (error) {
+      return error;
+    }
+  }
 }

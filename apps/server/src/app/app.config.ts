@@ -26,6 +26,11 @@ export const appConfig = registerAs('app', () => ({
     host: process.env.REDIS_HOST,
     port: Number(process.env.REDIS_PORT),
   },
+  cloudinary: {
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  },
 }));
 
 export const appSchema = Joi.object({
@@ -45,4 +50,8 @@ export const appSchema = Joi.object({
 
   REDIS_HOST: Joi.string().required(),
   REDIS_PORT: Joi.number().optional().default(6379),
+
+  CLOUD_NAME: Joi.string().required(),
+  CLOUDINARY_API_KEY: Joi.string().required(),
+  CLOUDINARY_API_SECRET: Joi.string().required(),
 });

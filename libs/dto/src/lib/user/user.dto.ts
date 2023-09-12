@@ -31,12 +31,12 @@ export class UserDto {
   @IsNotEmpty()
   description: string;
 
-  // @ApiProperty({
-  //   description: 'array images',
-  //   example: '["urlexample.jpg", "url2example.jpg"]',
-  // })
-  // @IsArray()
-  // images: string[];
+  @ApiProperty({
+    description: 'array images',
+    example: '["urlexample.jpg", "url2example.jpg"]',
+  })
+  @IsArray()
+  images: string[];
 
   @ApiProperty({
     description: 'birthdate (valid Format ISO)',

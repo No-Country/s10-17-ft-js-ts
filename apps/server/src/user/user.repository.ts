@@ -11,7 +11,7 @@ export interface UserRepository {
     UpdateUserDto: UpdateUserDto
   ): Promise<UserDto | undefined | null>;
   findById(id: string): Promise<UserDto | null>;
-  findOne(filter: FilterQuery<User>): Promise<UserDto | null>;
+  findOne(id: string): Promise<UserDto | null>;
   findByEmail(email: string): Promise<UserDocument | null>;
   findMany(filter: FilterQuery<User>): Promise<UserDto[]>;
   updateAddLike(
@@ -48,13 +48,11 @@ export interface UserRepository {
     userId: string,
     category: UserCategory
   ): Promise<UserDto | undefined | null>;
+  confirmProfileConfigured(id: string): Promise<UserDto | null>;
+  updateAddImage(
+    userId: string,
+    URL: string
+  ): Promise<UserDto | null | undefined>;
 }
 
 export const UserRepositoryKey = Symbol('UserRepository');
-
-// si el email existe, validacion y hash de password.
-// servicio separados en 2, que se pueda ver si hay email ya registrado.
-
-// cuando quiere ver tu perfil, tenes que verificar que haya tenido match.//
-
-// un dto para el perfil desde el lado del visitante y otro para ver tu propio perfil.//
