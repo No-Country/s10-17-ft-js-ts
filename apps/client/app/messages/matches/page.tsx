@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import BackButton from 'components/BackButton/BackButton'
 import style from './style.module.scss'
 
 const matches = [
@@ -49,6 +50,7 @@ const matches = [
 export default function Index () {
   return (
     <main className={style.matches}>
+      <BackButton/>
       <h1>Matches</h1>
       <div className={style.matches__container}>
         {

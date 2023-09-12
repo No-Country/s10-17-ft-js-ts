@@ -1,3 +1,5 @@
+@import "../../../styles/variables";
+
 @mixin flex-col {
   display: flex;
   flex-direction: column;
@@ -14,6 +16,9 @@
     @include flex-col;
     gap: 1rem;
     width: 100%;
+    & span {
+      color: $warning;
+    }
   }
   &__photo {
     display: flex;
@@ -201,7 +206,8 @@
       background: transparent;
     }
     &__preview-content {
-      width: 100%;
+      max-width: 400px;
+      min-width: 100%;
       padding: 3rem;
     }
     &__preview-close {

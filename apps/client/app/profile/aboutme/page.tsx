@@ -2,12 +2,40 @@
 'use client'
 import { Icons } from 'components/Icons'
 import style from './style.module.scss'
-import React, { useEffect } from 'react'
+import React from 'react'
+import { useUserStore } from 'store/user'
+import { handleAboutForm } from '../../../libs/validateEditForm'
+import { AboutForm } from 'types'
+
+interface ImageState {
+  url: string | null
+  file: File | null
+}
 
 export default function Index () {
-  const [image, setImage] = React.useState<string | undefined>(undefined)
+  const { userState } = useUserStore()
+
   const [preview, setPreview] = React.useState(false)
-  //
+
+  const [image, setImage] = React.useState<ImageState | undefined>({
+    url: null,
+    file: null
+  })
+
+  const [form, setForm] = React.useState<AboutForm>({
+    data: {
+      firstname: userState?.info.firstName,
+      lastname: userState?.info.lastName,
+      description: userState?.info.description,
+      image: image?.url || userState?.info.images[0]
+    },
+    errors: {
+      firstname: '',
+      lastname: '',
+      description: ''
+    }
+  })
+
   function handleImage (e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files) {
       const file = e?.target?.files[0]
@@ -15,14 +43,13 @@ export default function Index () {
       reader.readAsDataURL(file)
       const url = URL.createObjectURL(file)
       reader.onloadend = () => {
-        setImage(url)
+        setImage({
+          url,
+          file
+        })
       }
     }
   }
-
-  useEffect(() => {
-    // traer datos del usuario
-  }, [])
 
   function handlePreview () {
     setPreview(!preview)
@@ -36,8 +63,12 @@ export default function Index () {
             <span className={style['aboutme__image-edit']}>
               <Icons.Edit width={35} height={35} />
             </span>
-            <input type="file" onChange={handleImage}/>
-            <img src={image || 'https://picsum.photos/200/200'} alt="profile" onError={(e) => {
+            <input
+              type="file"
+              itemType='image/*'
+              onChange={handleImage}
+            />
+            <img src={image?.url || 'https://picsum.photos/200/200'} alt="profile" onError={(e) => {
               e.currentTarget.src = '/images/user-default.png'
             }}/>
           </figure>
@@ -46,19 +77,37 @@ export default function Index () {
             <div className={style.aboutme__names}>
               <label className={style.aboutme__firstname}>
                 Nombre
-                <input type="text" name="firstname" />
-                <span></span>
+                <input
+                  type="text"
+                  name="firstname"
+                  onChange={(e) => handleAboutForm(e, form, setForm)}
+                  value={form.data.firstname}
+                />
+                <span>{form.errors.firstname}</span>
               </label>
               <label className={style.aboutme__lastname}>
                 Apellido
-                <input type="text" name="lastname" />
-                <span></span>
+                <input
+                  type="text"
+                  name="lastname"
+                  onChange={(e) => handleAboutForm(e, form, setForm)}
+                  value={form.data.lastname}
+                />
+                <span>{form.errors.lastname}</span>
               </label>
             </div>
             <label className={style.aboutme__description}>
               Descripción
-              <textarea cols={30} rows={3} placeholder='Agrega una descripción'></textarea>
-              <span></span>
+              <textarea
+                cols={30}
+                rows={3}
+                name='description'
+                onChange={(e) => handleAboutForm(e, form, setForm)}
+                placeholder='Agrega una descripción'
+                value={form.data.description}
+              >
+              </textarea>
+              <span>{form.errors.description}</span>
             </label>
             <span className={style.aboutme__location}>
               <Icons.Location width={30} height={30} />
@@ -80,10 +129,10 @@ export default function Index () {
             </button>
             <div className={style['aboutme__preview-content']}>
               <div className={style.aboutme__preview1}>
-                <img src={image || 'https://picsum.photos/200/200'} alt="" />
+                <img src={image?.url || 'https://picsum.photos/200/200'} alt="" />
                 <div className={style['aboutme__preview1-info']}>
                   <div className={style['aboutme__preview1-info-name']}>
-                    <h2>Santiago, </h2>
+                    <h2>{form.data.firstname} {form.data.lastname},</h2>
                     <h2>29 años</h2>
                   </div>
                   <h3>Ubicación</h3>
@@ -114,7 +163,7 @@ export default function Index () {
               <div className={style.aboutme__preview2}>
                 <h3>Sobre mí</h3>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam asperiores libero cumque illo magni sequi.
+                  {form.data.description}
                 </p>
               </div>
             </div>

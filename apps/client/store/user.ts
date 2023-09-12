@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @nx/enforce-module-boundaries */
+import axios from 'axios'
 import { type UserDto } from '../../../libs/dto/src/lib/user/user.dto'
 import { create } from 'zustand'
 
@@ -44,7 +45,10 @@ const user: UserDto = {
   gender: 'male',
   wantsGender: 'female',
   id: '1',
-  isVerified: false
+  isVerified: false,
+  isProfileConfigured: false,
+  dislikedBy: [],
+  matches: []
 }
 
 // Define la estructura de UserDto
@@ -67,30 +71,31 @@ export const useUserStore = create<UserStore>((set) => ({
   } || null,
   setUser: async (id: string) => {
     try {
-      const pinsResponse = await fetch(`/api/user/pins/${id}`)
-      const interestsResponse = await fetch(`/api/user/interests/${id}`)
-      const userResponse = await fetch(`/api/user/${id}`)
+      // Obtener los datos del usuario
+      // Obtener los pines del usuario
+      // Obtener los intereses del usuario
+      const dataUser = [
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/${id}`),
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/${id}/pins`),
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/${id}/interests`)
+      ]
 
-      if (!pinsResponse.ok || !interestsResponse.ok || !userResponse.ok) {
-        throw new Error('Error en la solicitud')
-      }
-
-      const pinsData: string[] = await pinsResponse.json()
-      const interestsData: string[] = await interestsResponse.json()
-      const userR: UserDto = await userResponse.json()
-
-      const user: User = {
-        info: userR,
-        pins: pinsData,
-        interests: interestsData
-      }
+      const [user, pins, interests] = await axios.all(dataUser)
+      console.log(user, pins, interests)
 
       // Actualiza el estado con los datos recibidos
-      set((prevState) => ({
-        userState: user
+      set(() => ({
+        userState: {
+          info: user.data,
+          pins: pins.data,
+          interests: interests.data
+        }
       }))
     } catch (error) {
       // Manejo de errores aquí
+      // TODO: quitar console
+      console.log('x')
+
       console.error('Error al obtener datos del usuario:', error)
     }
   }

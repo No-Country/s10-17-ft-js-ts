@@ -51,7 +51,13 @@ export default function Index () {
   const isAdmin = true
   const pins = useRef<HTMLUListElement>(null)
   const [isScroll, setIsScroll] = useState<boolean>(false)
-  const { userState: user } = useUserStore()
+  const { userState: user, setUser } = useUserStore()
+
+  useEffect(() => {
+    const user = localStorage.getItem('session')
+    const useremp = JSON.parse(user || '{}')
+    setUser(useremp.id)
+  }, [])
 
   useEffect(() => {
     if (pins.current?.scrollWidth) {

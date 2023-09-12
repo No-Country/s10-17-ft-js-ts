@@ -35,7 +35,7 @@ $pl: 40px;
     align-items: center;
     animation: swap-right 0.5s ease-in-out;
     -webkit-animation: swap-right 0.5s ease-in-out;
-    z-index: 2;
+    z-index: 3;
   }
   &__menu-back {
     @extend .header;

@@ -102,27 +102,27 @@ export default function Header () {
         <div className={style['header__menu-options']}>
           <ul>
             <li>
-              <Link className={style.header__perfil} href={'/profile'}>Perfil</Link>
+              <Link onClick={handleMenu} className={style.header__perfil} href={'/profile'}>Perfil</Link>
             </li>
             <li>
-              <Link href={'#'}>Configuración</Link>
+              <Link onClick={handleMenu} href={'#'}>Configuración</Link>
             </li>
             <li>
-              <Link href={'#'}>Notificaciones</Link>
+              <Link onClick={handleMenu} href={'#'}>Notificaciones</Link>
             </li>
             <li>
-              <Link href={'#'}>Quienes somos</Link>
+              <Link onClick={handleMenu} href={'#'}>Quienes somos</Link>
             </li>
             <li>
-              <Link href={'#'}>Avisos Legales</Link>
+              <Link onClick={handleMenu} href={'#'}>Avisos Legales</Link>
             </li>
           </ul>
           <ul>
             <li>
-              <Link href={'#'}>Cambiar cuenta</Link>
+              <Link onClick={handleMenu} href={'#'}>Cambiar cuenta</Link>
             </li>
             <li>
-              <Link href={'/'}>Salir</Link>
+              <Link onClick={handleMenu} href={'/'}>Salir</Link>
             </li>
           </ul>
         </div>
