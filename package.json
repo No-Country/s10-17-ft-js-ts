@@ -2,9 +2,12 @@
   "name": "@seleccionado-10/source",
   "version": "0.0.0",
   "license": "MIT",
+  "main": "./dist/apps/server/main.js",
   "scripts": {
     "prepare": "husky install",
-    "lint": "nx run-many -t lint"
+    "lint": "nx run-many -t lint",
+    "build": "nx run server:build",
+    "start": "node dist/apps/server/main.js"
   },
   "private": true,
   "dependencies": {

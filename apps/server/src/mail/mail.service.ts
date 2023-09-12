@@ -12,20 +12,24 @@ import { Redis } from 'ioredis';
 @Injectable()
 export class MailService {
   private transporter: Transporter;
+  private mail: string;
 
   constructor(
     @Inject(appConfig.KEY) { mail }: ConfigType<typeof appConfig>,
     @InjectRedis() private readonly redis: Redis
   ) {
     this.transporter = createTransport({
-      secure: false,
-      host: mail.host,
-      port: mail.port,
+      // secure: false,
+      // host: mail.host,
+      // port: mail.port,
+      service: 'hotmail',
       auth: {
         user: mail.user,
         pass: mail.password,
       },
     });
+
+    this.mail = mail.user;
   }
 
   async sendVerificationCode(to: string): Promise<string | null> {
@@ -34,7 +38,7 @@ export class MailService {
 
       await this.transporter.sendMail({
         to,
-        from: 'support@wave.com',
+        from: this.mail,
         subject: 'Verification Code',
         text: `Welcome to wave! Here is your verification code: ${code}`,
       });

@@ -1,13 +1,13 @@
 @mixin container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .user {
   padding: 2rem;
   border-radius: 2rem;
-  background-color: #908e8e;
+  background-color: var(--bg-chat-color);
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -23,6 +23,11 @@
     overflow-y: scroll;
     position: relative;
   }
+  &__details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
   &__info {
     display: flex;
     gap: 3rem;
@@ -36,14 +41,15 @@
     @include container;
   }
   &__interests-content {
+    overflow-x: scroll;
     display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
+    gap: 1rem;
   }
   &__interest {
-    background-color: #fff;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
+    background-color: var(--icon-color-400);
+    color: white;
+    padding: .5rem 1rem;
+    border-radius: 0.8rem;
   }
   &__pins {
     @include container;
@@ -78,7 +84,7 @@
   right: 0;
   height: 100%;
   width: 100%;
-  pointer-events: painted;
+  pointer-events: none;
   & button:nth-child(1) {
     transform: rotate(180deg);
   }
@@ -90,13 +96,17 @@
     background: linear-gradient(90deg, rgba(255, 255, 255, 0.56) 0%, var(--bg-color) 100%);
     cursor: pointer;
     font-size: 3rem;
+    pointer-events: painted;
     & svg path {
       fill: var(--text-color);
     };
   }
 }
   &__about {
+    display: flex;
+    flex-direction: column;
     padding-top: 50px;
+    gap: 1rem;
   }
 
   &__buttons {

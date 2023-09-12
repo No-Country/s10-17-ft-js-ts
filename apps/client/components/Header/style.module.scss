@@ -19,6 +19,9 @@ $pl: 40px;
       display: none;
     }
   }
+  &__logoD {
+    display: none;
+  }
   &__menu--active {
     top: 0;
     left: 0;
@@ -85,15 +88,17 @@ $pl: 40px;
     align-items: flex-start;
     justify-content: flex-start;
     gap: 60px;
-    min-width: 310px;
-    width: 20dvw;
+    width: 310px;
     height: 100dvh;
     transition: all 0.3s ease-in-out;
     z-index: 5;
     border-right: 1px solid var(--bg-chat-color);
     background: linear-gradient(180deg, var(--bg-chat-color) 0%, var(--bg-color) 100%);
-    &__logo {
-      padding-left: $pl - 20px;
+    &__logoD {
+      display: block;
+    }
+    &__logoM {
+      display: none;
     }
     &__btn {
       position: absolute;
@@ -113,7 +118,7 @@ $pl: 40px;
     }
     &__menu--active {
       border-radius: 1.5rem;
-      background-color: rgb(64, 64, 64);
+      background-color: var(--bg-chat-color);
       padding: 0;
       top: auto;
       left: 20px;
@@ -122,7 +127,6 @@ $pl: 40px;
       height: 50dvh;
       animation: swap-left-scale 0.4s ease-in-out;
       -webkit-animation: swap-left-scale 0.4s ease-in-out;
-      color: white;
       z-index: 1;
     }
     &__logout, &__perfil {
@@ -140,8 +144,6 @@ $pl: 40px;
     }
     & .opt--theme {
       display: none;
-      & svg {
-      }
     }
     &__msg-mobile {
       display: none;

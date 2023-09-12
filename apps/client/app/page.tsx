@@ -11,6 +11,7 @@ export default function Index () {
        <main className={styles.home__main}>
           <ClientSection/>
           <section className={styles.home__features}>
+            <div className={styles.home__gradient2}></div>
             <article className={styles.home__card}>
               <h2 className={styles['home__card-title']}>Haz amistades!</h2>
               <Icons.Chat width={40} height={40}/>
