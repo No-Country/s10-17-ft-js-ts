@@ -35,15 +35,31 @@ export default function Header () {
         {pathname !== '/messages' ? <p className={style['header__btn-menu--title']}>Mas</p> : null}
       </div>
       <span
-        className={style.header__logo}
+        className={style.header__logoM}
       >
-        <Icons.LogoHome width={40} height={40} />
+        {theme === 'dark'
+          ? <Icons.IsotypeDark width={60} height={60} />
+          : <Icons.IsotypeLight width={60} height={60} />
+          }
+      </span>
+      <span
+        className={style.header__logoD}
+      >
+        {pathname !== '/messages'
+          ? (theme === 'dark'
+              ? <Icons.LogoDark width={150} height={60} />
+              : <Icons.LogoLight width={150} height={60} />
+            )
+          : (theme === 'dark'
+              ? <Icons.IsotypeDark width={60} height={60} />
+              : <Icons.IsotypeLight width={60} height={60} />
+            )}
       </span>
 
       <div>
         <ul className={style.header__options}>
           <li>
-            <Link href={'/'} className={style.header__option}>
+            <Link href={'/home'} className={style.header__option}>
               <Icons.Home width={40} height={40} />
               {pathname !== '/messages' ? <p>Inicio</p> : null}
             </Link>
@@ -52,12 +68,6 @@ export default function Header () {
             <Link href={'/profile'} className={style.header__option}>
               <Icons.User2 width={40} height={40} />
               {pathname !== '/messages' ? <p>Perfil</p> : null}
-            </Link>
-          </li>
-          <li>
-            <Link href={'/home'} className={style.header__option}>
-              <Icons.Home width={40} height={40} />
-              {pathname !== '/messages' ? <p>Explorar?</p> : null}
             </Link>
           </li>
           <li>

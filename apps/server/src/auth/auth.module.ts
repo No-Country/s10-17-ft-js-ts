@@ -27,6 +27,8 @@ import { MailModule } from '../mail/mail.module';
         config: {
           host: redis.host,
           port: redis.port,
+          password: redis.password,
+          username: redis.username,
         },
       }),
     }),

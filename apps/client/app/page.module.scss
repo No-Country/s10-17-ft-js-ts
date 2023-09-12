@@ -1,7 +1,7 @@
 @import '../styles/variables';
 
 .home {
-  overflow-x: hidden;
+  overflow: hidden;
   width: 100dvw;
   height: 100%;
   position: relative;
@@ -42,18 +42,23 @@
     flex-direction: column;
     align-items: center;
     gap: 5rem;
+    position: relative;
   }
   &__image {
-    width: 70%;
-    box-shadow: 0px 2.73432px 10.28846px 0px rgba(105, 12, 255, 0.22), 0px 6.35751px 23.92147px 0px rgba(105, 12, 255, 0.32), 0px 11.41661px 42.95742px 0px rgba(105, 12, 255, 0.39), 0px 18.94735px 71.29341px 0px rgba(105, 12, 255, 0.46), 0px 37px 205.27466px 0px rgba(105, 12, 255, 0.63), 0px 40px 444px 0px rgba(255, 70, 12, 0.75);
+    margin-left: 50px;
+    width: 100%;
   }
   &__title {
     font-weight: 800;
     & b {
-      color: var(--title-color);
+      color: var(--icon-color-500);
     }
   }
+  &__description {
+    color: var(--text-color);
+  }
   &__features {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 3rem;
@@ -75,6 +80,30 @@
   &__card-title {
     font-weight: 800;
     color: var(--title-color);
+  }
+  &__gradient {
+    top: -450px;
+    left: -350px;
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    flex-shrink: 0;
+    border-radius: 1155px;
+    background: radial-gradient(41.76% 41.76% at 50% 50%, var(--icon-color-400) 0%, rgba(191, 9, 255, 0.00) 100%);
+    filter: blur(10px);
+    z-index: -1; 
+  }
+  &__gradient2 {
+    top: -300px;
+    right: -100px;
+    position: absolute;
+    width: 269px;
+    height: 336px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: radial-gradient(41.76% 41.76% at 50% 50%, #FBFF48 0%, #FF9820 100%);
+    filter: blur(100px);
+    z-index: -1; 
   }
 }
 
@@ -122,14 +151,16 @@
     &__gradient {
       top: -600px;
       left: -400px;
-      position: absolute;
       width: 1155px;
       height: 1155px;
-      flex-shrink: 0;
-      border-radius: 1155px;
-      background: radial-gradient(41.76% 41.76% at 50% 50%, var(--icon-color-400) 0%, rgba(191, 9, 255, 0.00) 100%);
       filter: blur(150px);
-      z-index: -1; 
+    }
+    &__gradient2 {
+      top: 0px;
+      right: -100px;
+      width: 509px;
+      height: 506px;
+      filter: blur(150px);
     }
   }  
 }
