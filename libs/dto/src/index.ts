@@ -8,4 +8,9 @@ export * from './lib/user/update-user.dto';
 export * from './lib/auth/login.dto'
 export * from './lib/auth/auth-response.dto'
 export * from './lib/dbseed/genres.dto'
+export * from './lib/user/update-categorys-user.dto'
+export * from './lib/enums/avatar.enum'
+export * from './lib/enums/gender.enum'
+export * from './lib/enums/lookinFor.enum'
 export * from './lib/recom/recommendations.dto'
+

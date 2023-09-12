@@ -1,8 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ArrayMaxSize, ArrayMinSize, IsArray, IsDateString, IsNumber, IsOptional, IsString } from 'class-validator';
+import { ArrayMaxSize, ArrayMinSize, IsArray, IsDateString, IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
+import { GenderEnum } from '../enums/gender.enum';
+import { Avatars } from '../enums/avatar.enum';
+import { LookingForEnum } from '../enums/lookinFor.enum';
 
 
-export class UpdateUserDto{
+export class UpdateUserDto {
 
   @ApiProperty({
     description: 'The first name of the user',
@@ -33,6 +36,7 @@ export class UpdateUserDto{
     example: 'text of exam',
   })
   @IsString()
+  @IsEnum(GenderEnum, { each: true })
   @IsOptional()
   wantsGender?: string;
 
@@ -48,8 +52,8 @@ export class UpdateUserDto{
   ageRange?: number[];
 
   @ApiProperty({
-    description: 'The users date of birth. Only YYYY/MM/DD format',
-    example: 'YYYY/MM/DD',
+    description: 'The users date of birth. Only YYYY-MM-DD format',
+    example: '2022-11-08',
   })
   @IsOptional()
   @IsDateString()
@@ -57,20 +61,56 @@ export class UpdateUserDto{
 
 
   @ApiProperty({
-      description:"The gender identity of the user.",
+    description: "The gender identity of the user (Enum).",
     example: 'male',
+    enum: GenderEnum
   })
   @IsOptional()
+  @IsEnum(GenderEnum, { each: true })
   @IsString()
   gender?: string;
 
   @ApiProperty({
-      description:" The user's current address",
-    example: 'Curazao',
+    description: 'lookingFor',
+    example: '',
   })
   @IsOptional()
   @IsString()
-  address?: string;
+  @IsEnum(LookingForEnum, { each: true })
+  lookingFor?: string
 
+
+  @ApiProperty({
+    description: 'avatar',
+    example: 'link of avatar ENUM',
+  })
+  @IsOptional()
+  @IsString()
+  @IsEnum(Avatars, { each: true })
+  avatar?: string
+
+  @ApiProperty({
+    description: 'latitude',
+    example: '40.7128',
+  })
+  @IsNumber()
+  @IsOptional()
+  latitude?: number
+
+  @ApiProperty({
+    description: 'longitude',
+    example: '-74.0060',
+  })
+  @IsNumber()
+  @IsOptional()
+  longitude?: number
+
+  @ApiProperty({
+    description: 'range in KM ',
+    example: 'default: 200',
+  })
+  @IsNumber()
+  @IsOptional()
+  zone?: number
 
 }

@@ -1,4 +1,4 @@
-import { CreateUserDto, UpdateUserDto, UserDto } from '@dto';
+import { CategoryDto, CreateUserDto, UpdateUserDto, UserDto } from '@dto';
 import {
   Inject,
   Injectable,
@@ -9,6 +9,8 @@ import { UserRepository, UserRepositoryKey } from './user.repository';
 import * as bcrypt from 'bcrypt';
 import { UserDocument } from './entities/user.entity';
 import { UserDislike } from './entities/user-dislike.entity';
+import { UserPin } from './entities/user-pin.entity';
+import { UserCategory } from './entities/user-categorys.entity';
 // import { appConfig } from '../app/app.config';
 // import { ConfigType } from '@nestjs/config';
 
@@ -113,13 +115,15 @@ export class UserService {
         // esto es un match.
 
         // Eliminarlo de los likedBy
-        const userRegisteredUpdated =
-          await this.userRepository.updateRemoveLike(userId, idLiked);
-        console.log('userRegisteredUpdated', userRegisteredUpdated);
+        await this.userRepository.updateRemoveLike(userId, idLiked);
         // agregar el _id del usuario a la propiedad match del otro. x2
 
-        await this.userRepository.updateAddMatch(userId, idLiked);
+        const updatedUser = await this.userRepository.updateAddMatch(
+          userId,
+          idLiked
+        );
         await this.userRepository.updateAddMatch(idLiked, userId);
+        updatedLikesUser = updatedUser;
 
         // lanzar notificacion de match
       } else {
@@ -217,6 +221,86 @@ export class UserService {
       return userRegisteredUpdated;
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async updateCategorys(updateCategorys: CategoryDto[], userId: string) {
+    // const example = [{
+    //   name: "Music",
+    //   rate: 1,
+    //   pins: [{
+    //     name: "ashe",
+    //     imgUrl: "ashe.png",
+    //     subCategorys: ["accion", "drama", "terror"]
+    //   }]
+    // },
+    // {
+    //   name: "Videogames",
+    //   rate: 2,
+    //   pins: [{
+    //     name: "ashe",
+    //     imgUrl: "ashe.png",
+    //     subCategorys: ["accion", "drama", "terror"]
+    //   }]
+    // },
+    // {
+    //   name: "Books",
+    //   rate: 3,
+    //   pins: [{
+    //     name: "Counter-Strike 1.6",
+    //     imgUrl: "Counter-Strike1.6.png",
+    //     subCategorys: ["accion", "drama", "terror"]
+    //   }]
+    // },
+    // {
+    //   name: "string",
+    //   rate: 4,
+    //   pins: [{
+    //     name: "ashe",
+    //     imgUrl: "ashe.png",
+    //     subCategorys: ["accion", "drama", "terror"]
+    //   }]
+    // },
+    // {
+    //   name: "string",
+    //   rate: 5,
+    //   pins: [{
+    //     name: "ashe",
+    //     imgUrl: "ashe.png",
+    //     subCategorys: ["accion", "drama", "terror"]
+    //   }]
+    // },
+    // ]
+    try {
+      updateCategorys.forEach(async ({ name, rate, pins }) => {
+        // creo los pines
+        console.log(pins);
+        const newPins = pins.map(
+          (p) => new UserPin(p.name, p.imgUrl, p.subCategories)
+        );
+        // creo la categoria
+        const categorys = new UserCategory(name, rate, newPins);
+
+        // pusheo la categoria
+        // verifico si ya existe la categoria.
+
+        const existingCategory = await this.userRepository.existingCategory(
+          userId,
+          categorys.name
+        );
+
+        if (existingCategory) {
+          // estaba creado y lo actualiza.
+          await this.userRepository.updateCategory(userId, categorys);
+        } else {
+          // lo crea nuevo
+          await this.userRepository.updateAddCategory(userId, categorys);
+        }
+      });
+
+      return 'Categories updated successfully';
+    } catch (error) {
+      throw new BadRequestException(error);
     }
   }
   // async deleteOne(id: string): Promise<UserDto | undefined | null>{

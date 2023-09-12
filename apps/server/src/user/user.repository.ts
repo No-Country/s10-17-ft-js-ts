@@ -2,6 +2,7 @@ import { CreateUserDto, UserDto, UpdateUserDto } from '@dto';
 import { FilterQuery } from 'mongoose';
 import { User, UserDocument } from './entities/user.entity';
 import { UserDislike } from './entities/user-dislike.entity';
+import { UserCategory } from './entities/user-categorys.entity';
 
 export interface UserRepository {
   create(createUserDto: CreateUserDto): Promise<UserDto>;
@@ -34,6 +35,18 @@ export interface UserRepository {
   updateDislikeTimes(
     idDisliked: string,
     userId: string
+  ): Promise<UserDto | undefined | null>;
+  existingCategory(
+    userId: string,
+    name: string
+  ): Promise<UserDto | undefined | null>;
+  updateAddCategory(
+    userId: string,
+    category: UserCategory
+  ): Promise<UserDto | undefined | null>;
+  updateCategory(
+    userId: string,
+    category: UserCategory
   ): Promise<UserDto | undefined | null>;
 }
 

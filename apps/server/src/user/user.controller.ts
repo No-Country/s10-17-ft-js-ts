@@ -1,9 +1,10 @@
-import { UpdateUserDto } from '@dto';
+import { CategoryDto, UpdateUserDto } from '@dto';
 import {
   Body,
   Controller,
   Get,
   Param,
+  ParseArrayPipe,
   Post,
   Put,
   UseGuards,
@@ -18,6 +19,7 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
+import { User } from '../auth/decorators/user.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UserService } from './user.service';
 
@@ -32,25 +34,53 @@ export class UserController {
     // });
   }
 
+  // los controller de like y dislike, ponerlos con el jwt. V
+  // arreglar el automapper en findOne.V
+  // agregar endpoint para devolver informacion del usuario V
+  // subir imagenes a cloudinary. V
+  // Crear por lo menos la maqueta de las categories y los pines
+  // ver la funcion de distancia con API de google MAPS. V
+  // en user agregar: lookingFor, avatar, coordenadas, rango de KM, 1/2
+
   @ApiOperation({ summary: 'Get all users' })
   @Get('/all')
   getAll() {
     return this.userService.getAll();
   }
 
-  @ApiOperation({ summary: 'Get a user by ID' })
+  @ApiOperation({ summary: 'Get user by ID' })
   @Get('/:id')
   getById(@Param('id') id: string) {
     return this.userService.getOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Get user by JWT' })
+  @Get()
+  getByJWT(@User('id') id: string) {
+    return this.userService.getOne(id);
+  }
+
+  @ApiOperation({ summary: 'update categorys' })
+  @ApiBody({ type: CategoryDto })
+  @UseGuards(JwtAuthGuard)
+  @Put('/categorys')
+  updateCategorys(
+    @Body(new ParseArrayPipe({ items: CategoryDto }))
+    updateCategorysDto: CategoryDto[],
+    @User('id') id: string
+  ) {
+    return this.userService.updateCategorys(updateCategorysDto, id);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @ApiBody({ type: UpdateUserDto })
   @ApiOperation({ summary: 'Update user information' })
-  @Put('/:id')
+  @Put()
   @UseInterceptors(FileInterceptor('file'))
   update(
     @Body() updateUserDto: UpdateUserDto,
-    @Param('id') id: string
+    @User('id') id: string
     // @UploadedFile() file: Express.Multer.File
   ) {
     // if(file){
@@ -65,6 +95,7 @@ export class UserController {
   // delete(@Param('id') id: string){
   //   return this.userService.deleteOne(id)
   // }
+
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Like a user' })
   @ApiNotFoundResponse({ description: `User not found` })
@@ -72,20 +103,14 @@ export class UserController {
     description: `Cannot like yourself. User IDs must be different`,
   })
   @ApiParam({
-    name: 'userId',
-    description: 'ID del usuario que dio el like',
-    required: true,
-    type: 'string',
-  })
-  @ApiParam({
     name: 'idLiked',
     description: 'ID del usuario que fue likeado',
     required: true,
     type: 'string',
   })
-  @Post('/like/:userId/:idLiked')
-  like(@Param('userId') userId: string, @Param('idLiked') idLiked: string) {
-    return this.userService.likedBy(userId, idLiked);
+  @Post('/like/:idLiked')
+  like(@User('id') id: string, @Param('idLiked') idLiked: string) {
+    return this.userService.likedBy(id, idLiked);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -96,22 +121,13 @@ export class UserController {
   })
   @ApiBadRequestResponse({ description: `User 1 already liked user 2` })
   @ApiParam({
-    name: 'userId',
-    description: 'ID del usuario que dio el like',
-    required: true,
-    type: 'string',
-  })
-  @ApiParam({
     name: 'idDisliked',
     description: 'ID del usuario que fue dislikeado',
     required: true,
     type: 'string',
   })
-  @Post('/dislike/:userId/:idDisliked')
-  dislike(
-    @Param('userId') userId: string,
-    @Param('idDisliked') idDisliked: string
-  ) {
-    return this.userService.disLikeBy(userId, idDisliked);
+  @Post('/dislike/:idDisliked')
+  dislike(@Param('idDisliked') idDisliked: string, @User('id') id: string) {
+    return this.userService.disLikeBy(id, idDisliked);
   }
 }
