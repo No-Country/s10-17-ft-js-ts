@@ -55,14 +55,11 @@ export class AuthService {
       throw new InternalServerErrorException(
         `Unable to retrieve user with email "${email}" from database`
       );
-    console.log(user);
-    const dataForReturn = {
+
+    return {
       user,
       access_token: await this.jwtService.signAsync({ email, id: userDoc._id }),
     };
-    console.log(dataForReturn);
-
-    return dataForReturn;
   }
 
   async login(credentials: LoginDto): Promise<AuthResponseDto> {
