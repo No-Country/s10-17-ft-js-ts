@@ -125,8 +125,17 @@ export class UserDto {
     description: 'range in KM ',
     example: 'default: 200',
   })
-  @IsNumber()
   zone: number
 
+  @ApiProperty({
+    description: 'latitude',
+    example: '40.7128',
+  })
+  latitude?: number
 
+  @ApiProperty({
+    description: 'longitude',
+    example: '-74.0060',
+  })
+  longitude?: number
 }

@@ -56,7 +56,7 @@ export const appSchema = Joi.object({
   CLOUD_NAME: Joi.string().required(),
   CLOUDINARY_API_KEY: Joi.string().required(),
   CLOUDINARY_API_SECRET: Joi.string().required(),
-  
+
   REDIS_PASSWORD: Joi.string().optional().default(''),
   REDIS_USERNAME: Joi.string().optional().default('default'),
 });
