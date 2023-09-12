@@ -1,12 +1,11 @@
 import { Mapper, createMap, forMember, mapFrom } from '@automapper/core';
+import { PojosMetadataMap } from '@automapper/pojos';
+import { UserDto } from '@dto';
 import {
   AutomapperProfile,
   InjectMapper,
 } from '@timonmasberg/automapper-nestjs';
-import { UserDto } from '@dto';
 import { UserDocument } from './entities/user.entity';
-import { PojosMetadataMap } from '@automapper/pojos';
-import { Schema } from 'mongoose';
 
 export class UserProfile extends AutomapperProfile {
   constructor(@InjectMapper() mapper: Mapper) {
@@ -22,7 +21,7 @@ export class UserProfile extends AutomapperProfile {
         'UserDto',
         forMember<UserDocument, UserDto>(
           (destination) => destination.id,
-          mapFrom((source) => source._id)
+          mapFrom((source) => source._id.toHexString())
         )
       );
     };
@@ -30,10 +29,11 @@ export class UserProfile extends AutomapperProfile {
 
   createMetadata(): void {
     PojosMetadataMap.create<UserDocument>('UserDocument', {
-      _id: Schema.Types.ObjectId,
+      _id: String,
       firstName: String,
       lastName: String,
       description: String,
+      images: Array,
       email: String,
       birthdate: Date,
       gender: String,
@@ -44,12 +44,15 @@ export class UserProfile extends AutomapperProfile {
       matches: Array,
       categorys: Array,
       isProfileConfigured: Boolean,
+      latitude: Number,
+      longitude: Number,
     });
 
     PojosMetadataMap.create<UserDto>('UserDto', {
       firstName: String,
       lastName: String,
       description: String,
+      images: Array,
       email: String,
       birthdate: Date,
       gender: String,
@@ -60,6 +63,8 @@ export class UserProfile extends AutomapperProfile {
       matches: Array,
       categorys: Array,
       isProfileConfigured: Boolean,
+      latitude: Number,
+      longitude: Number,
     });
   }
 }

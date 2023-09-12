@@ -36,10 +36,14 @@ export class UserMongoRepository implements UserRepository {
     id: string,
     updateUserDto: UpdateUserDto
   ): Promise<UserDto | undefined | null> {
-    const updatedData = { ...updateUserDto, isConfigured: true };
-    return await this.userModel.findOneAndUpdate({ _id: id }, updatedData, {
-      new: true,
-    });
+    const user = await this.userModel.findOneAndUpdate(
+      { _id: id },
+      updateUserDto,
+      {
+        new: true,
+      }
+    );
+    return this.mapper.map(user, 'UserDocument', 'UserDto');
   }
 
   async findById(id: string): Promise<UserDto | null> {
@@ -52,8 +56,10 @@ export class UserMongoRepository implements UserRepository {
     return user;
   }
 
-  async findOne(filter: FilterQuery<User>): Promise<UserDto | null> {
-    const user = await this.userModel.findOne(filter);
+  async findOne(id: string): Promise<UserDto | null> {
+    const user = await this.userModel
+      .findOne({ _id: id })
+      .populate({ path: 'matches', model: 'User' });
     if (!user) return null;
     return this.mapper.map(user, 'UserDocument', 'UserDto');
   }
@@ -126,7 +132,17 @@ export class UserMongoRepository implements UserRepository {
     );
 
     if (!userUpdated) return null;
+    return this.mapper.map(userUpdated, 'UserDocument', 'UserDto');
+  }
 
+  async confirmProfileConfigured(id: string): Promise<UserDto | null> {
+    const userUpdated = await this.userModel.findOneAndUpdate(
+      { _id: id },
+      { isProfileConfigured: true },
+      { new: true }
+    );
+
+    if (!userUpdated) return null;
     return this.mapper.map(userUpdated, 'UserDocument', 'UserDto');
   }
 
@@ -212,6 +228,18 @@ export class UserMongoRepository implements UserRepository {
     if (user) return null;
 
     return this.mapper.map(user, 'UserDocument', 'UserDto');
+  }
+
+  async updateAddImage(
+    userId: string,
+    URL: string
+  ): Promise<UserDto | null | undefined> {
+    const updatedUser = await this.userModel.findOneAndUpdate(
+      { _id: userId },
+      { $addToSet: { images: URL } },
+      { new: true }
+    );
+    return this.mapper.map(updatedUser, 'UserDocument', 'UserDto');
   }
 
   // const updatedUser = await this.userModel.findOneAndUpdate(

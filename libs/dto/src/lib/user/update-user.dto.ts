@@ -73,6 +73,7 @@ export class UpdateUserDto {
   @ApiProperty({
     description: 'lookingFor',
     example: '',
+    enum: LookingForEnum
   })
   @IsOptional()
   @IsString()
@@ -82,7 +83,8 @@ export class UpdateUserDto {
 
   @ApiProperty({
     description: 'avatar',
-    example: 'link of avatar ENUM',
+    example: '',
+    enum: Avatars
   })
   @IsOptional()
   @IsString()

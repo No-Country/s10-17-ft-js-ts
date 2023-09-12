@@ -31,12 +31,12 @@ export class UserDto {
   @IsNotEmpty()
   description: string;
 
-  // @ApiProperty({
-  //   description: 'array images',
-  //   example: '["urlexample.jpg", "url2example.jpg"]',
-  // })
-  // @IsArray()
-  // images: string[];
+  @ApiProperty({
+    description: 'array images',
+    example: '["urlexample.jpg", "url2example.jpg"]',
+  })
+  @IsArray()
+  images: string[];
 
   @ApiProperty({
     description: 'birthdate (valid Format ISO)',
@@ -125,8 +125,17 @@ export class UserDto {
     description: 'range in KM ',
     example: 'default: 200',
   })
-  @IsNumber()
   zone: number
 
+  @ApiProperty({
+    description: 'latitude',
+    example: '40.7128',
+  })
+  latitude?: number
 
+  @ApiProperty({
+    description: 'longitude',
+    example: '-74.0060',
+  })
+  longitude?: number
 }

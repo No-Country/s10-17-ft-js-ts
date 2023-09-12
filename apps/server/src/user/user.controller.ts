@@ -3,10 +3,12 @@ import {
   Body,
   Controller,
   Get,
+  Inject,
   Param,
   ParseArrayPipe,
   Post,
   Put,
+  UploadedFile,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -22,25 +24,29 @@ import {
 import { User } from '../auth/decorators/user.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UserService } from './user.service';
+import { v2 as cloudinarys } from 'cloudinary';
+import { ConfigType } from '@nestjs/config';
+import { appConfig } from '../app/app.config';
 
 @ApiTags('User')
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {
-    // cloudinary.config({
-    //   cloud_name: this.configService.get<string>('cloudinary.cloudName'),
-    //   api_key: this.configService.get<string>('cloudinary.apiKey'),
-    //   api_secret: this.configService.get<string>('cloudinary.apiSecret'),
+  constructor(
+    private readonly userService: UserService,
+    @Inject(appConfig.KEY) { cloudinary }: ConfigType<typeof appConfig>
+  ) {
+    cloudinarys.config({
+      cloud_name: cloudinary.cloud_name,
+      api_key: cloudinary.api_key,
+      api_secret: cloudinary.api_secret,
+    });
+
+    // cloudinarys.config({
+    //   cloud_name: cloudinary.cloud_name,
+    //   api_key: cloudinary.api_key,
+    //   api_secret: cloudinary.api_secret,
     // });
   }
-
-  // los controller de like y dislike, ponerlos con el jwt. V
-  // arreglar el automapper en findOne.V
-  // agregar endpoint para devolver informacion del usuario V
-  // subir imagenes a cloudinary. V
-  // Crear por lo menos la maqueta de las categories y los pines
-  // ver la funcion de distancia con API de google MAPS. V
-  // en user agregar: lookingFor, avatar, coordenadas, rango de KM, 1/2
 
   @ApiOperation({ summary: 'Get all users' })
   @Get('/all')
@@ -74,20 +80,19 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @ApiBody({ type: UpdateUserDto })
+  @ApiBody({ type: [UpdateUserDto] })
   @ApiOperation({ summary: 'Update user information' })
   @Put()
   @UseInterceptors(FileInterceptor('file'))
-  update(
+  async update(
     @Body() updateUserDto: UpdateUserDto,
-    @User('id') id: string
-    // @UploadedFile() file: Express.Multer.File
+    @User('id') id: string,
+    @UploadedFile() file: Express.Multer.File
   ) {
-    // if(file){
-    // const url = await this.userService.uploadImage(file)
-    // const updateimages = await this.userService.update(url)
-    // }
-
+    if (file) {
+      const url = await this.userService.uploadFile(file);
+      await this.userService.addUrlImages(url, id);
+    }
     return this.userService.update(id, updateUserDto);
   }
 
@@ -129,5 +134,18 @@ export class UserController {
   @Post('/dislike/:idDisliked')
   dislike(@Param('idDisliked') idDisliked: string, @User('id') id: string) {
     return this.userService.disLikeBy(id, idDisliked);
+  }
+
+  @UseInterceptors(FileInterceptor('file'))
+  @Get('/prueba/:id')
+  async prueba(
+    // @Body('email') email: string,
+    @UploadedFile() file: Express.Multer.File,
+    @Param('id') id: string
+  ) {
+    const url = await this.userService.prueba(id);
+    // const updateimages = await this.userService.update(url)
+
+    return url;
   }
 }
