@@ -13,7 +13,7 @@ export function useFormFields<T> () {
   }
 
   function imperativeChange (name: keyof T, value: string) {
-    setFields({ ...fields, [name]: value.trim() } as Fields<T>)
+    setFields({ ...fields, [name]: value } as Fields<T>)
   }
 
   return { fields, handleChange, imperativeChange }
