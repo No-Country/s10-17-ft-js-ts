@@ -68,7 +68,7 @@ export class UserController {
   }
 
   @ApiOperation({ summary: 'update categorys' })
-  @ApiBody({ type: CategoryDto })
+  @ApiBody({ type: [CategoryDto] })
   @UseGuards(JwtAuthGuard)
   @Put('/categorys')
   updateCategorys(
@@ -80,7 +80,7 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @ApiBody({ type: [UpdateUserDto] })
+  @ApiBody({ type: UpdateUserDto })
   @ApiOperation({ summary: 'Update user information' })
   @Put()
   @UseInterceptors(FileInterceptor('file'))
@@ -136,16 +136,16 @@ export class UserController {
     return this.userService.disLikeBy(id, idDisliked);
   }
 
-  @UseInterceptors(FileInterceptor('file'))
-  @Get('/prueba/:id')
-  async prueba(
-    // @Body('email') email: string,
-    @UploadedFile() file: Express.Multer.File,
-    @Param('id') id: string
-  ) {
-    const url = await this.userService.prueba(id);
-    // const updateimages = await this.userService.update(url)
+  // @UseInterceptors(FileInterceptor('file'))
+  // @Get('/prueba/:id')
+  // async prueba(
+  //   // @Body('email') email: string,
+  //   @UploadedFile() file: Express.Multer.File,
+  //   @Param('id') id: string
+  // ) {
+  //   const url = await this.userService.prueba(id);
+  //   // const updateimages = await this.userService.update(url)
 
-    return url;
-  }
+  //   return url;
+  // }
 }
