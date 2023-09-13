@@ -47,8 +47,9 @@ export function AboutYou () {
       setError(true)
     } else {
       // @ts-expect-error the next error is not a problem, because we are sure that the fields are not null
-      const birthdate = `${fields.year}-${meses[fields.month]}-${fields.day}` as Date
+      const birthdate = `${fields.year}-${meses[fields.month]}-${fields.day.length === 1 ? `0${fields.day}` : fields.day}` as Date
       const { day: _day, month: _month, year: _year, ...rest } = fields
+      console.log(birthdate)
       addData({ ...rest, birthdate })
       nextStep()
     }
@@ -75,7 +76,7 @@ export function AboutYou () {
 
         <span>
           <label>Género</label>
-          <Select name='gender' handleChange={handleChange} options={['Masculino', 'Femenino']} placeholder='Género' disabled={false} />
+          <Select name='gender' handleChange={handleChange} options={['Hombre', 'Mujer', 'No binario', 'Otros']} placeholder='Género' disabled={false} />
         </span>
 
         <span>

@@ -41,7 +41,7 @@ export function SetupStepProvider ({ children }: { children: React.ReactNode }) 
   }
 
   useEffect(() => {
-    if (categories) {
+    if (categories && session?.access_token) {
       const toSendCategories: Category[] = []
 
       Object.entries(categories).forEach(([key, value]) => {
@@ -53,7 +53,7 @@ export function SetupStepProvider ({ children }: { children: React.ReactNode }) 
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/categorys`, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${session?.access_token}`
+          Authorization: `Bearer ${session.access_token}`
         },
         method: 'PUT',
         body: JSON.stringify(toSendCategories)
