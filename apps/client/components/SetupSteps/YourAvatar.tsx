@@ -36,7 +36,7 @@ export function YourAvatar () {
   const { prevStep, addData, formData } = useSetupSteps()
   const [avatar, setAvatar] = useState(links[0])
   const [shownAvatars, setShownAvatars] = useState(links.slice(1, links.length))
-  const { session } = useSession()
+  const { session, setSession } = useSession()
   const router = useRouter()
 
   const handleAvatar = (link: string) => {
@@ -59,6 +59,8 @@ export function YourAvatar () {
       })
 
       if (response.ok) {
+        const json = await response.json()
+        setSession({ user: json, access_token: session?.access_token as string })
         router.push('/home')
       }
     } catch (e) {
