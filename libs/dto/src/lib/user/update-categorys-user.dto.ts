@@ -3,7 +3,7 @@ import { ArrayMinSize, IsArray, IsEnum, IsNotEmpty, IsNumber, IsString, Validate
 import { CategoryEnum } from '../enums/category.enum';
 import { ApiProperty } from '@nestjs/swagger';
 
-
+// agregar el nombre de las catergorias dentro de los pines. lo tengo que cambiar aca, en la clase, y en el servicio.
 class PinDto {
   @ApiProperty({
     description: 'The name of the pin',
@@ -20,6 +20,16 @@ class PinDto {
   @IsNotEmpty()
   @IsString()
   imgUrl: string
+
+  @ApiProperty({
+    description: 'The name of the category. Should be one of the values from the CategoryEnum',
+    example: 'Category Name',
+    enum: [CategoryEnum],
+  })
+  @IsString()
+  @IsNotEmpty()
+  @IsEnum(CategoryEnum, { each: true })
+  categoryName: CategoryEnum;
 
   @ApiProperty({
     description: 'An array of subcategories associated with the pin',
