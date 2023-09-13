@@ -62,6 +62,7 @@
     grid-template-rows: repeat(3, 1fr);
     gap: 1rem;
     overflow-x: scroll;
+    margin-inline: 3rem;
   }
   &__pin {
     width: 70px;
@@ -93,7 +94,6 @@
     height: calc(100% - 4rem);
     display: grid;
     place-items: center;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.56) 0%, var(--bg-color) 100%);
     cursor: pointer;
     font-size: 3rem;
     pointer-events: painted;
@@ -129,10 +129,11 @@
 @media (width >= 1000px) {
   .user {
     max-height: 90dvh;
+    gap: 0;
     &__content {
       gap: 3rem;
       height: 100%;
-      overflow-y: hidden;
+      overflow-y: scroll;
     }
     &__info {
       gap: 5rem;
@@ -151,6 +152,7 @@
     }
     &__buttons {
       padding-block: 50px;
+      font-size: 8rem;
     }
   }
 }

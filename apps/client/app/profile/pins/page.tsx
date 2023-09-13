@@ -49,11 +49,11 @@ export default function Index () {
           </button>
           <h3 className={style.pins__counter}>
             <b>
-              {userState?.user.categorys[0].pins
-                .concat(userState?.user.categorys[1].pins)
-                .concat(userState?.user.categorys[2].pins)
-                .concat(userState?.user.categorys[3].pins)
-                .concat(userState?.user.categorys[4].pins).length}
+              {userState?.user.categorys[0]?.pins
+                .concat(userState?.user.categorys[1]?.pins)
+                .concat(userState?.user.categorys[2]?.pins)
+                .concat(userState?.user.categorys[3]?.pins)
+                .concat(userState?.user.categorys[4]?.pins).length}
             </b>/
             <h4>{40}</h4>
           </h3>
@@ -62,11 +62,11 @@ export default function Index () {
         <div className={style['pins__edit-pins']}>
           <ul className={style.pins__content} ref={pins}>
             {
-              userState?.user.categorys[0].pins
-                .concat(userState?.user.categorys[1].pins)
-                .concat(userState?.user.categorys[2].pins)
-                .concat(userState?.user.categorys[3].pins)
-                .concat(userState?.user.categorys[4].pins)
+              userState?.user.categorys[0]?.pins
+                .concat(userState?.user.categorys[1]?.pins)
+                .concat(userState?.user.categorys[2]?.pins)
+                .concat(userState?.user.categorys[3]?.pins)
+                .concat(userState?.user.categorys[4]?.pins)
                 .map((_, i) => (
                 <figure key={i} className={style.pins__pin}>
                   <img src="https://picsum.photos/200/300" alt="" />

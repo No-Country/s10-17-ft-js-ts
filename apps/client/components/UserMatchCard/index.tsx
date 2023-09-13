@@ -140,7 +140,7 @@ export default function UserMatchCard ({ user, setMatches, matches }: Props) {
 
       <div className={style.user__buttons}>
         <button onClick={handleDislike} className={style.user__button}>✖️</button>
-        <button onClick={handleLike} className={style.user__button}>✅</button>
+        <button onClick={handleLike} className={style.user__button}>✔️</button>
       </div>
     </div>
   )

@@ -68,7 +68,7 @@ export default function Index () {
                   onChange={(e) => handleAboutForm(e, userState?.user, setUser)}
                   value={userState?.user.firstName}
                 />
-                <span>{userState && userState?.user?.firstName.length < 3 && 'El nombre debe tener al menos 3 caracteres'}</span>
+                <span>{userState && userState?.user?.firstName?.length < 3 && 'El nombre debe tener al menos 3 caracteres'}</span>
               </label>
               <label className={style.aboutme__lastname}>
                 Apellido
@@ -78,7 +78,7 @@ export default function Index () {
                   onChange={(e) => handleAboutForm(e, userState?.user, setUser)}
                   value={userState?.user.lastName}
                 />
-                <span>{userState && userState?.user.lastName.length < 3 && 'El apellido debe tener al menos 3 caracteres'}</span>
+                <span>{userState && userState?.user.lastName?.length < 3 && 'El apellido debe tener al menos 3 caracteres'}</span>
               </label>
             </div>
             <label className={style.aboutme__description}>
@@ -92,7 +92,7 @@ export default function Index () {
                 value={userState?.user.description}
               >
               </textarea>
-              <span>{userState && userState?.user.description.length < 8 && 'La descripción debe tener al menos 8 caracteres'}</span>
+              <span>{userState && userState?.user.description?.length < 8 && 'La descripción debe tener al menos 8 caracteres'}</span>
             </label>
             <span className={style.aboutme__location}>
               <Icons.Location width={30} height={30} />
