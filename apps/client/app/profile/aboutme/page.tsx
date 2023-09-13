@@ -68,7 +68,7 @@ export default function Index () {
                   onChange={(e) => handleAboutForm(e, userState?.user, setUser)}
                   value={userState?.user.firstName}
                 />
-                <span>{userState && userState?.user.firstName.length < 3 && 'El nombre debe tener al menos 3 caracteres'}</span>
+                <span>{userState && userState?.user?.firstName.length < 3 && 'El nombre debe tener al menos 3 caracteres'}</span>
               </label>
               <label className={style.aboutme__lastname}>
                 Apellido
