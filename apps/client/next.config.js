@@ -10,6 +10,9 @@ const nextConfig = {
   nx: {
     svgr: false,
   },
+  images: {
+    domains: ['res.cloudinary.com'],
+  },
 };
 
 const plugins = [

@@ -1,19 +1,20 @@
 'use client'
 import { createContext, useState } from 'react'
+import { User } from 'types'
 
 interface IContext {
   step: number
   nextStep: () => void
   prevStep: () => void
-  formData: any
-  addData: (_data: FormData) => void
+  formData: Partial<User> | null
+  addData: (_data: Partial<IContext['formData']>) => void
 }
 
 export const SetupStepCTX = createContext<IContext>({} as IContext)
 
 export function SetupStepProvider ({ children }: { children: React.ReactNode }) {
   const [step, setStep] = useState<number>(1)
-  const [formData, _setFormData] = useState()
+  const [formData, setFormData] = useState<Partial<IContext['formData']> | null>(null)
 
   const nextStep = () => {
     if (step < 5) {
@@ -27,10 +28,14 @@ export function SetupStepProvider ({ children }: { children: React.ReactNode }) 
     }
   }
 
-  const addData = (_data: IContext['formData']) => {
-    // setFormData({ ...data, data })
+  const addData = (data: IContext['formData']) => {
+    if (formData) {
+      setFormData({ ...formData, ...data })
+    } else {
+      setFormData(data)
+    }
   }
-
+  console.log(formData)
   return (
     <SetupStepCTX.Provider value={{ step, nextStep, prevStep, formData, addData }}>
       {children}

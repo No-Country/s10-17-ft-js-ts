@@ -4,22 +4,34 @@ import { useFormFields } from 'hooks/useFormFields'
 import Image from 'next/image'
 import { Select } from './Select'
 import { Checkbox } from './Checkbox'
+import { useState } from 'react'
 
 interface FormFields {
-  relation: string
-  genre: string
+  lookingFor: string
+  wantsGenre: string
 }
 
+type FormFieldsKeys = keyof FormFields
+
 export function YourPreferences () {
-  const { nextStep, prevStep } = useSetupSteps()
+  const { nextStep, prevStep, addData } = useSetupSteps()
+  const [error, setError] = useState(false)
   const { fields, handleChange, imperativeChange } = useFormFields<FormFields>()
-  console.log(fields)
-  const handleSubmit = (e: React.SyntheticEvent) => {
-    e.preventDefault()
-  }
 
   const handleCheckbox = (name: string) => {
-    imperativeChange('genre', name)
+    imperativeChange('wantsGenre', name)
+  }
+
+  const onNextStep = () => {
+    const requiredFields: FormFieldsKeys[] = ['lookingFor', 'wantsGenre']
+    const isFormValid = requiredFields.every((field) => fields[field as FormFieldsKeys])
+
+    if (!isFormValid) {
+      setError(true)
+    } else {
+      addData(fields)
+      nextStep()
+    }
   }
 
   return (
@@ -29,11 +41,11 @@ export function YourPreferences () {
         <h3>Tus preferencias</h3>
         <small>2/5</small>
       </div>
-      <div className={style.form} onSubmit={handleSubmit}>
+      <div className={style.form}>
         <span className={style.form__describedGroup}>
           <p>¿Qué tipo de conexión buscas?</p>
           <small>Elige el tipo de relación que buscas aquí</small>
-          <Select name='relation' placeholder='Seleccionar' options={['XD no se', 'No se 2']} disabled={false} handleChange={handleChange} />
+          <Select name='lookingFor' placeholder='Seleccionar' options={['Amistad', 'Amorosa']} disabled={false} handleChange={handleChange} />
         </span>
 
         <span className={style.form__describedGroup}>
@@ -41,12 +53,15 @@ export function YourPreferences () {
           <small>Elige el género que se mostrará en tu inicio</small>
 
           <div className={style.form__checkboxGroup}>
-            <Checkbox addChecked={handleCheckbox} currentChecked={fields?.genre} name='Hombres' />
-            <Checkbox addChecked={handleCheckbox} currentChecked={fields?.genre} name='Mujeres' />
-            <Checkbox addChecked={handleCheckbox} currentChecked={fields?.genre} name='Todos' />
+            <Checkbox addChecked={handleCheckbox} currentChecked={fields?.wantsGenre} name='Hombres' />
+            <Checkbox addChecked={handleCheckbox} currentChecked={fields?.wantsGenre} name='Mujeres' />
+            <Checkbox addChecked={handleCheckbox} currentChecked={fields?.wantsGenre} name='Todos' />
           </div>
         </span>
-        <button onClick={nextStep} className={style.form__next}>Continuar</button>
+
+        {error ? <p className={style.form__error}>Por favor completa todos los campos</p> : null}
+
+        <button onClick={onNextStep} className={style.form__next}>Continuar</button>
       </div>
 
     </>

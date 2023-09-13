@@ -1,23 +1,44 @@
+/* eslint-disable @next/next/no-img-element */
+
 import style from './style.module.scss'
 import { useSetupSteps } from 'hooks/useSetupSteps'
 import { useFormFields } from 'hooks/useFormFields'
 import Image from 'next/image'
 import { Checkbox } from './Checkbox'
 import { SearchPins } from './SearchPins'
-
+import { useState } from 'react'
+import { type Category } from 'types'
 interface FormFields {
   interests: string
-  pins: any
+  categories: Category['pins']
 }
 
 export function YourTastes () {
-  const { nextStep, prevStep } = useSetupSteps()
+  const { nextStep, prevStep, addData: _addData } = useSetupSteps()
   const { fields, imperativeChange } = useFormFields<FormFields>()
+  const [error, setError] = useState(false)
+  const [pins, setPins] = useState<Category['pins']>([])
+  const [selected, setSelected] = useState<Category['pins']>([])
 
-  console.log(fields)
+  const onNextStep = () => {
+    if (selected.length >= 3) {
+      const groupByCategory = selected.reduce((group: Category['pins'], pin: Category['pins']) => {
+        const { category } = pin
+        group[category] = group[category] ?? []
+        group[category].push(pin)
+        return group
+      }, {})
+      imperativeChange('categories', groupByCategory)
+      // addData()
+      nextStep()
+    } else {
+      setError(true)
+    }
+  }
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
-    e.preventDefault()
+  const deletePins = () => {
+    setPins([...pins, ...selected])
+    setSelected([])
   }
 
   const handleCheckbox = (name: string) => {
@@ -34,6 +55,17 @@ export function YourTastes () {
     }
   }
 
+  const handleSelect = (pin: Category['pins']) => {
+    if (selected.includes(pin)) {
+      const newSelected = selected.filter((item: Category['pins']) => item.name !== pin.name)
+      setSelected(newSelected)
+    } else {
+      setSelected([...selected, pin])
+      setPins(pins.filter((item: Category['pins']) => item.name !== pin.name))
+      console.log(selected)
+    }
+  }
+
   return (
     <>
       <div className={style.data}>
@@ -41,7 +73,7 @@ export function YourTastes () {
         <h3>Tus gustos</h3>
         <small>3/5</small>
       </div>
-      <div className={style.form} onSubmit={handleSubmit}>
+      <div className={style.form} onSubmit={(e) => e.preventDefault()}>
         <span className={style.form__describedGroup}>
           <p>Elige tus intereses</p>
 
@@ -51,15 +83,32 @@ export function YourTastes () {
             <Checkbox addChecked={handleCheckbox} currentChecked={fields?.interests} name='Peliculas' multiple={true} />
             <Checkbox addChecked={handleCheckbox} currentChecked={fields?.interests} name='Musica' multiple={true} />
             <Checkbox addChecked={handleCheckbox} currentChecked={fields?.interests} name='Series' multiple={true} />
-            <Checkbox addChecked={handleCheckbox} currentChecked={fields?.interests} name='Otros' multiple={true} />
           </div>
         </span>
 
         <span className={style.form__describedGroup}>
           <p>Elige al menos 3 pines</p>
-          <SearchPins />
+          {fields?.interests?.length > 0 ? <SearchPins setPins={setPins} selected={fields.interests} /> : null}
+          {selected.length > 0 ? <b className={style.delete} onClick={deletePins}>Borrar todos</b> : null}
+          <p className={style.count}>{selected.length}/3</p>
         </span>
-        <button onClick={nextStep} className={style.form__next}>Continuar</button>
+
+        {pins.length > 0
+          ? (
+        <div className={style.form__pins}>
+          {
+            pins.map((pin: Category['pins'], i: number) => (
+              <div key={pin.name + i} className={style['form__pins--item'] + ' ' + pin.category} onClick={() => handleSelect(pin)} title={pin.name}>
+                <img alt={pin.name} src={pin.imgUrl} />
+              </div>
+            ))}
+        </div>
+            )
+          : null}
+
+        {error ? <p className={style.form__error}>Por favor elige 3 o mas pines</p> : null}
+
+        <button onClick={onNextStep} className={style.form__next}>Continuar</button>
       </div>
 
     </>
