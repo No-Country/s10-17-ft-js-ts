@@ -14,23 +14,6 @@ export interface ISession {
   user?: User
 }
 
-// ! Edit About Form
-
-export interface AboutForm {
-  data: {
-    firstname: string | undefined
-    lastname: string | undefined
-    description: string | undefined
-    image: string | undefined
-  }
-  errors: {
-    firstname: string
-    lastname: string
-    description: string
-  }
-}
-
-
 // ! Animes
 export type Animes = Anime[]
 

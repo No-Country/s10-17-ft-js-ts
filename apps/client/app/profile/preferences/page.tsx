@@ -1,38 +1,18 @@
 'use client'
 import React from 'react'
 import style from './style.module.scss'
+import { useUserStore } from 'store/user'
+import { handleChageAge, handleChageDistance, handleSelectGenreOption, handleSelectSearchOption } from '../../../libs/validateEditForm'
 
 export default function Index () {
-  const [distanceValue, setDistanceValue] = React.useState(10)
-  const [ageValue, setAgeValue] = React.useState(18)
-  const [searchOption, setSearchOption] = React.useState('')
-  const [genreOption, setGenreOption] = React.useState('')
+  const { userState, setUser } = useUserStore()
   const distancePicker = React.useRef<HTMLHeadingElement>(null)
   const agePicker = React.useRef<HTMLHeadingElement>(null)
 
-  function handleSelectSearchOption (e: React.ChangeEvent<HTMLInputElement>) {
-    setSearchOption(e.target.value)
-  }
+  function handleSaveChanges () {
+    if (userState) {
 
-  function handleSelectGenreOption (e: React.ChangeEvent<HTMLInputElement>) {
-    setGenreOption(e.target.value)
-  }
-
-  function handleChageDistance (e: React.ChangeEvent<HTMLInputElement>) {
-    const value = Number(e.target.value)
-    setDistanceValue(value)
-
-    if (distancePicker.current && value > 100) {
-      distancePicker.current.style.left = `${e.currentTarget.clientWidth * (value / 1000) - 60}px`
-    }
-  }
-
-  function handleChageAge (e: React.ChangeEvent<HTMLInputElement>) {
-    const value = Number(e.target.value)
-    setAgeValue(value)
-
-    if (agePicker.current && value > 20) {
-      agePicker.current.style.left = `${e.currentTarget.clientWidth * (value / 99) - 70}px`
+      // peticion a la api
     }
   }
 
@@ -46,57 +26,73 @@ export default function Index () {
             <label
               className={`
               ${style.preferences__option} 
-              ${searchOption === 'all' ? `${style['preferences__option--selected']}` : ''}
+              ${userState?.user.lookingFor === 'all' ? `${style['preferences__option--selected']}` : ''}
               `}
             >
               Solo conocer gente
               <input
                 value={'all'}
                 type="radio"
-                defaultChecked={true}
-                onChange={handleSelectSearchOption}
+                checked={userState?.user.lookingFor === 'all'}
+                onChange={(e) => {
+                  if (userState) {
+                    handleSelectSearchOption(e, userState, setUser)
+                  }
+                }}
               />
             </label>
             <label
               className={`
               ${style.preferences__option} 
-              ${searchOption === 'friendship' ? `${style['preferences__option--selected']}` : ''}
+              ${userState?.user.lookingFor === 'friendship' ? `${style['preferences__option--selected']}` : ''}
               `}
             >
               Amistad
               <input
                 value={'friendship'}
                 type="radio"
-                defaultChecked={false}
-                onChange={handleSelectSearchOption}
+                checked={userState?.user.lookingFor === 'friendship'}
+                onChange={(e) => {
+                  if (userState) {
+                    handleSelectSearchOption(e, userState, setUser)
+                  }
+                }}
               />
             </label>
             <label
               className={`
               ${style.preferences__option} 
-              ${searchOption === 'love' ? `${style['preferences__option--selected']}` : ''}
+              ${userState?.user.lookingFor === 'love' ? `${style['preferences__option--selected']}` : ''}
               `}
             >
               Relación
               <input
                 value={'love'}
                 type="radio"
-                defaultChecked={false}
-                onChange={handleSelectSearchOption}
+                checked={userState?.user.lookingFor === 'love'}
+                onChange={(e) => {
+                  if (userState) {
+                    handleSelectSearchOption(e, userState, setUser)
+                  }
+                }}
               />
             </label>
             <label
               className={`
               ${style.preferences__option} 
-              ${searchOption === 'both' ? `${style['preferences__option--selected']}` : ''}
+              ${userState?.user.lookingFor === 'both' ? `${style['preferences__option--selected']}` : ''}
               `}
             >
               Lo que sea
               <input
                 value={'both'}
                 type="radio"
-                defaultChecked={false}
-                onChange={handleSelectSearchOption}
+                checked={userState?.user.lookingFor === 'both'}
+                onChange={(e) => {
+                  if (userState) {
+                    handleSelectSearchOption(e, userState, setUser)
+                  }
+                }}
               />
             </label>
           </div>
@@ -108,39 +104,54 @@ export default function Index () {
             <label
               className={`
               ${style.preferences__option} 
-              ${genreOption === 'male' ? `${style['preferences__option--selected']}` : ''}`
+              ${userState?.user.wantsGender === 'male' ? `${style['preferences__option--selected']}` : ''}`
               }>
 
               Hombres
               <input
-                onChange={handleSelectGenreOption}
+                onChange={(e) => {
+                  if (userState) {
+                    handleSelectGenreOption(e, userState, setUser)
+                  }
+                }}
                 value={'male'}
+                checked={userState?.user.wantsGender === 'male'}
                 type="radio"
               />
             </label>
             <label
               className={`
               ${style.preferences__option} 
-              ${genreOption === 'female' ? `${style['preferences__option--selected']}` : ''}`
+              ${userState?.user.wantsGender === 'female' ? `${style['preferences__option--selected']}` : ''}`
               }>
 
               Mujeres
               <input
-                onChange={handleSelectGenreOption}
+                onChange={(e) => {
+                  if (userState) {
+                    handleSelectGenreOption(e, userState, setUser)
+                  }
+                }}
                 value={'female'}
+                checked={userState?.user.wantsGender === 'female'}
                 type="radio"
               />
             </label>
             <label
               className={`
               ${style.preferences__option} 
-              ${genreOption === 'all' ? `${style['preferences__option--selected']}` : ''}`
+              ${userState?.user.wantsGender === 'both' ? `${style['preferences__option--selected']}` : ''}`
               }>
 
               Todos
               <input
-                onChange={handleSelectGenreOption}
-                value={'all'}
+                onChange={(e) => {
+                  if (userState) {
+                    handleSelectGenreOption(e, userState, setUser)
+                  }
+                }}
+                value={'both'}
+                checked={userState?.user.wantsGender === 'both'}
                 type="radio"
               />
             </label>
@@ -156,16 +167,19 @@ export default function Index () {
               <p>Lejos</p>
             </div>
             <div className={style['preferences__range-input']}>
-              <h4 ref={distancePicker} className={style['preferences__picker-value']}>
-                {distanceValue} KM
+              <h4 ref={distancePicker} className={style['preferences__picker-value']} style={{ left: `${userState?.user.zone && userState?.user.zone / 10 - 15}%` }}>
+                {userState?.user.zone} KM
               </h4>
               <input
                 min={10}
                 max={1000}
                 type="range"
-                value={distanceValue}
-                defaultValue={distanceValue}
-                onChange={handleChageDistance}
+                value={userState?.user.zone}
+                onChange={(e) => {
+                  if (userState) {
+                    handleChageDistance(e, userState, setUser, distancePicker)
+                  }
+                }}
               />
             </div>
             <div className={style['preferences__range-labels']}>
@@ -193,16 +207,19 @@ export default function Index () {
             <p>Más</p>
           </div>
           <div className={style['preferences__range-input']}>
-            <h4 ref={agePicker} className={style['preferences__picker-value']} >
-              {ageValue}
+            <h4 ref={agePicker} className={style['preferences__picker-value']} style={{ left: `${userState?.user?.ageRange && userState?.user?.ageRange[1] - 10}%` } }>
+              {userState?.user?.ageRange && userState?.user?.ageRange[1]}
             </h4>
             <input
               min={18}
               max={99}
               type="range"
-              value={ageValue}
-              defaultValue={ageValue}
-              onChange={handleChageAge}
+              value={userState?.user?.ageRange && userState?.user?.ageRange[1]}
+              onChange={(e) => {
+                if (userState) {
+                  handleChageAge(e, userState, setUser, agePicker)
+                }
+              }}
             />
           </div>
           <div className={style['preferences__range-labels']}>
@@ -217,7 +234,7 @@ export default function Index () {
         <h2>¿Cuáles son tus intereses y cuánto te gustan?</h2>
         <div className={style['preferences__interest-container']}>
           {
-            Array.from({ length: 6 }).map((_, i) => (
+            userState?.user.categorys.map((item, i) => (
               <div key={i} className={style.preferences__interest}>
                 <div className={style['preferences__interest-info']}>
                     <span>✔️</span>
@@ -228,9 +245,12 @@ export default function Index () {
                     min={1}
                     max={3}
                     type="range"
-                    defaultValue={1}
-                    value={'anime'}
-                    // onChange={() => {}}
+                    value={item.rate}
+                    onChange={() => {
+                      if (userState) {
+                        // handleRateInterest(e, userState, setUser)
+                      }
+                    }}
                   />
                 </label>
               </div>
@@ -239,8 +259,9 @@ export default function Index () {
         </div>
       </section>
       <button
-        disabled={true}
+        disabled={false}
         className={`${style.preferences__save} btn`}
+        onClick={handleSaveChanges}
       >
         Guardar cambios
       </button>

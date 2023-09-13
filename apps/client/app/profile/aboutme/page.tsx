@@ -5,7 +5,6 @@ import style from './style.module.scss'
 import React from 'react'
 import { useUserStore } from 'store/user'
 import { handleAboutForm } from '../../../libs/validateEditForm'
-import { AboutForm } from 'types'
 
 interface ImageState {
   url: string | null
@@ -13,27 +12,13 @@ interface ImageState {
 }
 
 export default function Index () {
-  const { userState } = useUserStore()
+  const { userState, setUser } = useUserStore()
 
   const [preview, setPreview] = React.useState(false)
 
   const [image, setImage] = React.useState<ImageState | undefined>({
     url: null,
     file: null
-  })
-
-  const [form, setForm] = React.useState<AboutForm>({
-    data: {
-      firstname: userState?.info.firstName,
-      lastname: userState?.info.lastName,
-      description: userState?.info.description,
-      image: image?.url || userState?.info.images[0]
-    },
-    errors: {
-      firstname: '',
-      lastname: '',
-      description: ''
-    }
   })
 
   function handleImage (e: React.ChangeEvent<HTMLInputElement>) {
@@ -79,21 +64,21 @@ export default function Index () {
                 Nombre
                 <input
                   type="text"
-                  name="firstname"
-                  onChange={(e) => handleAboutForm(e, form, setForm)}
-                  value={form.data.firstname}
+                  name="firstName"
+                  onChange={(e) => handleAboutForm(e, userState?.user, setUser)}
+                  value={userState?.user.firstName}
                 />
-                <span>{form.errors.firstname}</span>
+                <span>{userState && userState?.user.firstName.length < 3 && 'El nombre debe tener al menos 3 caracteres'}</span>
               </label>
               <label className={style.aboutme__lastname}>
                 Apellido
                 <input
                   type="text"
-                  name="lastname"
-                  onChange={(e) => handleAboutForm(e, form, setForm)}
-                  value={form.data.lastname}
+                  name="lastName"
+                  onChange={(e) => handleAboutForm(e, userState?.user, setUser)}
+                  value={userState?.user.lastName}
                 />
-                <span>{form.errors.lastname}</span>
+                <span>{userState && userState?.user.lastName.length < 3 && 'El apellido debe tener al menos 3 caracteres'}</span>
               </label>
             </div>
             <label className={style.aboutme__description}>
@@ -102,12 +87,12 @@ export default function Index () {
                 cols={30}
                 rows={3}
                 name='description'
-                onChange={(e) => handleAboutForm(e, form, setForm)}
+                onChange={(e) => handleAboutForm(e, userState?.user, setUser)}
                 placeholder='Agrega una descripción'
-                value={form.data.description}
+                value={userState?.user.description}
               >
               </textarea>
-              <span>{form.errors.description}</span>
+              <span>{userState && userState?.user.description.length < 8 && 'La descripción debe tener al menos 8 caracteres'}</span>
             </label>
             <span className={style.aboutme__location}>
               <Icons.Location width={30} height={30} />
@@ -132,7 +117,7 @@ export default function Index () {
                 <img src={image?.url || 'https://picsum.photos/200/200'} alt="" />
                 <div className={style['aboutme__preview1-info']}>
                   <div className={style['aboutme__preview1-info-name']}>
-                    <h2>{form.data.firstname} {form.data.lastname},</h2>
+                    <h2>{userState?.user.firstName} {userState?.user.lastName},</h2>
                     <h2>29 años</h2>
                   </div>
                   <h3>Ubicación</h3>
@@ -163,7 +148,7 @@ export default function Index () {
               <div className={style.aboutme__preview2}>
                 <h3>Sobre mí</h3>
                 <p>
-                  {form.data.description}
+                  {userState?.user.description}
                 </p>
               </div>
             </div>

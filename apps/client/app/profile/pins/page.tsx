@@ -1,9 +1,12 @@
-'use client'
+/* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable @next/next/no-img-element */
+'use client'
 import { Icons } from 'components/Icons'
 import style from './style.module.scss'
 import handleScroll from '../../../libs/handleScroll'
 import React from 'react'
+import { useUserStore } from 'store/user'
+import { CategoryEnum } from '../../../../../libs/dto/src/lib/enums/category.enum'
 
 export default function Index () {
   const [isScroll, setIsScroll] = React.useState(false)
@@ -11,7 +14,8 @@ export default function Index () {
   const pins = React.useRef<HTMLUListElement>(null)
   const pinsResults = React.useRef<HTMLUListElement>(null)
   const [editPin, setEditPin] = React.useState(false)
-  const [categorySelect, setCategorySelect] = React.useState<string | null>(null)
+  const [categorySelect, setCategorySelect] = React.useState<CategoryEnum | null>(null)
+  const { userState } = useUserStore()
 
   React.useEffect(() => {
     if (pins.current) {
@@ -44,15 +48,26 @@ export default function Index () {
             <Icons.Edit width={20} height={20} />
           </button>
           <h3 className={style.pins__counter}>
-            <b>{8}</b>/
-            <h4>{50}</h4>
+            <b>
+              {userState?.user.categorys[0].pins
+                .concat(userState?.user.categorys[1].pins)
+                .concat(userState?.user.categorys[2].pins)
+                .concat(userState?.user.categorys[3].pins)
+                .concat(userState?.user.categorys[4].pins).length}
+            </b>/
+            <h4>{40}</h4>
           </h3>
         </header>
 
         <div className={style['pins__edit-pins']}>
           <ul className={style.pins__content} ref={pins}>
             {
-              Array(25).fill(0).map((_, i) => (
+              userState?.user.categorys[0].pins
+                .concat(userState?.user.categorys[1].pins)
+                .concat(userState?.user.categorys[2].pins)
+                .concat(userState?.user.categorys[3].pins)
+                .concat(userState?.user.categorys[4].pins)
+                .map((_, i) => (
                 <figure key={i} className={style.pins__pin}>
                   <img src="https://picsum.photos/200/300" alt="" />
                   {editPin && (
@@ -61,7 +76,7 @@ export default function Index () {
                     </button>
                   )}
                 </figure>
-              ))
+                ))
             }
           </ul>
           {isScroll && (
@@ -87,30 +102,18 @@ export default function Index () {
             </div>
           </div>
           <div className={style['pins__add-categories']}>
-            <button
-              onClick={() => setCategorySelect('movies')}
-              className={`${categorySelect === 'movies' && style['pins__add-category']} btn-second`}
-              value="movies">Películas</button>
-            <button
-              onClick={() => setCategorySelect('music')}
-              className={`${categorySelect === 'music' && style['pins__add-category']} btn-second`}
-              value="music">Música</button>
-            <button
-              onClick={() => setCategorySelect('games')}
-              className={`${categorySelect === 'games' && style['pins__add-category']} btn-second`}
-              value="games">Juegos</button>
-            <button
-              onClick={() => setCategorySelect('anime')}
-              className={`${categorySelect === 'anime' && style['pins__add-category']} btn-second`}
-              value="anime">Anime</button>
-            <button
-              onClick={() => setCategorySelect('tvseries')}
-              className={`${categorySelect === 'tvseries' && style['pins__add-category']} btn-second`}
-              value="tvseries">Series</button>
-            <button
-              onClick={() => setCategorySelect('others')}
-              className={`${categorySelect === 'others' && style['pins__add-category']} btn-second`}
-              value="others">Otros</button>
+            {
+              userState?.user.categorys.map((item, i) => (
+                <button
+                  key={i}
+                  className={`${item.name === categorySelect && style['pins__add-category']} btn-second`}
+                  onClick={() => setCategorySelect(item.name)}
+                  value={item.name}
+                >
+                  {item.name}
+                </button>
+              ))
+            }
           </div>
         </header>
         <div className={style['pins__add-pins']}>
