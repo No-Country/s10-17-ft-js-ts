@@ -8,7 +8,7 @@ export class MongoChatRepository implements ChatRepository {
   constructor(
     @InjectModel(Chat.name) private readonly chatSchema: Model<Chat>,
     @InjectModel(Message.name) private readonly messageSchema: Model<Chat>
-  ) { }
+  ) {}
 
   async createChat(userA: string, userB: string): Promise<Chat> {
     const newChat = await this.chatSchema.create({
@@ -26,17 +26,23 @@ export class MongoChatRepository implements ChatRepository {
     return chat!;
   }
 
-  async createMessage(userA: string, userB: string, senderId: string, msg: string): Promise<Chat | null> {
-    const chat = await this.chatSchema
-    .findOne({ participants: [userA, userB] });
-    if(chat) {
+  async createMessage(
+    userA: string,
+    userB: string,
+    senderId: string,
+    msg: string
+  ): Promise<Chat | null> {
+    const chat = await this.chatSchema.findOne({
+      participants: [userA, userB],
+    });
+    if (chat) {
       const message = await this.messageSchema.create({
         body: msg,
         senderId: senderId,
-        chatId: chat._id
-      })
+        chatId: chat._id,
+      });
       chat.populate('messages');
-      return chat
+      return chat;
     }
     return null;
   }

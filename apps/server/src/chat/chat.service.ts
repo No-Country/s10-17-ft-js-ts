@@ -69,7 +69,12 @@ export class ChatService {
   }
 }
 */
-import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { Chat } from './entities/chat.entity';
 import { ChatRepository, ChatRepositoryKey } from './chat.repository';
@@ -81,9 +86,8 @@ export class ChatService {
   constructor(
     private readonly userService: UserService,
     @Inject(ChatRepositoryKey)
-    private readonly chatRepository: ChatRepository,
+    private readonly chatRepository: ChatRepository
   ) {}
-  
 
   async chats(email: string, emailB: string): Promise<Chat[]> {
     const user = await this.userService.isRegistered(email);
@@ -107,10 +111,7 @@ export class ChatService {
     }
 
     // Check if the chat already exists
-    const existingChat = await this.chatRepository.getChat(
-      emailA,
-      emailB,
-    );
+    const existingChat = await this.chatRepository.getChat(emailA, emailB);
     if (existingChat) {
       return existingChat;
     }
@@ -124,10 +125,10 @@ export class ChatService {
     receiverEmail: string,
     senderEmail: string,
     content: string,
-    socket: Socket, // Pass the socket instance for real-time communication
+    socket: Socket // Pass the socket instance for real-time communication
   ): Promise<Chat | null> {
     const chat = await this.chatRepository.getChat(senderEmail, receiverEmail);
-    
+
     const user = await this.userService.getOneByEmail(senderEmail);
 
     if (!chat) {
@@ -139,7 +140,7 @@ export class ChatService {
       throw new NotFoundException('Sender is not part of this chat');
     }
 
-    if(user) {
+    if (user) {
       const message = await this.chatRepository.createMessage(
         senderEmail,
         receiverEmail,
