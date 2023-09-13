@@ -6,18 +6,22 @@ import handleScroll from '../../libs/handleScroll'
 import { Icons } from 'components/Icons'
 import Link from 'next/link'
 import { useUserStore } from 'store/user'
+import { useSession } from 'hooks/useSession'
 
 export default function Index () {
   const isAdmin = true
   const pins = useRef<HTMLUListElement>(null)
   const [isScroll, setIsScroll] = useState<boolean>(false)
   const { userState: user, getUser } = useUserStore()
+  const { session } = useSession()
 
   useEffect(() => {
-    const user = localStorage.getItem('session')
-    const useremp = JSON.parse(user || '{}')
-
-    getUser(useremp.user.id)
+    if (session) {
+      const { user } = session
+      if (user && user.id) {
+        getUser(user?.id)
+      }
+    }
   }, [])
 
   useEffect(() => {

@@ -27,6 +27,13 @@ export default function RootLayout ({
         <SessionProvider>
           <Header />
           {children}
+          <footer className='footer'>
+            <p>Contacto</p>
+            <p>Redes sociales</p>
+            <p>Sobre Wave</p>
+            <p>Avisos legales</p>
+            <p>Términos y condiciones</p>
+          </footer>
         </SessionProvider>
       </body>
     </html>
