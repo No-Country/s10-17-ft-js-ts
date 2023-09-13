@@ -19,14 +19,22 @@ export class RecomService {
       return undefined; // Handle the case where the current user is not found.
     }
 
-    const recommendedUsers = otherUsers
-      .filter((user) => !user.likedBy.includes(userId))
-      .map((user) => ({
-        compatibility: getCompatibility(currUser, user),
-        user,
-      }))
-      .filter((rankedUser) => rankedUser.compatibility > 0);
+    try {
+      const recommendedUsers = otherUsers
+        .filter((user) => !user.likedBy.includes(userId))
+        .map((user) => ({
+          compatibility: getCompatibility(currUser, user),
+          user,
+        }))
+        .filter((rankedUser) => rankedUser.compatibility > 0);
 
-    return recommendedUsers;
+      return recommendedUsers;
+    } catch (error) {
+      console.log(error);
+      return otherUsers.map((user) => ({
+        compatibility: 100,
+        user,
+      }));
+    }
   }
 }
