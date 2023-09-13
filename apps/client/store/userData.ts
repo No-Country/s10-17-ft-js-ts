@@ -195,5 +195,7 @@ export const user: UserDto = {
   ],
   lookingFor: 'love',
   zone: 350,
-  ageRange: [18, 99]
+  ageRange: [18, 99],
+  latitude: 0,
+  longitude: 0
 }
