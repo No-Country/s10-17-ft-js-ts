@@ -10,7 +10,6 @@ function calculateDistanceInKilometers(
   destination: Coordinates
 ): number {
   const distanceInMeters = geolib.getPreciseDistance(origin, destination, 1);
-  console.log(distanceInMeters);
   const distanceInKilometers = geolib.convertDistance(distanceInMeters, 'km');
   return distanceInKilometers;
 }

@@ -1,6 +1,5 @@
 export enum LookingForEnum {
-  Friendship = 'Friendship',               // Amistad
-  CasualDating = 'CasualDating',           // Citas casuales
-  MonogamousRelationship = 'MonogamousRelationship', // Relación monogama
-  OpenRelationship = 'OpenRelationship',     // Relación abierta
+  Friendship = 'Amistad',               // Amistad
+  MonogamusRelationship = 'Relación monógama',           // Citas casuales
+  Both = 'Ambos', // Relación monogama
 }
