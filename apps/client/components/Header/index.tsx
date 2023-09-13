@@ -4,11 +4,23 @@ import style from './style.module.scss'
 import React, { useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import { Icons } from 'components/Icons'
+import { useSession } from 'hooks/useSession'
 
 export default function Header () {
   const menu = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
   const [theme, setTheme] = React.useState('light')
+  const { session, removeSession } = useSession()
+
+  function handleLogout () {
+    if (session) {
+      removeSession()
+    }
+
+    if (menu.current) {
+      menu.current.classList.toggle(style['header__menu--active'])
+    }
+  }
 
   const handleMenu = () => {
     if (menu.current) {
@@ -122,7 +134,7 @@ export default function Header () {
               <Link onClick={handleMenu} href={'#'}>Cambiar cuenta</Link>
             </li>
             <li>
-              <Link onClick={handleMenu} href={'/'}>Salir</Link>
+              <Link onClick={handleLogout} href={'/'}>Salir</Link>
             </li>
           </ul>
         </div>

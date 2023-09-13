@@ -64,6 +64,7 @@
 @media (min-width: 1000px) {
   .container {
     padding-bottom: 8rem;
+    min-height: calc(100vh - 150px);
   }
 
   .header {
