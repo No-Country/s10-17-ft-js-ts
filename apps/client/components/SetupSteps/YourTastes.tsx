@@ -14,7 +14,7 @@ interface FormFields {
 }
 
 export function YourTastes () {
-  const { nextStep, prevStep, addData: _addData } = useSetupSteps()
+  const { prevStep, setCategories } = useSetupSteps()
   const { fields, imperativeChange } = useFormFields<FormFields>()
   const [error, setError] = useState(false)
   const [pins, setPins] = useState<Category['pins']>([])
@@ -29,8 +29,7 @@ export function YourTastes () {
         return group
       }, {})
       imperativeChange('categories', groupByCategory)
-      // addData()
-      nextStep()
+      setCategories(groupByCategory)
     } else {
       setError(true)
     }

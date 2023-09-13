@@ -45,7 +45,7 @@ export function YourPreferences () {
         <span className={style.form__describedGroup}>
           <p>¿Qué tipo de conexión buscas?</p>
           <small>Elige el tipo de relación que buscas aquí</small>
-          <Select name='lookingFor' placeholder='Seleccionar' options={['Amistad', 'Amorosa']} disabled={false} handleChange={handleChange} />
+          <Select name='lookingFor' placeholder='Seleccionar' options={['Amistad', 'Relación monógama', 'Ambos']} disabled={false} handleChange={handleChange} />
         </span>
 
         <span className={style.form__describedGroup}>

@@ -2,7 +2,7 @@ import style from './style.module.scss'
 import { useSetupSteps } from 'hooks/useSetupSteps'
 import Image from 'next/image'
 import { useState } from 'react'
-
+import { useSession } from 'hooks/useSession'
 import { useRouter } from 'next/navigation'
 
 export function YourAvatar () {
@@ -33,10 +33,10 @@ export function YourAvatar () {
     'https://res.cloudinary.com/dlvpftdsm/image/upload/v1694119151/Frame_427319171_n4yrps.png' // Perrito fuego
   ]
 
-  const { nextStep, prevStep, addData } = useSetupSteps()
+  const { prevStep, addData, formData } = useSetupSteps()
   const [avatar, setAvatar] = useState(links[0])
   const [shownAvatars, setShownAvatars] = useState(links.slice(1, links.length))
-
+  const { session } = useSession()
   const router = useRouter()
 
   const handleAvatar = (link: string) => {
@@ -45,16 +45,25 @@ export function YourAvatar () {
     setAvatar(link)
   }
 
-  const onNextStep = () => {
+  const onNextStep = async () => {
     addData({ avatar })
 
-    // Temporary workaround
-    const session = JSON.parse(localStorage.getItem('session') as string)
-    localStorage.setItem('session', JSON.stringify({ ...session, isProfileConfigured: true }))
-    router.push('/home')
-    // Temporary workaround
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session?.access_token}`
+        },
+        body: JSON.stringify(formData)
+      })
 
-    nextStep()
+      if (response.ok) {
+        router.push('/home')
+      }
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   return (

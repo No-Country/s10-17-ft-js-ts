@@ -1,20 +1,13 @@
 import style from './style.module.scss'
 import { useSetupSteps } from 'hooks/useSetupSteps'
-import { useFormFields } from 'hooks/useFormFields'
 import Image from 'next/image'
 import { useState } from 'react'
-interface FormFields {
-  latitude: number
-  longitude: number
-}
 
 export function YourLocation () {
-  const { nextStep, prevStep } = useSetupSteps()
+  const { nextStep, prevStep, addData } = useSetupSteps()
   const [error, setError] = useState(false)
-  const { imperativeChange } = useFormFields<FormFields>()
 
   const onNextStep = () => {
-  //
     const options = {
       enableHighAccuracy: true,
       timeout: 5000,
@@ -23,9 +16,7 @@ export function YourLocation () {
 
     function success (pos: {coords: {latitude: unknown; longitude: unknown; accuracy: unknown}}) {
       const { latitude, longitude } = pos.coords
-      console.log(latitude, longitude)
-      imperativeChange('latitude', latitude as string)
-      imperativeChange('longitude', longitude as string)
+      addData({ latitude: latitude as number, longitude: longitude as number })
       nextStep()
     }
 
@@ -46,7 +37,7 @@ export function YourLocation () {
       </div>
       <div className={style.form}>
         <div className={style.location}>
-          <Image className={style.location__image} src={'/images/map.png'} alt='map' width={390} height={292}/>
+          <Image className={style.location__image} src={'https://res.cloudinary.com/dlvpftdsm/image/upload/v1694614444/mapa_kuum4w.png'} alt='map' width={390} height={292}/>
           <p>Para usar wave es necesario que permitas tu ubicación</p>
           <a href="#">Saber más</a>
         </div>
