@@ -1,7 +1,5 @@
 # WAVE
 
-![Alt text](https://res.cloudinary.com/dlvpftdsm/image/upload/v1694612900/Logo_m2de4i.png "Wave")
-
 ![Alt text](https://res.cloudinary.com/dlvpftdsm/image/upload/v1694612895/Homeconlogin-encuentros_qqxr3t.png "Home")
 
 ![Alt text](https://res.cloudinary.com/dlvpftdsm/image/upload/v1694612870/Home_sin_login2_neazrr.png "Perfiles")
