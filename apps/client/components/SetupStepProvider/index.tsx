@@ -49,17 +49,18 @@ export function SetupStepProvider ({ children }: { children: React.ReactNode }) 
         toSendCategories.push({ name: key, rate: 4.5, pins: value })
       })
 
-      console.log(toSendCategories, 'toSendCategories')
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/categorys`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${session.access_token}`
-        },
-        method: 'PUT',
-        body: JSON.stringify(toSendCategories)
-      })
-        .then((res) => res.ok && nextStep())
-        .catch(console.error)
+      if (toSendCategories.length > 0) {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/categorys`, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${session.access_token}`
+          },
+          method: 'PUT',
+          body: JSON.stringify(toSendCategories)
+        })
+          .then((res) => res.ok && nextStep())
+          .catch(console.error)
+      }
     }
   }, [categories])
 

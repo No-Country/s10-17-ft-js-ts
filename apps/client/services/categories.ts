@@ -1,4 +1,5 @@
 import { request } from './request'
+import { type Category } from 'types'
 
 const movies = {
   get: async (page = 1) => {
@@ -16,7 +17,7 @@ const movies = {
       }
     })
 
-    return movieList
+    return movieList.filter((movie: Category['pins']) => movie.imgUrl && movie.subCategories.length > 0)
   },
   search: async (query: string) => {
     const API_KEY = 'a0e1f02b394263b862d094dbc96d422c'
@@ -33,7 +34,7 @@ const movies = {
       }
     })
 
-    return movieList
+    return movieList.filter((movie: Category['pins']) => movie.imgUrl && movie.subCategories.length > 0)
   }
 
 }
@@ -46,6 +47,7 @@ const series = {
     const serieList = response.results.map((movie: unknown) => {
       const { genre_ids: genreIds, name, poster_path } = movie as { genre_ids: number[], name: string, poster_path: string }
 
+      if (!poster_path || genreIds.length === 0) return null
       return {
         name,
         imgUrl: `https://image.tmdb.org/t/p/w500${poster_path}`,
@@ -54,7 +56,7 @@ const series = {
       }
     })
 
-    return serieList
+    return serieList.filter((movie: Category['pins']) => movie.imgUrl && movie.subCategories.length > 0)
   },
 
   search: async (query: string) => {
@@ -72,7 +74,7 @@ const series = {
       }
     })
 
-    return serieList
+    return serieList.filter((movie: Category['pins']) => movie.imgUrl && movie.subCategories.length > 0)
   }
 }
 
@@ -93,7 +95,7 @@ const animes = {
       }
     })
 
-    return animeList
+    return animeList.filter((movie: Category['pins']) => movie.imgUrl && movie.subCategories.length > 0)
   },
 
   search: async (query: string) => {
@@ -112,7 +114,7 @@ const animes = {
       }
     })
 
-    return animeList
+    return animeList.filter((movie: Category['pins']) => movie.imgUrl && movie.subCategories.length > 0)
   }
 }
 
@@ -133,7 +135,7 @@ const videogames = {
       }
     })
 
-    return videogameList
+    return videogameList.filter((movie: Category['pins']) => movie.imgUrl && movie.subCategories.length > 0)
   },
 
   search: async (query:string) => {
@@ -152,7 +154,7 @@ const videogames = {
       }
     })
 
-    return videogameList
+    return videogameList.filter((movie: Category['pins']) => movie.imgUrl && movie.subCategories.length > 0)
   }
 }
 
@@ -174,7 +176,7 @@ const music = {
       }
     })
 
-    return musicList
+    return musicList.filter((movie: Category['pins']) => movie.imgUrl && movie.subCategories.length > 0)
   },
 
   search: async (query: string) => {
@@ -193,8 +195,7 @@ const music = {
         category: 'Música'
       }
     })
-
-    return musicList
+    return musicList.filter((movie: Category['pins']) => movie.imgUrl && movie.subCategories.length > 0)
   }
 }
 
