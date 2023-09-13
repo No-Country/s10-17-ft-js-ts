@@ -16,7 +16,8 @@ export default function Index () {
   useEffect(() => {
     const user = localStorage.getItem('session')
     const useremp = JSON.parse(user || '{}')
-    getUser(useremp.id)
+
+    getUser(useremp.user.id)
   }, [])
 
   useEffect(() => {
@@ -66,7 +67,7 @@ export default function Index () {
             <ul className={style['user__pins-content']} ref={pins}>
 
               {user &&
-                user.user.categorys[0].pins
+                user.user.categorys[0]?.pins
                   .concat(user.user.categorys[1].pins)
                   .concat(user.user.categorys[2].pins)
                   .concat(user.user.categorys[3].pins)

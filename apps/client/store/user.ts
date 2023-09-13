@@ -26,6 +26,8 @@ export const useUserStore = create<UserStore>((set) => ({
       const user = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/${id}`)
 
       // Actualiza el estado con los datos recibidos
+      console.log('user', user.data)
+
       set(() => ({
         userState: {
           user: user.data
