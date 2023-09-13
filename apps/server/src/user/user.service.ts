@@ -208,6 +208,15 @@ export class UserService {
     }
   }
 
+  async getOneByEmail(email: string): Promise<UserDocument | undefined | null> {
+    try {
+      return await this.userRepository.findByEmail(email);
+    } catch (error) {
+      console.log(error);
+      throw new BadRequestException(error);
+    }
+  }
+
   async prueba(userId: string): Promise<UserDto | undefined | null> {
     try {
       const userRegisteredUpdated = await this.userRepository.findOne(userId);

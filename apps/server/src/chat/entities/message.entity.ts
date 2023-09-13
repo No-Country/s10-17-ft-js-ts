@@ -3,6 +3,7 @@ import {
   SchemaFactory,
   Schema as SchemaDecorator,
 } from '@nestjs/mongoose';
+import { IsOptional } from 'class-validator';
 import { HydratedDocument, Schema, Types } from 'mongoose';
 
 export type MessageDocument = HydratedDocument<Message>;
@@ -10,6 +11,7 @@ export type MessageDocument = HydratedDocument<Message>;
 @SchemaDecorator({ timestamps: { createdAt: 'sendAt' } })
 export class Message {
   @Prop()
+  @IsOptional()
   id: string;
 
   @Prop()
