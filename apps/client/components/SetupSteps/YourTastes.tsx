@@ -19,6 +19,7 @@ export function YourTastes () {
   const [error, setError] = useState(false)
   const [pins, setPins] = useState<Category['pins']>([])
   const [selected, setSelected] = useState<Category['pins']>([])
+  const [isLoading, setIsLoading] = useState(false)
 
   const onNextStep = () => {
     if (selected.length >= 3) {
@@ -87,7 +88,7 @@ export function YourTastes () {
 
         <span className={style.form__describedGroup}>
           <p>Elige al menos 3 pines</p>
-          {fields?.interests?.length > 0 ? <SearchPins setPins={setPins} selected={fields.interests} /> : null}
+          {fields?.interests?.length > 0 ? <SearchPins setIsLoading={setIsLoading} setPins={setPins} selected={fields.interests} /> : null}
           {selected.length > 0 ? <b className={style.delete} onClick={deletePins}>Borrar todos</b> : null}
           <p className={style.count}>{selected.length}/3</p>
         </span>
@@ -107,7 +108,7 @@ export function YourTastes () {
 
         {error ? <p className={style.form__error}>Por favor elige 3 o mas pines</p> : null}
 
-        <button onClick={onNextStep} className={style.form__next}>Continuar</button>
+        <button disabled={isLoading} onClick={onNextStep} className={style.form__next}>{isLoading ? 'Cargando...' : 'Continuar'}</button>
       </div>
 
     </>
