@@ -21,22 +21,32 @@ export function SessionProvider ({ children }: {children: React.ReactNode}) {
 
   const getSessionStorage = async () => {
     const storedSession = localStorage.getItem('session')
-    if (storedSession) {
-      const parsedSession = JSON.parse(storedSession)
 
-      if (!parsedSession.user?.isProfileConfigured) router.push('/setup-account')
-      // Here we should validate if the token is still valid
-      // all data is saved in the session by now, so we can use it
+    try {
+      if (storedSession) {
+        const checkSession = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, {
+          headers: {
+            Authorization: `Bearer ${storedSession}`
+          }
+        })
 
-      setSession(parsedSession)
-    } else {
-      setSession({} as ISession)
+        if (checkSession.ok) {
+          const data = await checkSession.json()
+          setSession({ user: data, access_token: storedSession })
+        }
+      } else {
+        setSession({} as ISession)
+        localStorage.removeItem('session')
+        router.push('/')
+      }
+    } catch (e) {
+      console.error(e)
     }
   }
 
   const setSessionStorage = (newSession: ISession) => {
-    localStorage.setItem('session', JSON.stringify(newSession)) // Should only store access_token
-    setSession(newSession)
+    localStorage.setItem('session', newSession.access_token) // Should only store access_token
+    setSession({ access_token: newSession.access_token, user: newSession.user })
   }
 
   const removeSession = () => {
