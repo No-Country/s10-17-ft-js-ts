@@ -223,7 +223,7 @@ export class UserService {
         // creo los pines
         console.log(pins);
         const newPins = pins.map(
-          (p) => new UserPin(p.name, p.imgUrl, p.subCategories)
+          (p) => new UserPin(p.name, p.imgUrl, p.subCategories, p.categoryName)
         );
         // creo la categoria
         const categorys = new UserCategory(name, rate, newPins);

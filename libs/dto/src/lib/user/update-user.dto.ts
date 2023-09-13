@@ -3,6 +3,7 @@ import { ArrayMaxSize, ArrayMinSize, IsArray, IsDateString, IsEnum, IsNumber, Is
 import { GenderEnum } from '../enums/gender.enum';
 import { Avatars } from '../enums/avatar.enum';
 import { LookingForEnum } from '../enums/lookinFor.enum';
+import { GenderWantsEnum } from '../enums/genderWants.enum';
 
 
 export class UpdateUserDto {
@@ -36,7 +37,7 @@ export class UpdateUserDto {
     example: 'text of exam',
   })
   @IsString()
-  @IsEnum(GenderEnum, { each: true })
+  @IsEnum(GenderWantsEnum, { each: true })
   @IsOptional()
   wantsGender?: string;
 

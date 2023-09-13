@@ -79,7 +79,9 @@ export class User {
   @IsOptional()
   address: string;
 
-  @Prop()
+  @Prop({
+    default: [18, 80],
+  })
   @IsOptional()
   ageRange: number[];
 

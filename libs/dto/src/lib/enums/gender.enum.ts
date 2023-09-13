@@ -1,6 +1,6 @@
 export enum GenderEnum {
-  Male = 'Male',            // Hombre
-  Female = 'Female',        // Mujer
-  NonBinary = 'NonBinary',  // No binario
-  Other = 'Other'           // Otro
+  Male = 'Hombre',            // Hombre
+  Female = 'Mujer',        // Mujer
+  NonBinary = 'No binario',  // No binario
+  Other = 'Otros'           // Otro
 }
