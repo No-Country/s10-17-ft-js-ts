@@ -32,6 +32,7 @@ export function SessionProvider ({ children }: {children: React.ReactNode}) {
 
         if (checkSession.ok) {
           const data = await checkSession.json()
+          if (!data.isProfileConfigured) router.push('/setup-account')
           setSession({ user: data, access_token: storedSession })
         }
       } else {
