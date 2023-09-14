@@ -1,14 +1,17 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @nx/enforce-module-boundaries */
-import { user } from './userData'
 import axios from 'axios'
 import { type UserDto } from '../../../libs/dto/src/lib/user/user.dto'
 import { create } from 'zustand'
 
 // Define la estructura de UserDto
 interface User {
-  user: UserDto;
+  user: UserDto | null;
 };
+
+interface UserData {
+  data: UserDto;
+}
 
 interface UserStore {
   userState: User | null;
@@ -18,7 +21,7 @@ interface UserStore {
 
 export const useUserStore = create<UserStore>((set) => ({
   userState: {
-    user: user || null
+    user: null
   } || null,
   getUser: async (id: string) => {
     try {
@@ -26,8 +29,6 @@ export const useUserStore = create<UserStore>((set) => ({
       const user = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/user/${id}`)
 
       // Actualiza el estado con los datos recibidos
-      console.log('user', user.data)
-
       set(() => ({
         userState: {
           user: user.data

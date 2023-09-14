@@ -6,16 +6,19 @@ import style from './style.module.scss'
 import handleScroll from '../../../libs/handleScroll'
 import React from 'react'
 import { useUserStore } from 'store/user'
+import { SearchPins } from 'components/SetupSteps/SearchPins'
+import { Category } from 'types'
 import { CategoryEnum } from '../../../../../libs/dto/src/lib/enums/category.enum'
 
 export default function Index () {
+  const { userState } = useUserStore()
   const [isScroll, setIsScroll] = React.useState(false)
   const [isScroll2, setIsScroll2] = React.useState(false)
   const pins = React.useRef<HTMLUListElement>(null)
   const pinsResults = React.useRef<HTMLUListElement>(null)
   const [editPin, setEditPin] = React.useState(false)
-  const [categorySelect, setCategorySelect] = React.useState<CategoryEnum | null>(null)
-  const { userState } = useUserStore()
+  const [categorySelect, setCategorySelect] = React.useState<string>(userState?.user.categorys[0].name as string)
+  const [pinsBox, setPinsBox] = React.useState<Category['pins']>([])
 
   React.useEffect(() => {
     if (pins.current) {
@@ -49,12 +52,12 @@ export default function Index () {
           </button>
           <h3 className={style.pins__counter}>
             <b>
-              {userState?.user.categorys[0]?.pins
-                .concat(userState?.user.categorys[1]?.pins)
-                .concat(userState?.user.categorys[2]?.pins)
-                .concat(userState?.user.categorys[3]?.pins)
-                .concat(userState?.user.categorys[4]?.pins).length}
-            </b>/
+            {userState &&
+                userState?.user.categorys.map((item) => (
+                  item.pins.length
+                )).reduce((a, b) => a + b, 0)
+            }/
+            </b>
             <h4>{40}</h4>
           </h3>
         </header>
@@ -62,21 +65,16 @@ export default function Index () {
         <div className={style['pins__edit-pins']}>
           <ul className={style.pins__content} ref={pins}>
             {
-              userState?.user.categorys[0]?.pins
-                .concat(userState?.user.categorys[1]?.pins)
-                .concat(userState?.user.categorys[2]?.pins)
-                .concat(userState?.user.categorys[3]?.pins)
-                .concat(userState?.user.categorys[4]?.pins)
-                .map((_, i) => (
-                <figure key={i} className={style.pins__pin}>
-                  <img src="https://picsum.photos/200/300" alt="" />
-                  {editPin && (
-                    <button>
-                      <Icons.Edit width={20} height={20} />
-                    </button>
-                  )}
-                </figure>
+              userState?.user.categorys.map((item) => (
+                item.pins.map((pin, index) => (
+                  <figure key={index} className={style.pins__pin}>
+                    <img src={pin.imgUrl} alt="" />
+                    {editPin && (
+                      <button>✖</button>
+                    )}
+                  </figure>
                 ))
+              ))
             }
           </ul>
           {isScroll && (
@@ -97,7 +95,8 @@ export default function Index () {
           <div className={style['pins__search-container']}>
             <h2 className={style['pins__add-title']}>Agregar pines</h2>
             <div className={style['pins__add-search']}>
-              <input type="text" placeholder='Buscar'/>
+              {/* <input type="text" placeholder='Buscar'/> */}
+              <SearchPins setPins={setPinsBox} selected={categorySelect}/>
               <Icons.Search width={40} height={40} />
             </div>
           </div>
@@ -106,8 +105,8 @@ export default function Index () {
               userState?.user.categorys.map((item, i) => (
                 <button
                   key={i}
-                  className={`${item.name === categorySelect && style['pins__add-category']} btn-second`}
-                  onClick={() => setCategorySelect(item.name)}
+                  className={`${(item.name === categorySelect || (item.name === CategoryEnum.Videogames && categorySelect === 'Juegos')) && style['pins__add-category']} btn-second`}
+                  onClick={() => setCategorySelect(item.name === CategoryEnum.Videogames ? 'Juegos' : item.name)}
                   value={item.name}
                 >
                   {item.name}
@@ -119,14 +118,13 @@ export default function Index () {
         <div className={style['pins__add-pins']}>
           <div className={style['pins__edit-pins']}>
           <ul className={style.pins__content} ref={pinsResults}>
-            {
-              Array(25).fill(0).map((_, i) => (
-                <figure key={i} className={style.pins__pin}>
-                  <img src="https://picsum.photos/200/300" alt="" />
-                  <button>➕</button>
-                </figure>
-              ))
-            }
+              {
+                pinsBox.map((pin: Category['pins'], i: number) => (
+                  <figure key={i} className={style.pins__pin}>
+                    <img src={pin.imgUrl} alt={pin.name} />
+                    <button>➕</button>
+                  </figure>
+                ))}
           </ul>
           {isScroll2 && (
             <div className={style.pins__buttons}>

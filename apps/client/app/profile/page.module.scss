@@ -42,6 +42,8 @@
     position: relative;
   }
   &__name {
+    display: flex;
+    align-items: center;
     color: var(--title-color);
   }
   &__details {

@@ -16,6 +16,36 @@ export default function Index () {
     }
   }
 
+  const preferences__option = [
+    {
+      name: 'Amistad',
+      value: 'Amistad'
+    },
+    {
+      name: 'Relación',
+      value: 'Relación monógama'
+    },
+    {
+      name: 'Lo que sea',
+      value: 'Ambos'
+    }
+  ]
+
+  const preferences__genre = [
+    {
+      name: 'Hombres',
+      value: 'Hombre'
+    },
+    {
+      name: 'Mujeres',
+      value: 'Mujer'
+    },
+    {
+      name: 'Todos',
+      value: 'Todos'
+    }
+  ]
+
   return (
     <main className={style.preferences}>
       <section className={style.preferences__searching}>
@@ -23,138 +53,56 @@ export default function Index () {
           <div className={style['preferences__search-container']}>
           <h2>¿Qué buscas?</h2>
           <div className={style.preferences__searches}>
-            <label
-              className={`
-              ${style.preferences__option} 
-              ${userState?.user.lookingFor === 'all' ? `${style['preferences__option--selected']}` : ''}
-              `}
-            >
-              Solo conocer gente
-              <input
-                value={'all'}
-                type="radio"
-                checked={userState?.user.lookingFor === 'all'}
-                onChange={(e) => {
-                  if (userState) {
-                    handleSelectSearchOption(e, userState, setUser)
-                  }
-                }}
-              />
-            </label>
-            <label
-              className={`
-              ${style.preferences__option} 
-              ${userState?.user.lookingFor === 'friendship' ? `${style['preferences__option--selected']}` : ''}
-              `}
-            >
-              Amistad
-              <input
-                value={'friendship'}
-                type="radio"
-                checked={userState?.user.lookingFor === 'friendship'}
-                onChange={(e) => {
-                  if (userState) {
-                    handleSelectSearchOption(e, userState, setUser)
-                  }
-                }}
-              />
-            </label>
-            <label
-              className={`
-              ${style.preferences__option} 
-              ${userState?.user.lookingFor === 'love' ? `${style['preferences__option--selected']}` : ''}
-              `}
-            >
-              Relación
-              <input
-                value={'love'}
-                type="radio"
-                checked={userState?.user.lookingFor === 'love'}
-                onChange={(e) => {
-                  if (userState) {
-                    handleSelectSearchOption(e, userState, setUser)
-                  }
-                }}
-              />
-            </label>
-            <label
-              className={`
-              ${style.preferences__option} 
-              ${userState?.user.lookingFor === 'both' ? `${style['preferences__option--selected']}` : ''}
-              `}
-            >
-              Lo que sea
-              <input
-                value={'both'}
-                type="radio"
-                checked={userState?.user.lookingFor === 'both'}
-                onChange={(e) => {
-                  if (userState) {
-                    handleSelectSearchOption(e, userState, setUser)
-                  }
-                }}
-              />
-            </label>
+            {
+              preferences__option.map((item, i) => (
+                <label
+                  key={i}
+                  className={`
+                  ${style.preferences__option} 
+                  ${userState?.user?.lookingFor === item.value ? `${style['preferences__option--selected']}` : ''}`
+                  }>
+                  {item.name}
+                  <input
+                    onChange={(e) => {
+                      if (userState) {
+                        handleSelectSearchOption(e, userState, setUser)
+                      }
+                    }}
+                    value={item.value}
+                    checked={userState?.user?.lookingFor === item.value}
+                    type="radio"
+                  />
+                </label>
+              ))
+            }
           </div>
           </div>
 
           <div className={style.preferences__genre}>
           <h2>¿Qué te mostramos?</h2>
           <div className={style.preferences__genres}>
-            <label
-              className={`
-              ${style.preferences__option} 
-              ${userState?.user.wantsGender === 'male' ? `${style['preferences__option--selected']}` : ''}`
-              }>
-
-              Hombres
-              <input
-                onChange={(e) => {
-                  if (userState) {
-                    handleSelectGenreOption(e, userState, setUser)
-                  }
-                }}
-                value={'male'}
-                checked={userState?.user.wantsGender === 'male'}
-                type="radio"
-              />
-            </label>
-            <label
-              className={`
-              ${style.preferences__option} 
-              ${userState?.user.wantsGender === 'female' ? `${style['preferences__option--selected']}` : ''}`
-              }>
-
-              Mujeres
-              <input
-                onChange={(e) => {
-                  if (userState) {
-                    handleSelectGenreOption(e, userState, setUser)
-                  }
-                }}
-                value={'female'}
-                checked={userState?.user.wantsGender === 'female'}
-                type="radio"
-              />
-            </label>
-            <label
-              className={`
-              ${style.preferences__option} 
-              ${userState?.user.wantsGender === 'both' ? `${style['preferences__option--selected']}` : ''}`
-              }>
-
-              Todos
-              <input
-                onChange={(e) => {
-                  if (userState) {
-                    handleSelectGenreOption(e, userState, setUser)
-                  }
-                }}
-                value={'both'}
-                checked={userState?.user.wantsGender === 'both'}
-                type="radio"
-              />
-            </label>
+            {
+              preferences__genre.map((item, i) => (
+                <label
+                  key={i}
+                  className={`
+                  ${style.preferences__genre} 
+                  ${userState?.user?.wantsGender === item.value ? `${style['preferences__genre--selected']}` : ''}`
+                  }>
+                  {item.name}
+                  <input
+                    onChange={(e) => {
+                      if (userState) {
+                        handleSelectGenreOption(e, userState, setUser)
+                      }
+                    }}
+                    value={item.value}
+                    checked={userState?.user?.wantsGender === item.value}
+                    type="radio"
+                  />
+                </label>
+              ))
+            }
           </div>
           </div>
         </div>
@@ -167,14 +115,14 @@ export default function Index () {
               <p>Lejos</p>
             </div>
             <div className={style['preferences__range-input']}>
-              <h4 ref={distancePicker} className={style['preferences__picker-value']} style={{ left: `${userState?.user.zone && userState?.user.zone / 10 - 15}%` }}>
-                {userState?.user.zone} KM
+              <h4 ref={distancePicker} className={style['preferences__picker-value']} style={{ left: `${userState?.user?.zone && userState?.user.zone / 10 - 15}%` }}>
+                {userState?.user?.zone} KM
               </h4>
               <input
                 min={10}
                 max={1000}
                 type="range"
-                value={userState?.user.zone}
+                value={userState?.user?.zone}
                 onChange={(e) => {
                   if (userState) {
                     handleChageDistance(e, userState, setUser, distancePicker)
@@ -234,7 +182,7 @@ export default function Index () {
         <h2>¿Cuáles son tus intereses y cuánto te gustan?</h2>
         <div className={style['preferences__interest-container']}>
           {
-            userState?.user.categorys.map((item, i) => (
+            userState?.user?.categorys.map((item, i) => (
               <div key={i} className={style.preferences__interest}>
                 <div className={style['preferences__interest-info']}>
                     <span>✔️</span>

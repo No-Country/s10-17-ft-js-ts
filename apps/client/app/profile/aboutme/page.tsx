@@ -5,6 +5,7 @@ import style from './style.module.scss'
 import React from 'react'
 import { useUserStore } from 'store/user'
 import { handleAboutForm } from '../../../libs/validateEditForm'
+import { getAge } from '../../../libs/getAge'
 
 interface ImageState {
   url: string | null
@@ -118,7 +119,7 @@ export default function Index () {
                 <div className={style['aboutme__preview1-info']}>
                   <div className={style['aboutme__preview1-info-name']}>
                     <h2>{userState?.user.firstName} {userState?.user.lastName},</h2>
-                    <h2>29 años</h2>
+                    <h2>{userState && getAge(userState?.user.birthdate)} Años</h2>
                   </div>
                   <h3>Ubicación</h3>
                 </div>
@@ -127,9 +128,9 @@ export default function Index () {
                 <h2 className={style['aboutme__interests-title']}>Mis intereses</h2>
                 <ul className={style['aboutme__interests-content']}>
                   {
-                    ['Interes 1', 'Interes 2', 'Interes 3'].map((interest, index) => (
+                    userState?.user.categorys.map((interest, index) => (
                         <li key={index} className={style.aboutme__interest}>
-                          {interest}
+                          {interest.name}
                         </li>
                     ))
                   }
@@ -138,11 +139,11 @@ export default function Index () {
               <div className={style.aboutme__preview3}>
                 <h2>Mis pines</h2>
                 <div className={style.aboutme__pins}>
-                  {['#', '#', '#'].map((item, index) => (
+                  {userState?.user.categorys.map((item) => item.pins.slice(0, 1).map((pin, index) => (
                     <figure key={index} className={style.aboutme__pin}>
-                      <img src='https://picsum.photos/200/200' alt="" />
+                      <img src={pin.imgUrl} alt="" />
                     </figure>
-                  ))}
+                  )))}
                 </div>
               </div>
               <div className={style.aboutme__preview2}>

@@ -40,9 +40,16 @@ export default function Index () {
       <div className={style.user}>
         <div className={style.user__content}>
           <div className={style.user__info}>
-            <img className={style.user__photo} src={user ? user.user.avatar : 'https://i.pinimg.com/564x/6b/6f/4d/6b6f4d9b5b0b0b0b0b0b0b0b0b0b0b0b.jpg'} alt='user' />
+            <img className={style.user__photo} src={user ? user.user?.avatar : 'https://i.pinimg.com/564x/6b/6f/4d/6b6f4d9b5b0b0b0b0b0b0b0b0b0b0b0b.jpg'} alt='user' />
             <div className={style.user__details}>
-              <h1 className={style.user__name}>{user && user.user.firstName}, {user && user.user.lastName}</h1>
+              <div className={style.user__name}>
+                <span>
+                  {user?.user?.gender === 'Hombre' && <Icons.Male width={40} height={40} />}
+                  {user?.user?.gender === 'Mujer' && <Icons.Female width={40} height={40} />}
+                  {user?.user?.gender === 'No binario' && <Icons.NotBinary width={40} height={40} />}
+                </span>
+                <h1>{user && user.user?.firstName}, {user && user.user?.lastName}</h1>
+              </div>
               <div className={style.user__location}>
                 <h2>
                   {'úbicacion'}
@@ -54,7 +61,7 @@ export default function Index () {
           <div className={style.user__interests}>
             <h2 className={style['user__interests-title']}>{isAdmin ? 'Mis' : 'Sus'} intereses</h2>
             <ul className={style['user__interests-content']}>
-              {user && user.user.categorys.map((interest, index) => {
+              {user && user.user?.categorys.map((interest, index) => {
                 if (interest.pins.length > 0) {
                   return (
                     <li key={index} className={style.user__interest}>
@@ -71,18 +78,13 @@ export default function Index () {
             <ul className={style['user__pins-content']} ref={pins}>
 
               {user &&
-                user.user.categorys[0]?.pins
-                  .concat(user.user.categorys[1].pins)
-                  .concat(user.user.categorys[2].pins)
-                  .concat(user.user.categorys[3].pins)
-                  .concat(user.user.categorys[4].pins)
-                  .map((pin, index) => {
-                    return (
-                      <li key={crypto.randomUUID() || index} className={style.user__pin} style={{ background: 'linear-gradient(45deg, rgb(186, 71, 71), rgb(33, 204, 164))' }}>
-                        <img className={style['user__pin-photo']} src={pin.imgUrl} alt={pin.name} />
-                      </li>
-                    )
-                  })}
+                user.user?.categorys.map((category) => category.pins.map((pin, index) => {
+                  return (
+                    <li key={crypto.randomUUID() || index} className={style.user__pin} style={{ background: 'linear-gradient(45deg, rgb(186, 71, 71), rgb(33, 204, 164))' }}>
+                      <img className={style['user__pin-photo']} src={pin.imgUrl} alt={pin.name} />
+                    </li>
+                  )
+                }))}
 
             </ul>
             {isScroll && (
@@ -98,9 +100,9 @@ export default function Index () {
           </div>
 
           <div className={style.user__about}>
-            <h2 className={style['user__about-title']}>Sobre {isAdmin ? 'mí' : `${(user && user.user.firstName) + ', ' + (user && user.user.lastName)}`}</h2>
+            <h2 className={style['user__about-title']}>Sobre {isAdmin ? 'mí' : `${(user && user.user?.firstName) + ', ' + (user && user.user?.lastName)}`}</h2>
             <p className={style['user__about-content']}>
-              {user && user.user.description}
+              {user && user.user?.description}
             </p>
           </div>
         </div>
