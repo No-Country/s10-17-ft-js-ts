@@ -26,10 +26,10 @@ export class RecomService {
         .map((user) => ({
           compatibility: getCompatibility(currUser, user),
           user,
-        }))
-        .filter((rankedUser) => rankedUser.compatibility > 0);
+        }));
+      //.filter((rankedUser) => rankedUser.compatibility > 0);
 
-      return recommendedUsers;
+      return recommendedUsers.slice(0, thisMany);
     } catch (error) {
       console.log(error);
       return otherUsers.map((user) => ({
