@@ -49,13 +49,16 @@ export const useChatsStore = create<MessageStore>((set) => ({
       console.error('Error al obtener datos del usuario:', error)
     }
   },
-  openChat: async (emailB: string) => {
+  openChat: async (emailB: string, access_token: string) => {
     try {
       // Abrir chat
       const options = {
-        headers: { 'Content-Type': 'application/json' }
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access_token}`
+        }
       }
-      const chat = await axios.post(`${BASE_URL}?to=${emailB}`, null, options)
+      const chat = await axios.post(`${BASE_URL}?to=${emailB}`, options)
       // Actualiza el estado con los datos recibidos
       set(() => ({
         chats: chat.data
