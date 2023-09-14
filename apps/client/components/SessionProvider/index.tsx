@@ -3,7 +3,7 @@
 import { createContext, useEffect, useState } from 'react'
 import { type ISession } from 'types'
 import { AuthForm } from 'components/AuthForm'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 interface IContext {
   session: ISession | null;
@@ -17,24 +17,37 @@ export function SessionProvider ({ children }: {children: React.ReactNode}) {
   const [session, setSession] = useState({} as ISession)
   const [isLoading, setIsLoading] = useState(true)
   const pathname = usePathname()
+  const router = useRouter()
 
   const getSessionStorage = async () => {
     const storedSession = localStorage.getItem('session')
-    if (storedSession) {
-      const parsedSession = JSON.parse(storedSession)
 
-      // Here we should validate if the token is still valid
-      // all data is saved in the session by now, so we can use it
+    try {
+      if (storedSession) {
+        const checkSession = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, {
+          headers: {
+            Authorization: `Bearer ${storedSession}`
+          }
+        })
 
-      setSession(parsedSession)
-    } else {
-      setSession({} as ISession)
+        if (checkSession.ok) {
+          const data = await checkSession.json()
+          if (!data.isProfileConfigured) router.push('/setup-account')
+          setSession({ user: data, access_token: storedSession })
+        }
+      } else {
+        setSession({} as ISession)
+        localStorage.removeItem('session')
+        router.push('/')
+      }
+    } catch (e) {
+      console.error(e)
     }
   }
 
   const setSessionStorage = (newSession: ISession) => {
-    localStorage.setItem('session', JSON.stringify(newSession)) // Should only store access_token
-    setSession(newSession)
+    localStorage.setItem('session', newSession.access_token) // Should only store access_token
+    setSession({ access_token: newSession.access_token, user: newSession.user })
   }
 
   const removeSession = () => {
@@ -47,6 +60,10 @@ export function SessionProvider ({ children }: {children: React.ReactNode}) {
       .finally(() => setIsLoading(false))
   }, [])
 
+  useEffect(() => {
+    if (!isLoading && !session.user?.isProfileConfigured && session.user?.email && pathname !== '/') router.push('/setup-account')
+  }, [isLoading, session, pathname])
+
   if (isLoading) return null // Loading spinner
 
   else if (!isLoading && !session.user?.isVerified && session.user?.email) {
@@ -55,7 +72,7 @@ export function SessionProvider ({ children }: {children: React.ReactNode}) {
       <AuthForm type='validate' email={session.user.email} />
     </SessionCTX.Provider>
     )
-  }
+  } else if (!isLoading && !session.user?.isProfileConfigured && session.user?.email && pathname !== '/setup-account') return null
 
   return ( // If everything is ok
       <SessionCTX.Provider value={{ setSession: setSessionStorage, session, removeSession }}>

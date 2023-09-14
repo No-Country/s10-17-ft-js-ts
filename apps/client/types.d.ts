@@ -1,18 +1,12 @@
-import { type } from "os"
+import { type UserDto } from "../../libs/dto/src/lib/user/user.dto";
+import { type CategoryDto } from "../../libs/dto/src/lib/user/update-categorys-user.dto";
 
-export interface User { // Could change in the future
-  firstName: string
-  lastName: string
-  email: string
-  description: string
-  images: string[]
-  birthdate: string
-  likedBy: string[]
-  gender: string
-  wantsGender: string
-  id: string
-  ageRange: number[]
-  isVerified: boolean
+export interface User extends UserDto { // Could change in the future
+
+}
+
+export interface Category extends CategoryDto { // Could change in the future
+  pins: Category['pins'] | {category: string}
 }
 
 export interface ISession {

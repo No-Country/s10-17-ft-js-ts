@@ -22,16 +22,6 @@ class PinDto {
   imgUrl: string
 
   @ApiProperty({
-    description: 'The name of the category. Should be one of the values from the CategoryEnum',
-    example: 'Category Name',
-    enum: [CategoryEnum],
-  })
-  @IsString()
-  @IsNotEmpty()
-  @IsEnum(CategoryEnum, { each: true })
-  categoryName: CategoryEnum;
-
-  @ApiProperty({
     description: 'An array of subcategories associated with the pin',
     example: ['Subcategory 1', 'Subcategory 2'],
     type: [String],
