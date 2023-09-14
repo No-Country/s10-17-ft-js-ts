@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { getCompatibility } from './utils/getCompatibility';
 import { Recommendations } from '@dto';
+import { isSimilar } from './utils/isSimilar';
 
 @Injectable()
 export class RecomService {
@@ -36,5 +37,19 @@ export class RecomService {
         user,
       }));
     }
+  }
+
+  async getPines(id: string, email: string) {
+    const userA = await this.userService.getOne(id);
+    const userB = await this.userService.getOneByEmail(email);
+    const samePines: any[] = [];
+    for (let i = 0; i < 6; i++) {
+      userA?.categorys[i].pins.map((pin) => {
+        userB?.categorys[i].pins.forEach((element) => {
+          isSimilar(pin.name, element.name) ? samePines.push(pin) : null;
+        });
+      });
+    }
+    return samePines;
   }
 }
