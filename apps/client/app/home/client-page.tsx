@@ -13,7 +13,7 @@ export function ClientPage () {
   const { session } = useSession()
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/recom/0/${session?.user?.id}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/recom/10/${session?.user?.id}`)
       .then(res => res.ok ? res.json() : new Error('Something went wrong'))
       .then(res => {
         setMatches(res.map((data: {user: User}) => ({ ...data.user })))
