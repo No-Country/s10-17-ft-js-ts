@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { Select } from './Select'
 
 const MONTHS = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-const YEARS = Array.from({ length: 100 }, (_, i) => i + 1920)
+const YEARS = Array.from({ length: 100 - 18 }, (_, i) => i + new Date().getFullYear() - 100)
 
 interface Props {
   month?: string
