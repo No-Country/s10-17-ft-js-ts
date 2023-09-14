@@ -208,7 +208,6 @@ export class UserService {
     }
   }
 
-
   async getOneByEmail(email: string): Promise<UserDocument | undefined | null> {
     try {
       return await this.userRepository.findByEmail(email);
@@ -217,7 +216,6 @@ export class UserService {
       throw new BadRequestException(error);
     }
   }
-
 
   async updateCategorys(updateCategorys: CategoryDto[], userId: string) {
     try {

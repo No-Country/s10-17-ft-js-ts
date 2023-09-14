@@ -1,5 +1,6 @@
 import { getAge } from './getAge';
 import calculateDistanceInKilometers from '../../user/utils/distanceCalculator';
+import { isSimilar } from './isSimilar';
 
 export const getCompatibility = (userA: any, userB: any): number => {
   let score = 0;
@@ -43,8 +44,8 @@ export const getCompatibility = (userA: any, userB: any): number => {
       currPin++
     ) {
       //compare if userB has the same pin as userA
-      score += userB.categorys[currCateg].pins.find(
-        (pin: any) => pin.name == userA.categorys[currCateg].pins[currPin]
+      score += userB.categorys[currCateg].pins.find((pin: any) =>
+        isSimilar(pin.name, userA.categorys[currCateg].pins[currPin])
       )
         ? highScore
         : 0;
