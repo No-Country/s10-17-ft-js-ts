@@ -96,6 +96,10 @@ export class UserController {
     return this.userService.update(id, updateUserDto);
   }
 
+  @Get('/email/:email')
+  getByEmail(@Param('email') email: string) {
+    return this.userService.getOneByEmail(email);
+  }
   // @Delete('/:id')
   // delete(@Param('id') id: string){
   //   return this.userService.deleteOne(id)
