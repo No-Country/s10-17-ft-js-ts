@@ -11,6 +11,8 @@ export const getCompatibility = (userA: any, userB: any): number => {
   const midPenalty = -20;
   const highPenalty = -1000;
   let currCateg: number;
+  let rateA: number;
+  let rateB: number;
   let currPin: number;
   let currSubc: number;
   let userASubc: string[];
@@ -23,45 +25,64 @@ export const getCompatibility = (userA: any, userB: any): number => {
     userASubc = [];
     userBSubc = [];
     //compare same category rates
-    score +=
-      highScore -
-      Math.abs(
-        userA.categorys[currCateg].rate - userB.categorys[currCateg].rate
-      ) *
-        midScore;
+    if (userA.categorys[currCateg]?.rate) {
+      rateA = userA.categorys[currCateg]?.rate;
+    } else {
+      rateA = 0;
+    }
+    if (userB.categorys[currCateg]?.rate) {
+      rateB = userB.categorys[currCateg]?.rate;
+    } else {
+      rateB = 0;
+    }
+    score += highScore - Math.abs(rateA - rateB) * midScore;
     //compare same category amount of pins
-    score +=
-      Math.abs(
-        userA.categorys[currCateg].pins.length -
-          userB.categorys[currCateg].pins.length
-      ) * lowPenalty;
+    if (userA.categorys[currCateg]?.pins && userB.categorys[currCateg]?.pins) {
+      score +=
+        Math.abs(
+          userA.categorys[currCateg].pins.length -
+            userB.categorys[currCateg].pins.length
+        ) * lowPenalty;
+    }
 
     //SECOND ITERATION, on pins
 
     for (
       currPin = 0;
-      currPin < userA.categorys[currCateg].pins.length;
+      currPin < userA.categorys[currCateg]?.pins?.length;
       currPin++
     ) {
       //compare if userB has the same pin as userA
-      score += userB.categorys[currCateg].pins.find((pin: any) =>
-        isSimilar(pin.name, userA.categorys[currCateg].pins[currPin])
-      )
-        ? highScore
-        : 0;
+      if (userB.categorys[currCateg]?.pins) {
+        score += userB.categorys[currCateg].pins.find((pin: any) =>
+          isSimilar(pin.name, userA.categorys[currCateg].pins[currPin])
+        )
+          ? highScore
+          : 0;
+      }
 
       //THIRD ITERATION, on subcategories
 
       for (
         currSubc = 0;
         currSubc <
-        userA.categorys[currCateg].pins[currPin].subCategories.length;
+        userA.categorys[currCateg].pins[currPin].subCategories?.length;
         currSubc++
       ) {
-        const ASubc =
-          userA.categorys[currCateg].pins[currPin].subCategories[currSubc];
-        const BSubc =
-          userB.categorys[currCateg].pins[currPin].subCategories[currSubc];
+        const ASubc = '';
+        const BSubc = '';
+        if (
+          userA.categorys[currCateg]?.pins[currPin]?.subCategories[currSubc]
+        ) {
+          const ASubc =
+            userA.categorys[currCateg].pins[currPin].subCategories[currSubc];
+        }
+        if (
+          userB.categorys[currCateg]?.pins[currPin]?.subCategories[currSubc]
+        ) {
+          const BSubc =
+            userB.categorys[currCateg].pins[currPin].subCategories[currSubc];
+        }
         //store the subcategory if it's new
         userASubc.includes(ASubc) ? null : userASubc.push(ASubc);
         userBSubc.includes(BSubc) ? null : userBSubc.push(BSubc);
@@ -82,25 +103,41 @@ export const getCompatibility = (userA: any, userB: any): number => {
       ? 0
       : highPenalty;
   //check if userB has an age inside userA range
-  const age = new Date().getFullYear() - userB.birthdate.getFullYear();
   score +=
-    userA.ageRange[0] < getAge(userB.birthdate) &&
+    userA.ageRange[0] < getAge(userB.birthdate ? userB.birthdate : 0) &&
     getAge(userB.birthdate) < userA.ageRange[1]
       ? 0
       : highPenalty;
 
   //check if userB is inside userA target zone
 
+  let latA = 0;
+  let lonA = 0;
+  let latB = 0;
+  let lonB = 0;
+  if (userA.latitude) {
+    latA = userA.latitude;
+  }
+  if (userA.longitude) {
+    lonA = userA.longitude;
+  }
+  if (userB.latitude) {
+    latB = userB.latitude;
+  }
+  if (userB.longitude) {
+    lonB = userB.longitude;
+  }
+
   score +=
     userA.zone >=
     calculateDistanceInKilometers(
       {
-        latitude: userA.latitude,
-        longitude: userA.longitude,
+        latitude: latA,
+        longitude: lonA,
       },
       {
-        latitude: userB.latitude,
-        longitude: userB.longitude,
+        latitude: latB,
+        longitude: lonB,
       }
     )
       ? 0
