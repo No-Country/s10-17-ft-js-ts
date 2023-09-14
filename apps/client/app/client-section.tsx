@@ -33,7 +33,7 @@ export function ClientSection () {
             </div>
             <img
               className={styles.home__image}
-              src={'/images/intro-landing.png'}
+              src={'https://res.cloudinary.com/dlvpftdsm/image/upload/v1694525830/Chat_gpsaeo.png'}
               alt="laptop con prueba de la aplicacion"
             />
             <div className={styles.home__buttonsD}>

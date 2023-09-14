@@ -248,3 +248,8 @@
     aspect-ratio: 1/1;
   }
 }
+
+.form__next[disabled] {
+  background-color: $light-quaternary;
+  cursor: not-allowed;
+}

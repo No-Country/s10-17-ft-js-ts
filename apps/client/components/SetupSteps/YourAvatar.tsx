@@ -55,7 +55,7 @@ export function YourAvatar () {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${session?.access_token}`
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({ ...formData, avatar })
       })
 
       if (response.ok) {
