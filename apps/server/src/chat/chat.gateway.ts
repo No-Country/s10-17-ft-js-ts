@@ -18,10 +18,10 @@ export class ChatGateway {
     // return this.chatService.create(createChatDto);
   }
 
-  @SubscribeMessage('findAllChat')
-  findAll() {
-    return this.chatService.findAll();
-  }
+  // @SubscribeMessage('findAllChat')
+  // findAll() {
+  //   return this.chatService.findAll();
+  // }
 
   @SubscribeMessage('findOneChat')
   findOne(@MessageBody() id: number) {

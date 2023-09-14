@@ -89,7 +89,7 @@ export class ChatService {
     private readonly chatRepository: ChatRepository
   ) {}
 
-  async chats(email: string, emailB: string): Promise<Chat[]> {
+  async chats(email: string, emailB: string): Promise<Chat | null> {
     const user = await this.userService.isRegistered(email);
 
     if (!user)
@@ -99,7 +99,7 @@ export class ChatService {
 
     const chats = await this.chatRepository.getChat(email, emailB);
 
-    return [chats];
+    return chats;
   }
 
   async createChat(emailA: string, emailB: string): Promise<Chat> {
@@ -152,8 +152,8 @@ export class ChatService {
     return null;
   }
 
-  findAll() {
-    return `This action returns all chat`;
+  findAllFromOneUser(email: string) {
+    return this.chatRepository.getChatsFromOneUser(email);
   }
 
   findOne(id: number) {
