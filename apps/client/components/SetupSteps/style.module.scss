@@ -65,6 +65,12 @@
   flex-direction: column;
   gap: 4rem;
 
+  .form__error {
+    color: #ff0000;
+    font-size: $text;
+    text-align: center;
+  }
+
   .about {
     width: 100%;
     height: 100px;
@@ -136,6 +142,17 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    position: relative;
+    
+    .delete {
+      font-size: $text;
+      color: $dark-quaternary;
+      cursor: pointer;
+      position: absolute;
+      right: 0;
+      top: .5rem;
+      text-decoration: underline;
+    }
 
     p {
       font-size: $text;
@@ -144,6 +161,13 @@
 
     small {
       color: #949494;
+      font-size: $text;
+    }
+
+    .count {
+      position: absolute;
+      top: 50%;
+      right: 0;
       font-size: $text;
     }
   }
@@ -174,6 +198,25 @@
     }
   }
 
+  .form__pins {
+    display: grid;
+    grid-template-columns: repeat(5, 70px);
+    grid-template-rows: repeat(3, 70px);
+    gap: 10px;
+    cursor: pointer;
+
+    .form__pins--item  {
+      border-radius: 50%;
+      padding: 3px;
+
+      
+      img {
+        border-radius: 50%;
+        aspect-ratio: 1/1;
+      }
+    }
+  }
+  
   .form__searchPins {
     position: relative;
 
@@ -184,5 +227,24 @@
       border-radius: 8px;
       padding-left: 16px;
     }
+  }
+}
+
+.avatar__selected {
+  width: 200px;
+  height: 200px;
+  margin: 20px auto;
+}
+
+.avatar__list {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  width: 100%;
+  
+  .avatar__item {
+    cursor: pointer;
+    aspect-ratio: 1/1;
   }
 }

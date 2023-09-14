@@ -208,6 +208,7 @@ export class UserService {
     }
   }
 
+
   async getOneByEmail(email: string): Promise<UserDocument | undefined | null> {
     try {
       return await this.userRepository.findByEmail(email);
@@ -217,14 +218,6 @@ export class UserService {
     }
   }
 
-  async prueba(userId: string): Promise<UserDto | undefined | null> {
-    try {
-      const userRegisteredUpdated = await this.userRepository.findOne(userId);
-      return userRegisteredUpdated;
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   async updateCategorys(updateCategorys: CategoryDto[], userId: string) {
     try {
@@ -232,7 +225,7 @@ export class UserService {
         // creo los pines
         console.log(pins);
         const newPins = pins.map(
-          (p) => new UserPin(p.name, p.imgUrl, p.subCategories, p.categoryName)
+          (p) => new UserPin(p.name, p.imgUrl, p.subCategories, name)
         );
         // creo la categoria
         const categorys = new UserCategory(name, rate, newPins);
