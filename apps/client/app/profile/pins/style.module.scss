@@ -131,6 +131,7 @@
 @media (width >= 1000px) {
   .pins {
     padding: 3rem 10rem;
+    height: calc(100% - 10rem);
     &__edit {
       padding: 0;
     }

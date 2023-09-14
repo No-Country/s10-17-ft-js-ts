@@ -157,7 +157,7 @@
     padding-left: 310px;
     height: calc(100% - 6rem);
     &__container {
-      height: 100%;      
+      height: calc(100dvh - 3rem);      
       padding: 3rem;
       display: grid;
       place-items: center;
