@@ -1,6 +1,5 @@
 /*import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { CreateChatDto } from './dto/create-chat.dto';
-import { UpdateChatDto } from './dto/update-chat.dto';
 import { UserService } from '../user/user.service';
 import { Chat } from './entities/chat.entity';
 import { ChatRepository, ChatRepositoryKey } from './chat.repository';
@@ -80,6 +79,7 @@ import { Chat } from './entities/chat.entity';
 import { ChatRepository, ChatRepositoryKey } from './chat.repository';
 import { Message } from './entities/message.entity';
 import { Socket } from 'socket.io';
+import { UpdateChatDto } from './dto/update-chat.dto';
 
 @Injectable()
 export class ChatService {
@@ -124,9 +124,8 @@ export class ChatService {
   async sendMessage(
     receiverEmail: string,
     senderEmail: string,
-    content: string,
-    socket: Socket // Pass the socket instance for real-time communication
-  ): Promise<Chat | null> {
+    content: string
+  ): Promise<Message | null> {
     const chat = await this.chatRepository.getChat(senderEmail, receiverEmail);
 
     const user = await this.userService.getOneByEmail(senderEmail);
@@ -135,7 +134,6 @@ export class ChatService {
       throw new NotFoundException(`Chat not found`);
     }
 
-    // Ensure that the sender is part of the chat
     if (!chat.participants.includes(senderEmail)) {
       throw new NotFoundException('Sender is not part of this chat');
     }
@@ -148,15 +146,26 @@ export class ChatService {
         content
       );
 
-      // Emit the message to all chat members in real-time
-      /*chat.members.forEach((member) => {
-        socket.to(member).emit('newMessage', message);
-      });*/
-
       return message;
     }
 
     return null;
+  }
+
+  findAll() {
+    return `This action returns all chat`;
+  }
+
+  findOne(id: number) {
+    return `This action returns a #${id} chat`;
+  }
+
+  update(id: number, updateChatDto: UpdateChatDto) {
+    return `This action updates a #${id} chat`;
+  }
+
+  remove(id: number) {
+    return `This action removes a #${id} chat`;
   }
 
   /*async getMessages(chatId: number): Promise<Message[]> {

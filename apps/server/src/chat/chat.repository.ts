@@ -1,4 +1,5 @@
 import { Chat } from './entities/chat.entity';
+import { Message } from './entities/message.entity';
 
 export interface ChatRepository {
   createChat(userA: string, userB: string): Promise<Chat>;
@@ -8,7 +9,7 @@ export interface ChatRepository {
     userB: string,
     senderId: string,
     msg: string
-  ): Promise<Chat | null>;
+  ): Promise<Message | null>;
 }
 
 export const ChatRepositoryKey = Symbol('ChatRepository');
