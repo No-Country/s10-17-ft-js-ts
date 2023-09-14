@@ -18,12 +18,11 @@ export class MongoChatRepository implements ChatRepository {
     return newChat;
   }
 
-  async getChat(emailA: string, emailB: string): Promise<Chat> {
+  async getChat(emailA: string, emailB: string): Promise<Chat | null> {
     const chat = await this.chatSchema
       .findOne({ participants: [emailA, emailB] })
       .populate('messages');
-
-    return chat!;
+    return chat;
   }
 
   async createMessage(
@@ -41,9 +40,13 @@ export class MongoChatRepository implements ChatRepository {
         senderId: senderId,
         chatId: chat._id,
       });
-      chat.populate('messages');
       return message;
     }
     return null;
+  }
+
+  async getChatsFromOneUser(email: string): Promise<Chat[] | null> {
+    const chats = await this.chatSchema.find({ participants: email }).exec();
+    return chats;
   }
 }

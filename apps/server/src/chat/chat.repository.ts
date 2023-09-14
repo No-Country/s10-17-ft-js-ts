@@ -3,13 +3,14 @@ import { Message } from './entities/message.entity';
 
 export interface ChatRepository {
   createChat(userA: string, userB: string): Promise<Chat>;
-  getChat(emailA: string, emailB: string): Promise<Chat>;
+  getChat(emailA: string, emailB: string): Promise<Chat | null>;
   createMessage(
     userA: string,
     userB: string,
     senderId: string,
     msg: string
   ): Promise<Message | null>;
+  getChatsFromOneUser(email: string): Promise<Chat[] | null>;
 }
 
 export const ChatRepositoryKey = Symbol('ChatRepository');

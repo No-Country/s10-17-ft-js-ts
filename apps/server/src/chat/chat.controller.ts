@@ -13,7 +13,7 @@ export class ChatController {
   chats(
     @User('email') email: string,
     @Query('to') emailB: string
-  ): Promise<Chat[]> {
+  ): Promise<Chat | null> {
     return this.chatService.chats(email, emailB);
   }
 
@@ -24,5 +24,13 @@ export class ChatController {
     @Query('to') emailB: string
   ): Promise<Chat> {
     return this.chatService.createChat(email, emailB);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/all')
+  async allChatFromOneUser(
+    @User('email') email: string
+  ): Promise<Chat[] | null> {
+    return await this.chatService.findAllFromOneUser(email);
   }
 }
