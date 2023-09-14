@@ -9,6 +9,8 @@ import { useUserStore } from 'store/user'
 import { SearchPins } from 'components/SetupSteps/SearchPins'
 import { Category } from 'types'
 import { CategoryEnum } from '../../../../../libs/dto/src/lib/enums/category.enum'
+import { CategoryDto } from '../../../../../libs/dto/src/lib/user/update-categorys-user.dto'
+import { Pin } from 'components/Pin'
 
 export default function Index () {
   const { userState } = useUserStore()
@@ -17,8 +19,9 @@ export default function Index () {
   const pins = React.useRef<HTMLUListElement>(null)
   const pinsResults = React.useRef<HTMLUListElement>(null)
   const [editPin, setEditPin] = React.useState(false)
-  const [categorySelect, setCategorySelect] = React.useState<string>(userState?.user.categorys[0].name as string)
+  const [categorySelect, setCategorySelect] = React.useState<string>(userState?.user?.categorys[0].name as string)
   const [pinsBox, setPinsBox] = React.useState<Category['pins']>([])
+  const [isLoading, setIsLoading] = React.useState(false)
 
   React.useEffect(() => {
     if (pins.current) {
@@ -53,7 +56,7 @@ export default function Index () {
           <h3 className={style.pins__counter}>
             <b>
             {userState &&
-                userState?.user.categorys.map((item) => (
+                userState?.user?.categorys.map((item) => (
                   item.pins.length
                 )).reduce((a, b) => a + b, 0)
             }/
@@ -65,16 +68,17 @@ export default function Index () {
         <div className={style['pins__edit-pins']}>
           <ul className={style.pins__content} ref={pins}>
             {
-              userState?.user.categorys.map((item) => (
-                item.pins.map((pin, index) => (
-                  <figure key={index} className={style.pins__pin}>
-                    <img src={pin.imgUrl} alt="" />
-                    {editPin && (
-                      <button>✖</button>
-                    )}
-                  </figure>
+              userState?.user?.categorys.map((item) => (
+                item.pins.map((pin, i) => (
+                    <figure key={i} className={style.pins__pin}>
+                      <Pin key={i} pin={pin} />
+                      {editPin && (
+                        <button>✖</button>
+                      )}
+                    </figure>
                 ))
               ))
+
             }
           </ul>
           {isScroll && (
@@ -96,13 +100,13 @@ export default function Index () {
             <h2 className={style['pins__add-title']}>Agregar pines</h2>
             <div className={style['pins__add-search']}>
               {/* <input type="text" placeholder='Buscar'/> */}
-              <SearchPins setPins={setPinsBox} selected={categorySelect}/>
+              <SearchPins setIsLoading={setIsLoading} setPins={setPinsBox} selected={categorySelect}/>
               <Icons.Search width={40} height={40} />
             </div>
           </div>
           <div className={style['pins__add-categories']}>
             {
-              userState?.user.categorys.map((item, i) => (
+              userState?.user?.categorys.map((item, i) => (
                 <button
                   key={i}
                   className={`${(item.name === categorySelect || (item.name === CategoryEnum.Videogames && categorySelect === 'Juegos')) && style['pins__add-category']} btn-second`}
@@ -119,12 +123,15 @@ export default function Index () {
           <div className={style['pins__edit-pins']}>
           <ul className={style.pins__content} ref={pinsResults}>
               {
-                pinsBox.map((pin: Category['pins'], i: number) => (
+                pinsBox.map((pin: CategoryDto['pins'][0], i: number) => (
                   <figure key={i} className={style.pins__pin}>
-                    <img src={pin.imgUrl} alt={pin.name} />
+                    <Pin key={i} pin={pin} />
                     <button>➕</button>
                   </figure>
                 ))}
+              {isLoading && (
+                <p>Cargando...</p>
+              )}
           </ul>
           {isScroll2 && (
             <div className={style.pins__buttons}>

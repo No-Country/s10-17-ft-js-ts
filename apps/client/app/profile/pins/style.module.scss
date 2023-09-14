@@ -15,12 +15,6 @@
   &__pin {
     position: relative;
     width: max-content;
-    & img {
-      min-width: 7rem;
-      max-width: 7rem;
-      height: 7rem;
-      border-radius: 50%;
-    }
     & button {
       position: absolute;
       top: 0;
@@ -120,6 +114,7 @@
   }
   &__add-categories {
     display: flex;
+    flex-wrap: wrap;
     gap: 2rem;
     overflow-x: scroll;
   }

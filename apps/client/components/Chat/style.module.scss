@@ -86,6 +86,9 @@
     padding-left: 1rem;
     font-size: 2rem;
   }
+  &__input-text:focus {
+    outline: none;
+  }
   &__emoticons {
     cursor: pointer;
   }

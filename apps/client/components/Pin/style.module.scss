@@ -1,0 +1,21 @@
+.pin {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  &__image {
+    width: 6.5rem;
+    height: 6.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  &__name {
+    display: none;
+  }
+  &__name:hover {
+    padding: .5rem 1rem;
+    background-color: var(--text-color);
+    color: var(--bg-color);
+  }
+}

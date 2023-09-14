@@ -5,7 +5,7 @@ import { type UserDto } from '../../../libs/dto/src/lib/user/user.dto'
 import { create } from 'zustand'
 
 // Define la estructura de UserDto
-interface User {
+export interface User {
   user: UserDto | null;
 };
 

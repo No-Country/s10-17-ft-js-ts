@@ -66,20 +66,26 @@ export default function Index () {
                 <input
                   type="text"
                   name="firstName"
-                  onChange={(e) => handleAboutForm(e, userState?.user, setUser)}
-                  value={userState?.user.firstName}
+                  onChange={(e) => {
+                    if (!userState) return
+                    handleAboutForm(e, userState?.user, setUser)
+                  }}
+                  value={userState?.user?.firstName}
                 />
-                <span>{userState && userState?.user?.firstName?.length < 3 && 'El nombre debe tener al menos 3 caracteres'}</span>
+                <span>{userState?.user && userState?.user?.firstName?.length < 3 && 'El nombre debe tener al menos 3 caracteres'}</span>
               </label>
               <label className={style.aboutme__lastname}>
                 Apellido
                 <input
                   type="text"
                   name="lastName"
-                  onChange={(e) => handleAboutForm(e, userState?.user, setUser)}
-                  value={userState?.user.lastName}
+                  onChange={(e) => {
+                    if (!userState) return
+                    handleAboutForm(e, userState?.user, setUser)
+                  }}
+                  value={userState?.user?.lastName}
                 />
-                <span>{userState && userState?.user.lastName?.length < 3 && 'El apellido debe tener al menos 3 caracteres'}</span>
+                <span>{userState?.user && userState?.user?.lastName?.length < 3 && 'El apellido debe tener al menos 3 caracteres'}</span>
               </label>
             </div>
             <label className={style.aboutme__description}>
@@ -88,12 +94,15 @@ export default function Index () {
                 cols={30}
                 rows={3}
                 name='description'
-                onChange={(e) => handleAboutForm(e, userState?.user, setUser)}
+                onChange={(e) => {
+                  if (!userState) return
+                  handleAboutForm(e, userState?.user, setUser)
+                }}
                 placeholder='Agrega una descripción'
-                value={userState?.user.description}
+                value={userState?.user?.description}
               >
               </textarea>
-              <span>{userState && userState?.user.description?.length < 8 && 'La descripción debe tener al menos 8 caracteres'}</span>
+              <span>{userState?.user && userState?.user?.description?.length < 8 && 'La descripción debe tener al menos 8 caracteres'}</span>
             </label>
             <span className={style.aboutme__location}>
               <Icons.Location width={30} height={30} />
@@ -118,8 +127,8 @@ export default function Index () {
                 <img src={image?.url || 'https://picsum.photos/200/200'} alt="" />
                 <div className={style['aboutme__preview1-info']}>
                   <div className={style['aboutme__preview1-info-name']}>
-                    <h2>{userState?.user.firstName} {userState?.user.lastName},</h2>
-                    <h2>{userState && getAge(userState?.user.birthdate)} Años</h2>
+                    <h2>{userState?.user?.firstName} {userState?.user?.lastName},</h2>
+                    <h2>{userState?.user && getAge(userState?.user?.birthdate)} Años</h2>
                   </div>
                   <h3>Ubicación</h3>
                 </div>
@@ -128,7 +137,7 @@ export default function Index () {
                 <h2 className={style['aboutme__interests-title']}>Mis intereses</h2>
                 <ul className={style['aboutme__interests-content']}>
                   {
-                    userState?.user.categorys.map((interest, index) => (
+                    userState?.user?.categorys.map((interest, index) => (
                         <li key={index} className={style.aboutme__interest}>
                           {interest.name}
                         </li>
@@ -139,7 +148,7 @@ export default function Index () {
               <div className={style.aboutme__preview3}>
                 <h2>Mis pines</h2>
                 <div className={style.aboutme__pins}>
-                  {userState?.user.categorys.map((item) => item.pins.slice(0, 1).map((pin, index) => (
+                  {userState?.user?.categorys.map((item) => item.pins.slice(0, 1).map((pin, index) => (
                     <figure key={index} className={style.aboutme__pin}>
                       <img src={pin.imgUrl} alt="" />
                     </figure>
@@ -149,7 +158,7 @@ export default function Index () {
               <div className={style.aboutme__preview2}>
                 <h3>Sobre mí</h3>
                 <p>
-                  {userState?.user.description}
+                  {userState?.user?.description}
                 </p>
               </div>
             </div>

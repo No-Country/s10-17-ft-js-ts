@@ -7,6 +7,7 @@ import { Icons } from 'components/Icons'
 import Link from 'next/link'
 import { useUserStore } from 'store/user'
 import { useSession } from 'hooks/useSession'
+import { Pin } from 'components/Pin'
 
 export default function Index () {
   const isAdmin = true
@@ -80,9 +81,7 @@ export default function Index () {
               {user &&
                 user.user?.categorys.map((category) => category.pins.map((pin, index) => {
                   return (
-                    <li key={crypto.randomUUID() || index} className={style.user__pin} style={{ background: 'linear-gradient(45deg, rgb(186, 71, 71), rgb(33, 204, 164))' }}>
-                      <img className={style['user__pin-photo']} src={pin.imgUrl} alt={pin.name} />
-                    </li>
+                    <Pin key={index} pin={pin} />
                   )
                 }))}
 
