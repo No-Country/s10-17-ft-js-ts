@@ -1,32 +1,38 @@
 ::-webkit-scrollbar {
-  width: 10px;
+  display: none;
 }
 
-::-webkit-scrollbar:hover {
-  width: 15px;
-}
-
-
-
-::-webkit-scrollbar-track {
-  background-color: transparent;
-  border-radius: 10px;
-  margin-block: .5em;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--icon-color-400);
-  border-radius: 10px;
-  border: .15em solid transparent;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--icon-color-500);
-}
-
-@supports (scrollbar-color: transparent var(--icon-color-500) var(--icon-color-400)) {
-  * {
-    scrollbar-color: var(--icon-color-400) transparent;
-    scrollbar-width: thin;
+@media (width >= 500px) {
+  ::-webkit-scrollbar {
+    width: 10px;
   }
+  
+  ::-webkit-scrollbar:hover {
+    width: 15px;
+  }
+  
+  
+  
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 10px;
+    margin-block: .5em;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--icon-color-400);
+    border-radius: 10px;
+    border: .15em solid transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--icon-color-500);
+  }
+  
+  @supports (scrollbar-color: transparent var(--icon-color-500) var(--icon-color-400)) {
+    * {
+      scrollbar-color: var(--icon-color-400) transparent;
+      scrollbar-width: thin;
+    }
+  } 
 }

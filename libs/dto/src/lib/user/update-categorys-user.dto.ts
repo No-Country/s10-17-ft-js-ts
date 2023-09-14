@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { ArrayMinSize, IsArray, IsEnum, IsNotEmpty, IsNumber, IsString, ValidateNested } from 'class-validator';
+import { ArrayMinSize, IsArray, IsEnum, IsNotEmpty, IsNumber, IsString, ValidateNested, IsOptional } from 'class-validator';
 import { CategoryEnum } from '../enums/category.enum';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -30,6 +30,13 @@ class PinDto {
   @IsArray()
   subCategories: string[]
 
+  @ApiProperty({
+    description: 'The Category Pin',
+    example: 'Anime',
+  })
+  @IsOptional()
+  @IsString()
+  categoryName: string
 }
 
 export class CategoryDto {

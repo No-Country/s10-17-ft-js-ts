@@ -14,7 +14,6 @@ export interface ISession {
   user?: User
 }
 
-
 // ! Animes
 export type Animes = Anime[]
 

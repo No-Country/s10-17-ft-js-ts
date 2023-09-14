@@ -23,10 +23,20 @@ export default function RootLayout ({
 }) {
   return (
     <html lang="en" data-theme="light">
+      <head>
+        <link rel="icon" href="https://res.cloudinary.com/dlvpftdsm/image/upload/v1694662526/Iconodegrade_ax05ng.png " sizes="any" />
+      </head>
       <body className={poppins.className}>
         <SessionProvider>
           <Header />
           {children}
+          <footer className='footer'>
+            <p>Contacto</p>
+            <p>Redes sociales</p>
+            <p>Sobre Wave</p>
+            <p>Avisos legales</p>
+            <p>Términos y condiciones</p>
+          </footer>
         </SessionProvider>
       </body>
     </html>
