@@ -41,6 +41,7 @@ export default function Index () {
       chat.current.style.display = 'flex'
     }
   }
+
   return (
     <main className={style.messages}>
       <Mails setOpenChat={handleOpenChat}/>

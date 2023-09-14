@@ -1,7 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
+'use client'
 import Link from 'next/link'
 import style from './style.module.scss'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import { useChatsStore } from 'store/chats'
+import { useSession } from 'hooks/useSession'
 
 interface Props {
   setOpenChat: () => void
@@ -9,10 +13,16 @@ interface Props {
 
 export function Mails ({ setOpenChat }: Props) {
   const router = useRouter()
+  const { getChats, chats } = useChatsStore()
+  const { session } = useSession()
 
   function openProfile () {
     router.push('/profile')
   }
+
+  useEffect(() => {
+    if (session) getChats(session.access_token)
+  }, [])
 
   return (
     <section className={style.mails}>
@@ -38,8 +48,8 @@ export function Mails ({ setOpenChat }: Props) {
       <div className={style.mails__messages}>
         <h2 className={style['mails__messages-title']}>Mensajes</h2>
         <ul className={style['mails__messages-list']}>
-          {Array.from({ length: 9 }).map((_, i) => (
-            <li key={i} className={style.mails__message}>
+          {chats && chats.map((item, index) => (
+            <li key={index} className={style.mails__message}>
               <figure className={style['mails__message-photo']}>
                 <span className={style['mails__message-status']}></span>
                 <img
