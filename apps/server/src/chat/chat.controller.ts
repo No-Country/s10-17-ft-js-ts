@@ -10,8 +10,11 @@ export class ChatController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  chats(@User('email') email: string): Promise<Chat[]> {
-    return this.chatService.chats(email);
+  chats(
+    @User('email') email: string,
+    @Query('to') emailB: string
+  ): Promise<Chat[]> {
+    return this.chatService.chats(email, emailB);
   }
 
   @UseGuards(JwtAuthGuard)

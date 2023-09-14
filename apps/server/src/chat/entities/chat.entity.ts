@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Chat {
@@ -18,3 +19,4 @@ ChatSchema.virtual('messages', {
 });
 
 export { ChatSchema };
+export type ChatDocument = HydratedDocument<Chat>;

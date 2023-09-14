@@ -47,6 +47,7 @@ export class UserProfile extends AutomapperProfile {
       latitude: Number,
       longitude: Number,
       zone: Number,
+      avatar: String,
     });
 
     PojosMetadataMap.create<UserDto>('UserDto', {
@@ -67,6 +68,7 @@ export class UserProfile extends AutomapperProfile {
       latitude: Number,
       longitude: Number,
       zone: Number,
+      avatar: String,
     });
   }
 }
